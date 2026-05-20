@@ -3830,31 +3830,273 @@ body.reel-mode {
   font-weight: 600;
 }
 
+/* =========================================================
+   MOBILE — full reset of spread grid, compact typography,
+   single-column layouts everywhere, hidden decorations that
+   steal vertical room.
+   ========================================================= */
+
 @media (max-width: 900px) {
-  .spread {
+  /* Reset .spread grid: kill desktop areas, stack everything in DOM order */
+  .spread,
+  .spread.layout-image-left,
+  .spread.layout-image-right {
     grid-template-columns: 1fr;
-    grid-template-rows: auto auto auto auto;
-    padding: clamp(80px, 11vh, 120px) clamp(20px, 5vw, 40px) clamp(90px, 11vh, 120px);
-    gap: 18px;
+    grid-template-rows: auto auto 1fr auto;
+    grid-template-areas: none;
+    padding: clamp(68px, 9vh, 92px) clamp(16px, 4vw, 28px) clamp(72px, 9vh, 92px);
+    gap: 12px;
   }
-  .spread-image { aspect-ratio: 16 / 10; height: auto; }
-  .spread.layout-image-right .spread-body { order: 0; }
-  .spread.layout-image-right .spread-image { order: 0; }
-  .spread-stats { grid-template-columns: repeat(2, 1fr); }
-  .spread-num { font-size: 96px; top: 88px; }
-  .scope-line { top: 60px; height: 20px; }
+  /* Reset children's grid-area so they auto-place into single column rows */
+  .spread > .spread-eyebrow,
+  .spread > .spread-image,
+  .spread > .spread-body,
+  .spread > .spread-foot {
+    grid-area: auto;
+    grid-column: 1 / -1;
+    align-self: auto;
+  }
+  .spread-image {
+    height: auto;
+    aspect-ratio: 16 / 10;
+    min-height: 0;
+  }
+  .spread-num { font-size: 72px; top: 72px; right: 16px; opacity: 0.08; }
+  .scope-line { top: 60px; height: 18px; }
 
-  .price-rail { grid-template-columns: 1fr; }
-  .price-rail .vendors { justify-content: flex-start; }
+  /* Eyebrow — compact + allow wrapping */
+  .spread-eyebrow {
+    flex-wrap: wrap;
+    gap: 8px;
+    padding-bottom: 8px;
+    font-size: 10px;
+    letter-spacing: 0.14em;
+  }
 
-  .methodology-body { grid-template-columns: 1fr; gap: 24px; }
-  .methodology-steps { grid-template-columns: 1fr 1fr; }
+  /* Body — start-aligned (not center), tighter type */
+  .spread-body {
+    gap: 12px;
+    height: auto;
+    justify-content: flex-start;
+  }
+  .spread-title {
+    font-size: clamp(28px, 7.4vw, 44px);
+    line-height: 0.98;
+  }
+  .spread-lede {
+    font-size: 14px;
+    line-height: 1.4;
+    border-left: 0;
+    padding-left: 0;
+    max-width: none;
+  }
 
-  .awards-grid { grid-template-columns: 1fr 1fr; }
-  .year-stats { grid-template-columns: 1fr 1fr; }
+  /* Stats — 2-col compact */
+  .spread-stats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .spread-stats .s {
+    padding: 10px 12px 12px;
+    gap: 4px;
+  }
+  .spread-stats dt { font-size: 9px; letter-spacing: 0.14em; }
+  .spread-stats dd { font-size: 17px; }
+  .spread-stats dd small { font-size: 9px; }
+
+  /* Foot — tight */
+  .spread-foot {
+    padding-top: 10px;
+    font-size: 9px;
+    letter-spacing: 0.12em;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  /* Hide the affiliate price rail on mobile — frees ~80px of vertical room */
+  .price-rail { display: none; }
+
+  /* Image caption + image-tag — smaller */
+  .spread-image .image-caption {
+    font-size: 9px;
+    gap: 8px;
+    padding-bottom: 8px;
+  }
+  .spread-image .image-caption .idx { font-size: 14px; }
+  .spread-image .image-tag { font-size: 9px; padding: 4px 7px; top: 10px; left: 10px; }
+
+  /* ----- Cover spread ----- */
+  .spread.layout-cover .spread-title {
+    font-size: clamp(56px, 14vw, 96px);
+    line-height: 0.9;
+  }
+  .spread.layout-cover .spread-lede { font-size: 16px; }
+  .cover-seal {
+    width: 86px;
+    height: 86px;
+    top: 76px;
+    right: 14px;
+    transform: rotate(-6deg) scale(0.78);
+    transform-origin: top right;
+  }
+  .cover-seal .core .l1 { font-size: 9px; letter-spacing: 0.14em; }
+  .cover-seal .core .l2 { font-size: 20px; }
+  .cover-seal .core .l3 { font-size: 8px; letter-spacing: 0.14em; }
+  .cover-stamps { gap: 6px; margin-top: 14px; }
+  .cover-stamps .stamp { font-size: 9px; padding: 5px 10px; letter-spacing: 0.14em; }
+  .cover-meta-strip {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+    padding: 10px 0;
+    font-size: 9px;
+    letter-spacing: 0.14em;
+  }
+  .cover-meta-strip span + span { padding-left: 0; border-left: 0; }
+
+  /* ----- Methodology spread ----- */
+  .spread.layout-methodology {
+    grid-template-rows: auto auto auto auto auto;
+  }
+  .methodology-body {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  .methodology-steps {
+    grid-template-columns: 1fr;
+  }
+  .methodology-steps .step {
+    padding: 14px 16px 16px;
+    gap: 6px;
+  }
+  .methodology-steps .step .n { font-size: 28px; }
+  .methodology-steps .step h4 { font-size: 16px; }
+  .methodology-steps .step p { font-size: 12px; line-height: 1.4; }
+  .rubric h4 { font-size: 10px; }
+  .rubric-row {
+    grid-template-columns: 90px 1fr 32px;
+    gap: 10px;
+  }
+  .rubric-row .axis { font-size: 14px; }
+  .rubric-row .wt { font-size: 10px; }
+
+  /* ----- Awards spread ----- */
+  .spread.layout-awards {
+    grid-template-rows: auto auto auto auto auto;
+    gap: 12px;
+  }
+  .spread.layout-awards .spread-title { font-size: clamp(32px, 8vw, 48px); }
+  .spread.layout-awards .spread-lede { font-size: 13px; margin-top: 8px !important; }
+  .awards-grid {
+    grid-template-columns: 1fr;
+    gap: 6px;
+    min-height: 0;
+  }
+  .award {
+    flex-direction: row;
+    align-items: center;
+    gap: 14px;
+    padding: 12px 14px;
+    min-height: 0;
+  }
+  .award .seal { display: none; }
+  .award .cat {
+    flex: 0 0 90px;
+    padding-right: 0;
+    font-size: 9px;
+    letter-spacing: 0.14em;
+    line-height: 1.3;
+    margin: 0;
+  }
+  .award .crown {
+    flex: 0 0 auto;
+    font-size: 22px;
+    line-height: 1;
+  }
+  .award .name {
+    flex: 1;
+    font-size: 15px;
+    margin: 0;
+  }
+  .award .meta {
+    flex: 0 0 auto;
+    padding-top: 0;
+    border-top: 0;
+    gap: 4px;
+    flex-direction: column;
+    align-items: flex-end;
+  }
+  .award .meta .score { font-size: 18px; }
+  .award .meta > span:first-child { font-size: 8px; letter-spacing: 0.12em; }
+
+  .year-stats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .year-stats .ys {
+    padding: 10px 14px 12px;
+  }
+  .year-stats dt { font-size: 9px; }
+  .year-stats dd { font-size: 22px; }
 
   .studio-body { grid-template-columns: 1fr; }
   .studio-result { min-height: 240px; aspect-ratio: 4 / 3; }
+
+  /* Make vernier ruler more compact */
+  .vernier {
+    height: 48px;
+    padding: 0 14px;
+    gap: 12px;
+    grid-template-columns: auto 1fr auto;
+  }
+  .vernier .label { font-size: 13px; }
+  .vernier .position { font-size: 15px; }
+
+  /* Hide reel-hint on mobile (touch-drag is obvious) */
+  .reel-hint { display: none; }
+}
+
+@media (max-width: 480px) {
+  /* Tighter still on very small phones */
+  .spread { padding: 64px 14px 60px; gap: 10px; }
+  .spread-title { font-size: clamp(26px, 7.4vw, 38px); }
+  .spread-image { aspect-ratio: 4 / 3; }
+  .spread-stats .s { padding: 8px 10px 10px; }
+  .spread-stats dd { font-size: 16px; }
+  .award { padding: 10px 12px; gap: 10px; }
+  .award .cat { flex: 0 0 70px; font-size: 8px; }
+  .award .crown { font-size: 19px; }
+  .award .name { font-size: 14px; }
+  /* Hide the giant italic spread numeral on tight phones — it overlaps the title */
+  .spread-num { display: none; }
+}
+
+/* Methodology fits in 100vh on mobile only by hiding the rubric (lower-priority
+   info) and tightening the step cards. */
+@media (max-width: 900px) {
+  .spread.layout-methodology .methodology-body .rubric { display: none; }
+  .spread.layout-methodology .methodology-body {
+    grid-template-columns: 1fr;
+  }
+  .spread.layout-methodology .spread-title { font-size: clamp(28px, 7vw, 40px); }
+  .spread.layout-methodology .spread-lede { font-size: 13px; line-height: 1.4; }
+  .methodology-steps {
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+  }
+  .methodology-steps .step {
+    padding: 12px 14px 14px;
+    gap: 4px;
+  }
+  .methodology-steps .step .n { font-size: 22px; }
+  .methodology-steps .step .lbl { font-size: 9px; letter-spacing: 0.14em; }
+  .methodology-steps .step h4 { font-size: 14px; }
+  .methodology-steps .step p { font-size: 11px; line-height: 1.35; }
+}
+
+@media (max-width: 480px) {
+  /* On the smallest phones, stack the 4 steps in a single column with very tight padding */
+  .methodology-steps { grid-template-columns: 1fr; }
+  .methodology-steps .step { padding: 10px 12px 12px; }
+  .methodology-steps .step p { display: none; } /* keep just step number + title */
 }
 
 @media (prefers-reduced-motion: reduce) {
