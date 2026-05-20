@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><style>
+  html, body { margin: 0; padding: 0; }
+  body {
+    width: 1600px; height: 1200px; position: relative;
+    background:
+      radial-gradient(ellipse 100% 70% at 50% 80%, rgba(125,211,252,0.06) 0%, transparent 60%),
+      radial-gradient(ellipse 80% 60% at 80% 20%, rgba(255,200,160,0.04) 0%, transparent 60%),
+      linear-gradient(180deg, #050810 0%, #08090C 50%, #0C0D11 100%);
+    overflow: hidden;
+  }
+  /* Stars/specks in the sky */
+  body::before {
+    content: ""; position: absolute; inset: 0;
+    background-image:
+      radial-gradient(1px 1px at 12% 8%, rgba(237,234,224,0.4) 50%, transparent 50%),
+      radial-gradient(1px 1px at 23% 14%, rgba(237,234,224,0.3) 50%, transparent 50%),
+      radial-gradient(1px 1px at 78% 5%, rgba(237,234,224,0.45) 50%, transparent 50%),
+      radial-gradient(1px 1px at 88% 22%, rgba(237,234,224,0.3) 50%, transparent 50%),
+      radial-gradient(1px 1px at 65% 12%, rgba(237,234,224,0.35) 50%, transparent 50%),
+      radial-gradient(1px 1px at 32% 6%, rgba(237,234,224,0.4) 50%, transparent 50%),
+      radial-gradient(1px 1px at 92% 18%, rgba(237,234,224,0.3) 50%, transparent 50%),
+      radial-gradient(1px 1px at 8% 30%, rgba(237,234,224,0.25) 50%, transparent 50%),
+      radial-gradient(1px 1px at 49% 8%, rgba(237,234,224,0.4) 50%, transparent 50%);
+  }
+  /* Distant water horizon glow */
+  body::after {
+    content: ""; position: absolute;
+    left: 0; right: 0; bottom: 0;
+    height: 14%;
+    background: linear-gradient(180deg, transparent 0%, rgba(125,211,252,0.06) 50%, rgba(125,211,252,0.12) 100%);
+    pointer-events: none;
+  }
+  .stage {
+    position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+  }
+  svg { width: 100%; height: 100%; }
+  /* Soft grain */
+  .grain {
+    position: absolute; inset: 0; pointer-events: none;
+    opacity: 0.10; mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.85  0 0 0 0 0.92  0 0 0 0 1  0 0 0 0.6 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  }
+</style></head>
+<body>
+  <div class="stage">
+    <svg viewBox="0 0 800 1000" preserveAspectRatio="xMidYMid meet">
+      <defs>
+        <!-- Copper-patina (verdigris) gradient — Statue of Liberty is famously oxidized green -->
+        <linearGradient id="statue-grad" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%"  stop-color="#9FC3B8"/>
+          <stop offset="35%" stop-color="#6FA194"/>
+          <stop offset="70%" stop-color="#4A7A6E"/>
+          <stop offset="100%" stop-color="#2E5048"/>
+        </linearGradient>
+        <linearGradient id="pedestal-grad" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%"  stop-color="#4A4438"/>
+          <stop offset="60%" stop-color="#322E26"/>
+          <stop offset="100%" stop-color="#1F1C18"/>
+        </linearGradient>
+        <linearGradient id="rim-light" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%"  stop-color="rgba(255,210,150,0)"/>
+          <stop offset="80%" stop-color="rgba(255,210,150,0.15)"/>
+          <stop offset="100%" stop-color="rgba(255,210,150,0.35)"/>
+        </linearGradient>
+        <radialGradient id="flame-grad" cx="50%" cy="60%" r="60%">
+          <stop offset="0%"  stop-color="#FFE7A8"/>
+          <stop offset="40%" stop-color="#FFB85A"/>
+          <stop offset="100%" stop-color="rgba(255,140,40,0)"/>
+        </radialGradient>
+        <radialGradient id="flame-core" cx="50%" cy="55%" r="35%">
+          <stop offset="0%"  stop-color="#FFFCEC"/>
+          <stop offset="100%" stop-color="rgba(255,232,140,0)"/>
+        </radialGradient>
+      </defs>
+
+      <!-- Distant harbor / horizon stripe -->
+      <rect x="0" y="908" width="800" height="3" fill="rgba(125,211,252,0.15)"/>
+      <rect x="0" y="920" width="800" height="1" fill="rgba(125,211,252,0.08)"/>
+
+      <!-- Statue silhouette — single unified path filled with verdigris gradient -->
+      <g>
+        <!-- PEDESTAL (dark stone) -->
+        <!-- Fort Wood star base -->
+        <path d="M 270 920 L 270 880 L 530 880 L 530 920 Z" fill="url(#pedestal-grad)"/>
+        <!-- Lower tier -->
+        <path d="M 300 880 L 300 840 L 500 840 L 500 880 Z" fill="url(#pedestal-grad)"/>
+        <!-- Main pedestal -->
+        <path d="M 320 840 L 320 760 L 480 760 L 480 840 Z" fill="url(#pedestal-grad)"/>
+        <!-- Pedestal cap -->
+        <path d="M 326 760 L 320 740 L 480 740 L 474 760 Z" fill="url(#pedestal-grad)"/>
+
+        <!-- Subtle pedestal vertical lines for texture -->
+        <line x1="350" y1="840" x2="350" y2="760" stroke="rgba(237,234,224,0.04)" stroke-width="0.5"/>
+        <line x1="400" y1="840" x2="400" y2="760" stroke="rgba(237,234,224,0.04)" stroke-width="0.5"/>
+        <line x1="450" y1="840" x2="450" y2="760" stroke="rgba(237,234,224,0.04)" stroke-width="0.5"/>
+
+        <!-- STATUE BODY (copper/verdigris) -->
+        <path fill="url(#statue-grad)" d="
+          M 400 90
+          C 384 90 372 102 372 118 C 372 130 376 140 384 148
+          C 376 152 366 168 364 188 C 362 206 372 220 388 226
+          C 388 248 380 264 366 270
+          C 360 290 354 320 348 360 C 340 410 332 460 326 510 C 322 560 322 600 322 740
+          L 326 740 L 326 460
+          L 308 380 L 282 384 L 264 388 L 252 400 L 248 420 L 252 440 L 264 452 L 282 460 L 308 464 L 326 460
+          L 326 740 L 474 740 L 474 460
+          L 488 464 L 514 460 L 532 452 L 544 440 L 548 420 L 544 400 L 532 388 L 514 384 L 488 380 L 474 460
+          L 478 740
+          L 478 600 C 478 560 478 520 476 480 C 474 440 470 400 466 360
+          C 462 340 458 320 454 300
+          C 470 290 480 280 484 268
+          C 478 248 472 234 472 226
+          C 488 220 498 206 496 188
+          C 494 168 484 152 476 148
+          C 484 140 488 130 488 118 C 488 102 476 90 460 90
+          C 444 86 416 86 400 90 Z"/>
+
+        <!-- Right arm raised — torch -->
+        <path fill="url(#statue-grad)" d="
+          M 462 380 L 480 360 L 500 320 L 514 270 L 522 220 L 530 170 L 538 120 L 542 100
+          L 532 100 L 526 120 L 518 170 L 510 220 L 502 270 L 488 320 L 468 360 L 450 380 Z"/>
+
+        <!-- Left arm with tablet -->
+        <path fill="url(#statue-grad)" d="
+          M 326 410 L 312 450 L 296 510 L 290 560 L 296 590 L 314 600
+          L 320 600 L 320 580 L 308 570 L 296 560 L 300 510 L 314 460 L 332 420 Z"/>
+
+        <!-- Tablet -->
+        <rect x="248" y="486" width="56" height="72" fill="url(#statue-grad)" stroke="rgba(0,0,0,0.3)" stroke-width="0.5"/>
+        <g stroke="rgba(0,0,0,0.25)" stroke-width="0.4">
+          <line x1="260" y1="500" x2="294" y2="500"/>
+          <line x1="260" y1="510" x2="294" y2="510"/>
+          <line x1="260" y1="520" x2="294" y2="520"/>
+          <line x1="260" y1="530" x2="294" y2="530"/>
+          <line x1="260" y1="540" x2="294" y2="540"/>
+          <line x1="260" y1="550" x2="294" y2="550"/>
+        </g>
+
+        <!-- Torch base -->
+        <rect x="530" y="100" width="22" height="36" fill="url(#statue-grad)"/>
+
+        <!-- Torch flame -->
+        <ellipse cx="552" cy="80" rx="22" ry="30" fill="url(#flame-grad)"/>
+        <ellipse cx="552" cy="78" rx="10" ry="18" fill="url(#flame-core)"/>
+
+        <!-- Head -->
+        <ellipse cx="400" cy="180" rx="32" ry="40" fill="url(#statue-grad)"/>
+        <!-- Hair / face shadow detail -->
+        <path d="M 372 168 Q 400 156 428 168" stroke="rgba(0,0,0,0.2)" stroke-width="0.6" fill="none"/>
+
+        <!-- Crown (7 rays) — extends above the head -->
+        <g fill="url(#statue-grad)" stroke="rgba(0,0,0,0.25)" stroke-width="0.5">
+          <polygon points="397,140 400,76 403,140"/>
+          <polygon points="389,142 378,86 391,142"/>
+          <polygon points="411,142 422,86 409,142"/>
+          <polygon points="381,146 358,104 384,146"/>
+          <polygon points="419,146 442,104 416,146"/>
+          <polygon points="373,154 336,122 377,154"/>
+          <polygon points="427,154 464,122 423,154"/>
+        </g>
+        <path d="M 368 152 Q 400 162 432 152 L 432 158 Q 400 168 368 158 Z" fill="url(#statue-grad)"/>
+
+        <!-- Subtle rim light on the right side -->
+        <path d="M 400 90 C 460 86 488 102 488 118 C 488 130 484 140 476 148 C 484 152 494 168 496 188 C 498 206 488 220 472 226 C 472 234 478 248 484 268 C 480 280 470 290 454 300 C 458 320 462 340 466 360 C 470 400 474 440 476 480 C 478 520 478 560 478 600 L 478 740 L 474 740 L 474 460 L 478 460 L 474 460 L 474 420 L 474 380 Z"
+          fill="url(#rim-light)"/>
+
+        <!-- Torch flame outer glow -->
+        <ellipse cx="552" cy="80" rx="40" ry="50" fill="url(#flame-grad)" opacity="0.4"/>
+      </g>
+
+      <!-- Soft horizon glow -->
+      <rect x="0" y="906" width="800" height="14" fill="url(#flame-grad)" opacity="0.05"/>
+    </svg>
+  </div>
+
+  <div class="grain"></div>
+</body></html>

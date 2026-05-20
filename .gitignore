@@ -18,12 +18,12 @@ node_modules/
 screenshots/
 temporary screenshots/
 
-# Local debug + screenshot scripts (not part of the live site)
+# Local debug + screenshot + render scripts (not part of the live site)
 debug-*.mjs
 screenshot-*.mjs
 zoom-center.mjs
-verify-anchors.mjs
-verify-anything.mjs
+verify-*.mjs
+render-*.mjs
 screenshot.mjs
 
 # OS
