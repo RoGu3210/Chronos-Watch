@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+<html lang="en" class="reel-mode">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>TesterTech — The Lab Index №001</title>
+<meta name="description" content="An editorial lab index of the connected things you actually wear, hear, and trust. Six spreads. Scroll to pan the test bench." />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..600&family=Hanken+Grotesk:wght@300..700&family=JetBrains+Mono:wght@400..600&display=swap" rel="stylesheet" />
+
+<link rel="stylesheet" href="css/testertech.css" />
+</head>
+<body class="reel-mode">
+
+<div class="grain" aria-hidden="true"></div>
+
+<!-- HEADER -->
+<header class="tt-header">
+  <a href="TesterTech.html" class="tt-brand">
+    <span class="mark">◐</span>
+    <span><i>Tester</i>Tech</span>
+  </a>
+  <nav class="tt-nav" aria-label="Primary">
+    <a href="#" data-jump="0">Cover</a>
+    <a href="#" data-jump="1">Wrist</a>
+    <a href="#" data-jump="2">Vision</a>
+    <a href="#" data-jump="3">Voice</a>
+    <a href="#" data-jump="4">Network</a>
+    <a href="#" data-jump="5">Lab</a>
+    <a href="#" data-jump="6">How</a>
+    <a href="#" data-jump="7">Awards</a>
+    <a href="index.html">Chronos&nbsp;↗</a>
+  </nav>
+  <div class="tt-meta">
+    <span class="live" aria-hidden="true"></span>
+    <span class="hide-sm">Issue №001</span>
+  </div>
+</header>
+
+<!-- Top oscilloscope sweep — scroll-driven sine wave -->
+<div class="scope-line" aria-hidden="true">
+  <svg id="scope-svg" viewBox="0 0 1000 28" preserveAspectRatio="none">
+    <line class="base" x1="0" y1="14" x2="1000" y2="14"/>
+    <path id="scope-wave" class="wave" d="M0,14 L1000,14"/>
+    <circle id="scope-dot" class="dot" cx="0" cy="14" r="2.5"/>
+  </svg>
+</div>
+
+<!-- Parallax background test codes -->
+<div class="lab-codes" aria-hidden="true" id="lab-codes">
+  <span style="top: 18%; left: 6vw;"  data-rate="0.25">LB / 001 — ENDURANCE</span>
+  <span style="top: 32%; left: 78vw;" data-rate="0.4">CHR · 9.4 / 10</span>
+  <span style="top: 64%; left: 22vw;" data-rate="0.18">— 38.2°C — TX</span>
+  <span style="top: 78%; left: 88vw;" data-rate="0.3">SPL · 91 dB · LC3</span>
+  <span style="top: 12%; left: 56vw;" data-rate="0.15">№ 014 / 026</span>
+  <span style="top: 52%; left: 142vw;" data-rate="0.35">FOV 52° · MICRO-OLED</span>
+  <span style="top: 28%; left: 218vw;" data-rate="0.22">— 0.6s · 92% — VOC</span>
+  <span style="top: 70%; left: 268vw;" data-rate="0.4">ANC −28 dB · CHAMBER</span>
+  <span style="top: 22%; left: 330vw;" data-rate="0.3">DAY 11 / 14 — A · 01</span>
+  <span style="top: 60%; left: 412vw;" data-rate="0.18">LOG — 1,427 H · ISSUE 001</span>
+</div>
+
+<!-- REEL — horizontal spread strip -->
+<main class="reel" id="reel">
+  <div class="reel-track" id="reel-track">
+
+    <!-- 00 · Cover -->
+    <section class="spread layout-cover" data-spread="0" data-label="Cover">
+      <div class="spread-num">00</div>
+      <div class="spread-eyebrow">
+        <span class="left"><span class="tick"></span> MMXXVI · Issue №001</span>
+        <span class="right">Spread 00 — Cover</span>
+      </div>
+      <div class="cover-seal" aria-hidden="true">
+        <div class="core">
+          <span class="l1">Lab Verified</span>
+          <span class="l2">Nº 001</span>
+          <span class="l3">MMXXVI</span>
+        </div>
+      </div>
+      <div class="spread-body">
+        <h1 class="spread-title">Tester<em>Tech</em>.</h1>
+        <p class="spread-lede">The <em>lab index</em> of the connected things you actually wear, hear, &amp; trust. Eight spreads · one strip · scroll to pan.</p>
+        <div class="cover-stamps" aria-hidden="true">
+          <span class="stamp">Tested</span>
+          <span class="stamp">Verified</span>
+          <span class="stamp">Indexed</span>
+        </div>
+        <div class="cover-meta-strip">
+          <span>MMXXVI · Spring</span>
+          <span class="live"><span class="dot"></span>26 tested · 1,427h logged</span>
+          <span>Set in Fraunces &amp; Hanken</span>
+        </div>
+      </div>
+      <div class="spread-image" aria-hidden="true"></div>
+      <div class="spread-foot">
+        <span class="verdict">Turn the strip</span>
+        <a href="#" data-jump="1">Begin the index <span>↗</span></a>
+      </div>
+    </section>
+
+    <!-- 01 · Wrist -->
+    <section class="spread layout-image-left" data-spread="1" data-label="Wrist">
+      <div class="spread-num">01</div>
+      <div class="spread-eyebrow">
+        <span class="left"><span class="tick"></span> Section · Wrist</span>
+        <span class="right">Spread 01 / 08</span>
+      </div>
+      <div class="spread-image">
+        <div class="frame">
+          <span class="image-tag lime">★ Editor's Pick</span>
+          <img src="https://images.unsplash.com/photo-1551816230-ef5deaed4a26?w=1100&q=85&auto=format&fit=crop" alt="Smartwatch on a wrist" loading="eager" />
+        </div>
+        <div class="image-caption">
+          <span class="idx">№ 01</span>
+          <span class="desc">Chronos · Edition 01 — wrist study, lab №001</span>
+          <span class="date">MMXXVI · 03 · 14</span>
+        </div>
+      </div>
+      <div class="spread-body">
+        <h2 class="spread-title">Watches that don't <em>apologise</em>.</h2>
+        <p class="spread-lede">"A watch you can take apart in your head — the most honest smartwatch we've put on a wrist this year."</p>
+        <dl class="spread-stats">
+          <div class="s"><dt>Score</dt><dd>9.4<small>/10</small></dd></div>
+          <div class="s"><dt>Battery</dt><dd>18<small>d</small></dd></div>
+          <div class="s"><dt>Sensors</dt><dd>11</dd></div>
+          <div class="s"><dt>Tested</dt><dd>168<small>h</small></dd></div>
+        </dl>
+        <div class="price-rail">
+          <span class="price"><span class="from">From</span><span class="amt">$1,240</span><span class="cur">USD</span></span>
+          <div class="vendors">
+            <a class="vendor best" href="#"><span class="star">★</span> Atelier <span class="at">· $1,240</span></a>
+            <a class="vendor" href="#">Hodinkee <span class="at">· $1,280</span></a>
+            <a class="vendor" href="#">Mr Porter <span class="at">· $1,295</span></a>
+          </div>
+        </div>
+      </div>
+      <div class="spread-foot">
+        <span class="verdict">Verified · Chronos Edition 01</span>
+        <a href="index.html">Read the full test <span>↗</span></a>
+      </div>
+    </section>
+
+    <!-- 02 · Vision -->
+    <section class="spread layout-image-right" data-spread="2" data-label="Vision">
+      <div class="spread-num">02</div>
+      <div class="spread-eyebrow">
+        <span class="left"><span class="tick"></span> Section · Vision</span>
+        <span class="right">Spread 02 / 08</span>
+      </div>
+      <div class="spread-body">
+        <h2 class="spread-title">Screens on your <em>face</em>.</h2>
+        <p class="spread-lede">"The first pair we've stopped self-consciously taking off in cafés. Honest about being a display — and that's why it works."</p>
+        <dl class="spread-stats">
+          <div class="s"><dt>Score</dt><dd>8.9<small>/10</small></dd></div>
+          <div class="s"><dt>Weight</dt><dd>38<small>g</small></dd></div>
+          <div class="s"><dt>FOV</dt><dd>52<small>°</small></dd></div>
+          <div class="s"><dt>Battery</dt><dd>6<small>h</small></dd></div>
+        </dl>
+        <div class="price-rail">
+          <span class="price"><span class="from">From</span><span class="amt">$680</span><span class="cur">USD</span></span>
+          <div class="vendors">
+            <a class="vendor best" href="#"><span class="star">★</span> Halo <span class="at">· $680</span></a>
+            <a class="vendor" href="#">B&amp;H <span class="at">· $699</span></a>
+            <a class="vendor" href="#">Amazon <span class="at">· $710</span></a>
+          </div>
+        </div>
+      </div>
+      <div class="spread-image">
+        <div class="frame">
+          <span class="image-tag">Verified</span>
+          <img src="https://images.unsplash.com/photo-1577803645773-f96470509666?w=1100&q=85&auto=format&fit=crop" alt="Smart glasses prototype" loading="lazy" />
+          <div class="sig-reticle" aria-hidden="true">
+            <span class="corner tl"></span><span class="corner tr"></span>
+            <span class="corner bl"></span><span class="corner br"></span>
+            <span class="ring"></span>
+            <span class="core"></span>
+          </div>
+        </div>
+        <div class="image-caption">
+          <span class="idx">№ 02</span>
+          <span class="desc">Halo Frame · G3 — micro-OLED study</span>
+          <span class="date">MMXXVI · 04 · 02</span>
+        </div>
+      </div>
+      <div class="spread-foot">
+        <span class="verdict">Halo Frame · G3</span>
+        <a href="#">Read the full test <span>↗</span></a>
+      </div>
+    </section>
+
+    <!-- 03 · Voice -->
+    <section class="spread layout-image-left" data-spread="3" data-label="Voice">
+      <div class="spread-num">03</div>
+      <div class="spread-eyebrow">
+        <span class="left"><span class="tick"></span> Section · Voice</span>
+        <span class="right">Spread 03 / 08</span>
+      </div>
+      <div class="spread-image">
+        <div class="frame">
+          <span class="image-tag lime">★ Pick</span>
+          <img src="https://images.unsplash.com/photo-1543512214-318c7553f230?w=1100&q=85&auto=format&fit=crop" alt="Smart speaker assistant" loading="lazy" />
+        </div>
+        <div class="image-caption">
+          <span class="idx">№ 03</span>
+          <span class="desc">Echo · Crescendo — room IR sweep</span>
+          <span class="date">MMXXVI · 04 · 19</span>
+        </div>
+      </div>
+      <div class="spread-body">
+        <h2 class="spread-title">What you say to a <em>room</em>.</h2>
+        <p class="spread-lede">"A speaker that finally treats the room as part of the instrument — Echo Crescendo leads a quiet field."</p>
+        <dl class="spread-stats">
+          <div class="s"><dt>Score</dt><dd>9.0<small>/10</small></dd></div>
+          <div class="s"><dt>Latency</dt><dd>0.6<small>s</small></dd></div>
+          <div class="s"><dt>SPL peak</dt><dd>91<small>dB</small></dd></div>
+          <div class="s"><dt>Mics</dt><dd>3</dd></div>
+        </dl>
+        <div class="price-rail">
+          <span class="price"><span class="from">From</span><span class="amt">$249</span><span class="cur">USD</span></span>
+          <div class="vendors">
+            <a class="vendor best" href="#"><span class="star">★</span> Echo <span class="at">· $249</span></a>
+            <a class="vendor" href="#">Best Buy <span class="at">· $259</span></a>
+            <a class="vendor" href="#">Crutchfield <span class="at">· $269</span></a>
+          </div>
+        </div>
+      </div>
+      <div class="spread-foot">
+        <span class="verdict">Echo · Crescendo</span>
+        <a href="#">Read the full test <span>↗</span></a>
+      </div>
+    </section>
+
+    <!-- 04 · Network -->
+    <section class="spread layout-image-right" data-spread="4" data-label="Network">
+      <div class="spread-num">04</div>
+      <div class="spread-eyebrow">
+        <span class="left"><span class="tick"></span> Section · Network</span>
+        <span class="right">Spread 04 / 08</span>
+      </div>
+      <div class="spread-body">
+        <h2 class="spread-title">The <em>quieter</em> half of the home.</h2>
+        <p class="spread-lede">"Tessera Earbuds top the mosaic — six connected things, two we'd actually live with."</p>
+        <dl class="spread-stats">
+          <div class="s"><dt>Tested</dt><dd>06</dd></div>
+          <div class="s"><dt>Top score</dt><dd>9.2</dd></div>
+          <div class="s"><dt>ANC depth</dt><dd>-28<small>dB</small></dd></div>
+          <div class="s"><dt>Returned</dt><dd>02</dd></div>
+        </dl>
+        <div class="price-rail">
+          <span class="price"><span class="from">Top pick</span><span class="amt">$319</span><span class="cur">USD</span></span>
+          <div class="vendors">
+            <a class="vendor best" href="#"><span class="star">★</span> Tessera <span class="at">· $319</span></a>
+            <a class="vendor" href="#">Apple <span class="at">· $329</span></a>
+            <a class="vendor" href="#">Costco <span class="at">· $339</span></a>
+          </div>
+        </div>
+      </div>
+      <div class="spread-image">
+        <div class="frame">
+          <span class="image-tag">Indexed</span>
+          <img src="https://images.unsplash.com/photo-1572569511254-d8f925fe2cbb?w=1100&q=85&auto=format&fit=crop" alt="Wireless earbuds in case" loading="lazy" />
+        </div>
+        <div class="image-caption">
+          <span class="idx">№ 04</span>
+          <span class="desc">Tessera · ANC chamber — top of mosaic</span>
+          <span class="date">MMXXVI · 05 · 07</span>
+        </div>
+      </div>
+      <div class="spread-foot">
+        <span class="verdict">Tessera · ANC</span>
+        <a href="#">Read the mosaic <span>↗</span></a>
+      </div>
+    </section>
+
+    <!-- 05 · Lab -->
+    <section class="spread layout-image-left" data-spread="5" data-label="Lab">
+      <div class="spread-num">05</div>
+      <div class="spread-eyebrow">
+        <span class="left"><span class="tick"></span> Section · The Lab Floor</span>
+        <span class="right">Spread 05 / 08</span>
+      </div>
+      <div class="spread-image">
+        <div class="frame">
+          <span class="image-tag lime">Live</span>
+          <img src="https://images.unsplash.com/photo-1473968512647-3e447244af8f?w=1100&q=85&auto=format&fit=crop" alt="Drone in the lab" loading="lazy" />
+        </div>
+        <div class="image-caption">
+          <span class="idx">№ 05</span>
+          <span class="desc">Station A · 01 — endurance loop</span>
+          <span class="date">MMXXVI · Day 11 / 14</span>
+        </div>
+      </div>
+      <div class="spread-body">
+        <h2 class="spread-title">What we're testing <em>right now</em>.</h2>
+        <p class="spread-lede">"Four stations, 1,427 hours logged this month. Halo Frame G3 on Day 11 of 14 — heat soak within spec."</p>
+        <dl class="spread-stats">
+          <div class="s"><dt>Stations</dt><dd>04</dd></div>
+          <div class="s"><dt>Hours</dt><dd>1,427</dd></div>
+          <div class="s"><dt>UTC now</dt><dd><span id="lab-clock-val">—</span></dd></div>
+          <div class="s"><dt>Status</dt><dd><em>Active</em></dd></div>
+        </dl>
+      </div>
+      <div class="spread-foot">
+        <span class="verdict">Live · Lab №001</span>
+        <a href="#">See the floor <span>↗</span></a>
+      </div>
+    </section>
+
+    <!-- 06 · Methodology -->
+    <section class="spread layout-methodology" data-spread="6" data-label="Methodology">
+      <div class="spread-num">06</div>
+      <div class="spread-eyebrow">
+        <span class="left"><span class="tick"></span> Section · How We Test</span>
+        <span class="right">Spread 06 / 08</span>
+      </div>
+      <div class="methodology-body">
+        <div>
+          <h2 class="spread-title">How we <em>test</em>.</h2>
+          <p class="spread-lede">"Every device sits on a bench for at least fourteen days before we file a verdict. No press loaners reviewed on a weekend. No exceptions."</p>
+        </div>
+        <div class="rubric">
+          <h4>Scoring rubric · weighted</h4>
+          <div class="rubric-row"><span class="axis">Design</span><div class="bar"><span class="fill" style="--w: 18%;"></span></div><span class="wt">18%</span></div>
+          <div class="rubric-row"><span class="axis">Daily use</span><div class="bar"><span class="fill" style="--w: 28%;"></span></div><span class="wt">28%</span></div>
+          <div class="rubric-row"><span class="axis"><em>Software</em></span><div class="bar"><span class="fill" style="--w: 22%;"></span></div><span class="wt">22%</span></div>
+          <div class="rubric-row"><span class="axis">Battery</span><div class="bar"><span class="fill" style="--w: 14%;"></span></div><span class="wt">14%</span></div>
+          <div class="rubric-row"><span class="axis">Repairability</span><div class="bar"><span class="fill" style="--w: 10%;"></span></div><span class="wt">10%</span></div>
+          <div class="rubric-row"><span class="axis"><em>Value</em></span><div class="bar"><span class="fill" style="--w: 8%;"></span></div><span class="wt">8%</span></div>
+        </div>
+      </div>
+      <div class="methodology-steps">
+        <div class="step">
+          <span class="n">01</span>
+          <span class="lbl">Day 01–03</span>
+          <h4>Unbox &amp; <em>baseline</em></h4>
+          <p>First impressions, weight, materials, packaging. Initial sensor calibration. Zero opinions filed.</p>
+        </div>
+        <div class="step">
+          <span class="n">02</span>
+          <span class="lbl">Day 04–14</span>
+          <h4>Daily wear</h4>
+          <p>Lived with in the conditions a buyer would. Café, gym, sleep, commute. Notes taken every evening.</p>
+        </div>
+        <div class="step">
+          <span class="n">03</span>
+          <span class="lbl">Day 14–18</span>
+          <h4>Stress &amp; <em>chamber</em></h4>
+          <p>Drop, water, heat, EMI, audio chamber, accuracy benches. Numbers logged against spec sheets.</p>
+        </div>
+        <div class="step">
+          <span class="n">04</span>
+          <span class="lbl">Day 18–21</span>
+          <h4>Verdict</h4>
+          <p>Cross-checked against rubric. Reviewed by a second editor. Verdict drafted, scored, indexed.</p>
+        </div>
+      </div>
+      <div class="spread-foot">
+        <span class="verdict">21-day test cycle · Issue №001</span>
+        <a href="#">Read the methodology <span>↗</span></a>
+      </div>
+    </section>
+
+    <!-- 07 · Awards -->
+    <section class="spread layout-awards" data-spread="7" data-label="Awards">
+      <div class="spread-num">07</div>
+      <div class="spread-eyebrow">
+        <span class="left"><span class="tick"></span> Section · Best of MMXXVI</span>
+        <span class="right">Spread 07 / 08</span>
+      </div>
+      <div>
+        <h2 class="spread-title">Best of <em>MMXXVI</em>.</h2>
+        <p class="spread-lede" style="margin-top: 14px;">Four winners, one Editor's Pick. Awarded annually after every device in its category has cleared the 21-day cycle.</p>
+      </div>
+      <div class="awards-grid">
+        <article class="award">
+          <span class="seal" aria-hidden="true">★</span>
+          <span class="cat">Smartwatch of the Year</span>
+          <span class="crown">№ 01</span>
+          <span class="name">Chronos <em>Edition 01</em></span>
+          <div class="meta">
+            <span>Editor's Pick</span>
+            <span class="score">9.4<small>/10</small></span>
+          </div>
+        </article>
+        <article class="award">
+          <span class="seal" aria-hidden="true">★</span>
+          <span class="cat">Smart Glasses</span>
+          <span class="crown">№ 02</span>
+          <span class="name">Halo <em>Frame G3</em></span>
+          <div class="meta">
+            <span>Verified</span>
+            <span class="score">8.9<small>/10</small></span>
+          </div>
+        </article>
+        <article class="award">
+          <span class="seal" aria-hidden="true">★</span>
+          <span class="cat">Voice Assistant</span>
+          <span class="crown">№ 03</span>
+          <span class="name">Echo <em>Crescendo</em></span>
+          <div class="meta">
+            <span>Verified</span>
+            <span class="score">9.0<small>/10</small></span>
+          </div>
+        </article>
+        <article class="award">
+          <span class="seal" aria-hidden="true">★</span>
+          <span class="cat">Earbuds &amp; Audio</span>
+          <span class="crown">№ 04</span>
+          <span class="name">Tessera <em>ANC</em></span>
+          <div class="meta">
+            <span>Top of Mosaic</span>
+            <span class="score">9.2<small>/10</small></span>
+          </div>
+        </article>
+      </div>
+      <dl class="year-stats">
+        <div class="ys"><dt>Devices tested</dt><dd>26</dd></div>
+        <div class="ys"><dt>Hours logged</dt><dd>1,427</dd></div>
+        <div class="ys"><dt>Returned to sender</dt><dd>12</dd></div>
+        <div class="ys"><dt>Perfect scores</dt><dd><span class="em">03</span></dd></div>
+      </dl>
+      <div class="spread-foot">
+        <span class="verdict">The TesterTech List · MMXXVI</span>
+        <a href="#">See past years <span>↗</span></a>
+      </div>
+    </section>
+
+  </div><!-- /.reel-track -->
+</main>
+
+<!-- Scroll hint -->
+<div class="reel-hint" id="reel-hint" aria-hidden="true">
+  <span>Scroll · Drag · Arrows</span>
+  <span class="arrow">→</span>
+</div>
+
+<!-- Bottom vernier ruler / progress -->
+<footer class="vernier" id="vernier">
+  <div class="left">
+    <span class="pulse"></span>
+    <span class="label" id="vernier-label">Cover</span>
+  </div>
+  <div class="vernier-track" id="vernier-track">
+    <span class="axis"></span>
+    <div class="ticks">
+      <span class="t major"></span>
+      <span class="t"></span>
+      <span class="t"></span>
+      <span class="t"></span>
+      <span class="t"></span>
+      <span class="t"></span>
+      <span class="t"></span>
+      <span class="t"></span>
+      <span class="t"></span>
+      <span class="t"></span>
+      <span class="t major"></span>
+      <span class="t"></span>
+      <span class="t"></span>
+      <span class="t"></span>
+      <span class="t"></span>
+      <span class="t"></span>
+      <span class="t"></span>
+      <span class="t"></span>
+      <span class="t"></span>
+      <span class="t"></span>
+      <span class="t major"></span>
+      <span class="t"></span>
+      <span class="t"></span>
+      <span class="t"></span>
+      <span class="t"></span>
+      <span class="t"></span>
+      <span class="t"></span>
+      <span class="t"></span>
+      <span class="t"></span>
+      <span class="t"></span>
+      <span class="t major"></span>
+      <span class="t"></span>
+      <span class="t"></span>
+      <span class="t"></span>
+      <span class="t"></span>
+      <span class="t"></span>
+      <span class="t"></span>
+      <span class="t"></span>
+      <span class="t"></span>
+      <span class="t"></span>
+      <span class="t major"></span>
+      <span class="t"></span>
+      <span class="t"></span>
+      <span class="t"></span>
+      <span class="t"></span>
+      <span class="t"></span>
+      <span class="t"></span>
+      <span class="t"></span>
+      <span class="t"></span>
+      <span class="t"></span>
+      <span class="t major"></span>
+    </div>
+    <span class="needle" id="vernier-needle"></span>
+  </div>
+  <div class="right">
+    <span class="position"><span id="vernier-pos">01</span> <small>/ 08</small></span>
+  </div>
+</footer>
+
+<!-- Custom crosshair cursor (fine-pointer only) -->
+<div class="crosshair" id="crosshair" aria-hidden="true">
+  <span class="ring"></span>
+  <span class="dot"></span>
+</div>
+
+<script>
+  // ---- Custom crosshair cursor ----
+  (function () {
+    if (!matchMedia('(pointer: fine)').matches) return;
+    const el = document.getElementById('crosshair');
+    if (!el) return;
+    let tx = window.innerWidth / 2, ty = window.innerHeight / 2;
+    let cx = tx, cy = ty;
+    let rafId = null;
+
+    function update() {
+      cx += (tx - cx) * 0.35;
+      cy += (ty - cy) * 0.35;
+      el.style.transform = 'translate3d(' + cx + 'px,' + cy + 'px,0)';
+      if (Math.abs(tx - cx) > 0.4 || Math.abs(ty - cy) > 0.4) {
+        rafId = requestAnimationFrame(update);
+      } else { rafId = null; }
+    }
+
+    window.addEventListener('mousemove', e => {
+      tx = e.clientX; ty = e.clientY;
+      if (rafId == null) rafId = requestAnimationFrame(update);
+    }, { passive: true });
+
+    window.addEventListener('mouseleave', () => el.classList.add('is-hidden'));
+    window.addEventListener('mouseenter', () => el.classList.remove('is-hidden'));
+    window.addEventListener('mousedown', () => el.classList.add('is-down'));
+    window.addEventListener('mouseup',   () => el.classList.remove('is-down'));
+
+    // Hover detection on interactive elements
+    const hoverSel = 'a, button, .chip, textarea, input, [data-jump]';
+    document.addEventListener('mouseover', e => {
+      if (e.target.closest && e.target.closest(hoverSel)) el.classList.add('is-hover');
+    });
+    document.addEventListener('mouseout', e => {
+      if (e.target.closest && e.target.closest(hoverSel)) el.classList.remove('is-hover');
+    });
+  })();
+
+  // Lab live UTC clock
+  (function () {
+    const el = document.getElementById('lab-clock-val');
+    if (!el) return;
+    const pad = n => String(n).padStart(2, '0');
+    function tick() {
+      const d = new Date();
+      el.textContent = pad(d.getUTCHours()) + ':' + pad(d.getUTCMinutes()) + ':' + pad(d.getUTCSeconds());
+    }
+    tick();
+    setInterval(tick, 1000);
+  })();
+
+  // ---- REEL: horizontal spread carousel ----
+  (function () {
+    const track = document.getElementById('reel-track');
+    const spreads = Array.from(document.querySelectorAll('.spread'));
+    const COUNT = spreads.length;
+    const needle = document.getElementById('vernier-needle');
+    const vLabel = document.getElementById('vernier-label');
+    const vPos   = document.getElementById('vernier-pos');
+    const hint   = document.getElementById('reel-hint');
+    const scopeWave = document.getElementById('scope-wave');
+    const scopeDot  = document.getElementById('scope-dot');
+    const codes = Array.from(document.querySelectorAll('#lab-codes span'));
+    // One image element per spread (cover has no image — null entries are skipped)
+    const spreadImgs = spreads.map(s => s.querySelector('.spread-image .frame img'));
+    // Per-image parallax tuning. Base scale comes from each image's CSS variable
+    // --img-base-scale (default 1.5; speaker spread uses 1.1, etc.). The overflow
+    // buffer per side = (baseScale - 1) / 2 × frame_width — we never let the parallax
+    // translate exceed that, so the frame stays fully covered for every image.
+    const IMG_PARALLAX   = 0.09;  // desired image horizontal drift = -ratio * vw * this
+    const IMG_ZOOM_MAX   = 0.05;  // peak extra scale at active position
+    const IMG_TILT_MAX   = 0.8;   // peak rotate (deg)
+    const IMG_BOB_MAX    = 6;     // peak vertical bob (px)
+    const RATIO_CLAMP    = 1.0;   // never let ratio exceed ±1 (one viewport away)
+
+    // Read per-image base scale + frame width to compute a safe parallax cap per spread
+    let imgBaseScales = [];
+    let imgMaxShifts = [];
+    let imgMaxRots   = [];
+    function measureImages() {
+      imgBaseScales = spreadImgs.map(img => {
+        if (!img) return 1.5;
+        const v = parseFloat(getComputedStyle(img).getPropertyValue('--img-base-scale'));
+        return isNaN(v) ? 1.5 : v;
+      });
+      imgMaxShifts = spreadImgs.map((img, i) => {
+        if (!img) return 0;
+        const frame = img.closest('.frame');
+        const fw = frame ? frame.offsetWidth : 0;
+        // Overflow per side = (baseScale - 1) / 2 × frame_width.
+        // Reserve a bit (×0.92) for rotation+breath overshoot.
+        return Math.max(0, (imgBaseScales[i] - 1) * 0.5 * fw * 0.92);
+      });
+      imgMaxRots = spreadImgs.map((img, i) => {
+        // Smaller base scale → less rotation safety; cap tilt accordingly
+        const s = imgBaseScales[i];
+        if (s < 1.15) return 0.2;
+        if (s < 1.35) return 0.5;
+        return IMG_TILT_MAX;
+      });
+    }
+    measureImages();
+
+    let W = window.innerWidth;
+    let maxPan = (COUNT - 1) * W;   // positive number; actual pan goes 0 → -maxPan
+
+    let current = 0;          // current pan (px, negative as we go right)
+    let target  = 0;
+    let snapTimer = null;
+    let rafId = null;
+    let interacted = false;
+
+    function clamp(v, min, max) { return Math.max(min, Math.min(max, v)); }
+
+    function applyTransform() {
+      track.style.transform = 'translate3d(' + current + 'px, 0, 0)';
+
+      // Progress 0..1
+      const prog = COUNT > 1 ? clamp(-current / maxPan, 0, 1) : 0;
+
+      // Vernier needle
+      if (needle) needle.style.left = (prog * 100) + '%';
+
+      // Active spread index — also drive .is-on class so saturation transitions kick in
+      const idx = Math.round(prog * (COUNT - 1));
+      if (spreads[idx]) {
+        if (vLabel) vLabel.textContent = spreads[idx].dataset.label;
+        if (vPos)   vPos.textContent   = String(idx).padStart(2, '0');
+      }
+      for (let i = 0; i < spreads.length; i++) {
+        spreads[i].classList.toggle('is-on', i === idx);
+      }
+
+      // ---- Image parallax + breathing zoom ----
+      // For each spread, compute its left-edge position relative to the viewport:
+      //   offset = i * vw + current
+      //   = 0 when the spread is in the active (leftmost visible) slot
+      //   > 0 when the spread is to the right (incoming)
+      //   < 0 when the spread is to the left (outgoing)
+      // The image inside drifts in the OPPOSITE direction at ~10% rate (parallax),
+      // and gains scale/tilt as it approaches the active position.
+      for (let i = 0; i < spreadImgs.length; i++) {
+        const img = spreadImgs[i];
+        if (!img) continue;
+        const offset = i * W + current;
+        const ratio = Math.max(-RATIO_CLAMP, Math.min(RATIO_CLAMP, offset / W));
+        const absR  = Math.abs(ratio);
+        // Desired parallax shift, then clamped to this image's safe overflow budget
+        const txDesired = -ratio * W * IMG_PARALLAX;
+        const cap = imgMaxShifts[i];
+        const tx = Math.max(-cap, Math.min(cap, txDesired));
+        // Vertical bob — peaks at ratio ±0.5, zero at active and at ±1vw
+        const ty = Math.sin(ratio * Math.PI) * IMG_BOB_MAX;
+        const proximity = Math.max(0, 1 - absR);                 // 1 at active, 0 at ±1vw
+        const sc = imgBaseScales[i] + proximity * IMG_ZOOM_MAX;  // per-spread base + breathing
+        const rot = ratio * imgMaxRots[i];                       // per-spread tilt cap
+        img.style.transform =
+          'translate3d(' + tx.toFixed(1) + 'px, ' + ty.toFixed(1) + 'px, 0) ' +
+          'scale(' + sc.toFixed(3) + ') ' +
+          'rotate(' + rot.toFixed(2) + 'deg)';
+      }
+
+      // Scope sweep — sine wave that shifts with scroll progress
+      if (scopeWave) {
+        const phase = prog * Math.PI * 8;
+        const amp = 8;
+        let d = 'M0,14';
+        for (let x = 0; x <= 1000; x += 10) {
+          const t = (x / 1000) * Math.PI * 4 + phase;
+          const localProg = prog * 1000;
+          // Strong wave near the current position, flat elsewhere
+          const distance = Math.abs(x - localProg);
+          const intensity = Math.max(0, 1 - distance / 220);
+          const y = 14 + Math.sin(t) * amp * intensity;
+          d += ' L' + x + ',' + y.toFixed(2);
+        }
+        scopeWave.setAttribute('d', d);
+        scopeDot.setAttribute('cx', String(prog * 1000));
+      }
+
+      // Parallax test codes — drift at individual rates relative to pan
+      codes.forEach(el => {
+        const rate = parseFloat(el.dataset.rate) || 0.3;
+        el.style.setProperty('--code-pan', (current * rate) + 'px');
+      });
+    }
+
+    function animate() {
+      const delta = target - current;
+      if (Math.abs(delta) < 0.4) {
+        current = target;
+        applyTransform();
+        rafId = null;
+        return;
+      }
+      current += delta * 0.16;
+      applyTransform();
+      rafId = requestAnimationFrame(animate);
+    }
+    function kick() { if (rafId == null) rafId = requestAnimationFrame(animate); }
+
+    function scheduleSnap() {
+      if (snapTimer) clearTimeout(snapTimer);
+      snapTimer = setTimeout(() => {
+        // Snap to nearest spread (multiple of W)
+        const snapped = Math.round(target / W) * W;
+        target = clamp(snapped, -maxPan, 0);
+        kick();
+      }, 180);
+    }
+
+    function noteInteraction() {
+      if (!interacted) {
+        interacted = true;
+        hint && hint.classList.add('is-faded');
+      }
+    }
+
+    function onResize() {
+      W = window.innerWidth;
+      maxPan = (COUNT - 1) * W;
+      // Re-measure frame widths so the per-spread parallax cap stays accurate
+      measureImages();
+      // Snap to nearest spread on resize
+      target = clamp(Math.round(target / W) * W, -maxPan, 0);
+      kick();
+    }
+    window.addEventListener('resize', onResize);
+
+    // Wheel — vertical OR horizontal scroll pans horizontally
+    window.addEventListener('wheel', e => {
+      e.preventDefault();
+      noteInteraction();
+      const dx = Math.abs(e.deltaY) > Math.abs(e.deltaX) ? e.deltaY : e.deltaX;
+      target = clamp(target - dx * 1.2, -maxPan, 0);
+      kick();
+      scheduleSnap();
+    }, { passive: false });
+
+    // Touch — drag horizontally
+    let tx = null, ty = null;
+    window.addEventListener('touchstart', e => {
+      tx = e.touches[0].clientX;
+      ty = e.touches[0].clientY;
+    }, { passive: true });
+    window.addEventListener('touchmove', e => {
+      if (tx == null) return;
+      noteInteraction();
+      const dx = e.touches[0].clientX - tx;
+      const dy = e.touches[0].clientY - ty;
+      // Either horizontal or vertical drag moves the strip; horizontal is primary
+      target = clamp(target + dx + (-dy * 0.6), -maxPan, 0);
+      tx = e.touches[0].clientX;
+      ty = e.touches[0].clientY;
+      kick();
+    }, { passive: true });
+    window.addEventListener('touchend', () => {
+      tx = ty = null;
+      scheduleSnap();
+    });
+
+    // Keyboard
+    window.addEventListener('keydown', e => {
+      const k = e.key;
+      if (k === 'ArrowRight' || k === 'ArrowDown' || k === ' ' || k === 'PageDown') {
+        e.preventDefault();
+        noteInteraction();
+        target = clamp(target - W, -maxPan, 0);
+        kick();
+      } else if (k === 'ArrowLeft' || k === 'ArrowUp' || k === 'PageUp') {
+        e.preventDefault();
+        noteInteraction();
+        target = clamp(target + W, -maxPan, 0);
+        kick();
+      } else if (k === 'Home') {
+        e.preventDefault();
+        target = 0;
+        kick();
+      } else if (k === 'End') {
+        e.preventDefault();
+        target = -maxPan;
+        kick();
+      }
+    });
+
+    // Jump links
+    document.querySelectorAll('[data-jump]').forEach(a => {
+      a.addEventListener('click', e => {
+        e.preventDefault();
+        noteInteraction();
+        const idx = parseInt(a.dataset.jump, 10);
+        target = clamp(-idx * W, -maxPan, 0);
+        kick();
+      });
+    });
+
+    // Init
+    applyTransform();
+  })();
+
+</script>
+
+</body>
+</html>

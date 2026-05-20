@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Sights — La Sagrada Familia</title>
+<meta name="description" content="An architectural sights series. Scroll to watch a landmark draw itself from blueprint to silhouette. Starting with La Sagrada Familia." />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..600&family=Hanken+Grotesk:wght@300..700&family=JetBrains+Mono:wght@400..600&display=swap" rel="stylesheet" />
+
+<link rel="stylesheet" href="css/sights.css" />
+</head>
+<body>
+
+<div class="grain" aria-hidden="true"></div>
+
+<!-- Top scroll-progress bar (§8 polish) -->
+<div class="scroll-progress" id="scroll-progress" aria-hidden="true"></div>
+
+<!-- Loading screen — shown while WebP frames batch-preload (§4) -->
+<div class="loading" id="loading" aria-hidden="true">
+  <div class="loading-inner">
+    <span class="loading-eyebrow"><span class="tick"></span> Sights · Loading frames</span>
+    <h2 class="loading-title">La <em>Sagrada</em> Família<span class="dot">.</span></h2>
+    <div class="loading-track"><span class="loading-fill" id="loading-bar"></span></div>
+    <div class="loading-meta-row">
+      <span id="loading-meta">0 / 0 frames</span>
+      <span id="loading-pct">0%</span>
+    </div>
+  </div>
+</div>
+
+<!-- HEADER -->
+<header class="sights-header" id="sights-header">
+  <a href="Sights.html" class="sights-brand">
+    <span class="mark">◇</span>
+    <span><i>Sights</i></span>
+  </a>
+  <nav class="sights-nav" aria-label="Primary">
+    <a href="#hero">Landmark</a>
+    <a href="#stage">Build</a>
+    <a href="#facts">Facts</a>
+    <a href="#workflow">Method</a>
+    <a href="index.html">Chronos&nbsp;↗</a>
+    <a href="TesterTech.html">TesterTech&nbsp;↗</a>
+  </nav>
+  <div class="sights-meta">
+    <span class="dot" aria-hidden="true"></span>
+    <span>№ 01 ·</span>
+    <span class="hide-sm">Barcelona</span>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero" id="hero">
+  <div class="wrap">
+    <span class="hero-eyebrow"><span class="tick"></span> Sight Nº 01 · MMXXVI</span>
+
+    <h1 class="hero-title">
+      La <em>Sagrada</em><br>
+      Família<span class="dot">.</span>
+    </h1>
+
+    <p class="hero-sub">
+      A basilica that has been <em>under construction</em> since 1882 — Gaudí's improbable forest of spires above Barcelona's Eixample.
+    </p>
+
+    <div class="hero-meta-strip">
+      <span>Architect <strong>Antoni&nbsp;Gaudí</strong></span>
+      <span>Begun <strong>1882</strong></span>
+      <span>Spires <strong>18</strong></span>
+      <span>Style <strong><em>Gothic / Art Nouveau</em></strong></span>
+    </div>
+  </div>
+
+  <div class="hero-scroll-cue" aria-hidden="true">
+    <span>Scroll to build</span>
+    <span class="line"></span>
+  </div>
+</section>
+
+<!-- FRAME STAGE — sticky animation player -->
+<section class="stage-shell" id="stage">
+  <span class="corner tl" aria-hidden="true"></span>
+  <span class="corner tr" aria-hidden="true"></span>
+  <span class="corner bl" aria-hidden="true"></span>
+  <span class="corner br" aria-hidden="true"></span>
+
+  <div class="stage">
+    <!-- Canvas (used when extracted frames are present in frames/sights/) -->
+    <div class="stage-canvas" id="stage-canvas" hidden>
+      <canvas id="frame-canvas"></canvas>
+    </div>
+
+    <!-- SVG placeholder — scroll-drawn blueprint of La Sagrada Familia.
+         Replaced by canvas the moment extracted frames exist in frames/sights/. -->
+    <div class="stage-svg" id="stage-svg">
+      <svg viewBox="0 0 800 600" preserveAspectRatio="xMidYMid meet" aria-label="La Sagrada Familia blueprint">
+
+        <!-- Grid registration marks -->
+        <g class="grid-mark" aria-hidden="true">
+          <line x1="40"  y1="540" x2="760" y2="540"/>
+          <line x1="400" y1="40"  x2="400" y2="540"/>
+          <line x1="120" y1="40"  x2="120" y2="540"/>
+          <line x1="680" y1="40"  x2="680" y2="540"/>
+        </g>
+
+        <!-- The drawn building, in one path group so we can stroke-dasharray it.
+             Approximate La Sagrada Familia: tall central tower, flanked by tapered
+             spires of varying heights, set on a ribbed base. Stylized, not literal. -->
+        <g class="silhouette">
+          <!-- Solid silhouette revealed by JS via --solid-op -->
+          <path d="
+            M 80 540
+            L 80 480 L 120 470 L 160 460 L 200 450
+            L 200 280 L 215 270 L 230 250 L 245 200 L 255 130 L 245 90 L 235 130 L 245 200 L 260 250 L 275 270 L 290 280
+            L 290 220 L 305 210 L 315 180 L 325 130 L 340 80 L 350 50 L 360 80 L 370 130 L 380 180 L 390 210 L 405 220
+            L 405 200 L 420 190 L 430 160 L 440 120 L 450 70 L 460 30 L 470 70 L 480 120 L 490 160 L 500 190 L 515 200
+            L 515 220 L 530 210 L 540 180 L 550 130 L 560 80 L 570 50 L 580 80 L 590 130 L 600 180 L 610 210 L 625 220
+            L 625 280 L 640 270 L 655 250 L 670 200 L 680 130 L 690 90 L 700 130 L 690 200 L 675 250 L 660 270 L 645 280
+            L 720 450
+            L 720 540
+            Z"/>
+        </g>
+
+        <g class="blueprint" id="blueprint-path">
+          <!-- Ground line -->
+          <path d="M 40 540 L 760 540"/>
+
+          <!-- Base mass -->
+          <path d="M 80 540 L 80 480 L 200 450 L 200 540 Z"/>
+          <path d="M 600 540 L 600 450 L 720 480 L 720 540 Z"/>
+          <path d="M 200 540 L 200 380 L 600 380 L 600 540 Z"/>
+
+          <!-- Rose window arches -->
+          <path d="M 240 540 L 240 420 Q 280 380 320 420 L 320 540"/>
+          <path d="M 360 540 L 360 420 Q 400 380 440 420 L 440 540"/>
+          <path d="M 480 540 L 480 420 Q 520 380 560 420 L 560 540"/>
+
+          <!-- Left tower group: short, medium, tall -->
+          <path d="M 215 380 L 215 270 L 245 200 L 250 90 L 255 200 L 285 270 L 285 380"/>
+          <path d="M 250 90 L 250 60"/>
+          <circle cx="250" cy="55" r="4"/>
+
+          <path d="M 295 380 L 295 220 L 320 160 L 330 50 L 335 160 L 360 220 L 360 380"/>
+          <path d="M 330 50 L 330 20"/>
+          <circle cx="330" cy="15" r="5"/>
+
+          <!-- Central tallest tower (Jesus) -->
+          <path d="M 380 380 L 380 200 L 410 130 L 425 0 L 440 130 L 470 200 L 470 380"/>
+          <path d="M 425 0 L 425 -30"/>
+          <circle cx="425" cy="-35" r="6"/>
+
+          <!-- Right tower group -->
+          <path d="M 490 380 L 490 220 L 515 160 L 525 50 L 530 160 L 555 220 L 555 380"/>
+          <path d="M 525 50 L 525 20"/>
+          <circle cx="525" cy="15" r="5"/>
+
+          <path d="M 565 380 L 565 270 L 590 200 L 600 90 L 605 200 L 635 270 L 635 380"/>
+          <path d="M 600 90 L 600 60"/>
+          <circle cx="600" cy="55" r="4"/>
+
+          <!-- Cross atop the central tower -->
+          <path d="M 419 -50 L 431 -50 M 425 -40 L 425 -60"/>
+
+          <!-- Façade details — vertical ribs -->
+          <line x1="220" y1="540" x2="220" y2="420"/>
+          <line x1="280" y1="540" x2="280" y2="420"/>
+          <line x1="340" y1="540" x2="340" y2="420"/>
+          <line x1="400" y1="540" x2="400" y2="420"/>
+          <line x1="460" y1="540" x2="460" y2="420"/>
+          <line x1="520" y1="540" x2="520" y2="420"/>
+          <line x1="580" y1="540" x2="580" y2="420"/>
+
+          <!-- Doors / portals -->
+          <path d="M 380 540 L 380 500 Q 400 480 420 500 L 420 540"/>
+        </g>
+
+        <!-- Annotation labels -->
+        <g class="blueprint" style="--len: 1; --off: 0; opacity: 0.7;">
+          <line x1="425" y1="-40" x2="425" y2="-90" stroke-dasharray="2 4"/>
+          <line x1="425" y1="-90" x2="540" y2="-90" stroke-dasharray="2 4"/>
+        </g>
+        <text x="548" y="-86" font-family="JetBrains Mono, monospace" font-size="9" fill="#7DD3FC" letter-spacing="1.5">TOWER OF JESUS · 172.5M</text>
+
+        <g class="blueprint" style="--len: 1; --off: 0; opacity: 0.7;">
+          <line x1="80"  y1="540" x2="40" y2="540" stroke-dasharray="2 4"/>
+          <line x1="720" y1="540" x2="760" y2="540" stroke-dasharray="2 4"/>
+        </g>
+        <text x="40" y="556" font-family="JetBrains Mono, monospace" font-size="9" fill="#7DD3FC" letter-spacing="1.5">PLAN W · 90M</text>
+        <text x="700" y="556" font-family="JetBrains Mono, monospace" font-size="9" fill="#7DD3FC" letter-spacing="1.5" text-anchor="end">E</text>
+
+      </svg>
+    </div>
+
+    <div class="stage-loading" id="stage-loading">Loading frames…</div>
+
+    <div class="stage-hud" id="stage-hud" aria-live="polite">
+      <span class="dot"></span>
+      <span class="phase">Phase <em id="hud-phase">Blueprint</em></span>
+      <span style="color: var(--text-muted)">·</span>
+      <span class="progress"><strong id="hud-pct">0%</strong> drawn</span>
+    </div>
+
+    <!-- Phase overlays — tied to scroll-position ranges, not timers (§7).
+         Each appears/fades based on JS toggling .is-visible. -->
+    <div class="overlay overlay-tl" id="overlay-1" aria-hidden="true">
+      <span class="num">Nº 01</span>
+      <span class="title">Plan view <em>ortho</em></span>
+      <p>The Passion façade in technical elevation — every spire's height to the centimeter. Dimensions in metres above sea level.</p>
+    </div>
+
+    <div class="overlay overlay-tr" id="overlay-2" aria-hidden="true">
+      <span class="num">Nº 02</span>
+      <span class="title">The <em>rising</em> mass</span>
+      <p>Eighteen spires take shape: twelve apostles around the periphery, four evangelists supporting the Tower of Mary, and the central Tower of Jesus rising to 172.5 m.</p>
+    </div>
+
+    <div class="overlay overlay-bl" id="overlay-3" aria-hidden="true">
+      <span class="num">Nº 03</span>
+      <span class="title">Façade in <em>stone</em></span>
+      <p>Sandstone clads the load-bearing skeleton. Gaudí's hyperboloid vaults distribute weight along catenary curves rather than buttresses.</p>
+    </div>
+
+    <div class="overlay overlay-br" id="overlay-4" aria-hidden="true">
+      <span class="num">Nº 04</span>
+      <span class="title"><em>Finished</em></span>
+      <p>A 144-year build, projected complete in MMXXVI. Visit during the hour after sunrise — the eastern Nativity façade lights from within.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FACTS -->
+<section class="facts" id="facts">
+  <div class="facts-inner">
+    <div>
+      <h2>An <em>improbable</em><br>forest in stone.</h2>
+      <p>Begun in 1882, the Basílica i Temple Expiatori de la Sagrada Família has been under continuous construction for over 140 years. Gaudí designed eighteen spires — twelve for the apostles, four for the evangelists, one for Mary, one for Jesus — set above a triple façade that catalogues the gospel in stone. Completion is now projected for 2026.</p>
+    </div>
+    <dl class="facts-grid">
+      <div class="f"><dt>Location</dt><dd>Barcelona <small>· ES</small></dd></div>
+      <div class="f"><dt>Begun</dt><dd>1882</dd></div>
+      <div class="f"><dt>Height (Jesus tower)</dt><dd>172.5<small>m</small></dd></div>
+      <div class="f"><dt>Spires planned</dt><dd>18</dd></div>
+      <div class="f"><dt>Architects</dt><dd>Gaudí <em>et al</em></dd></div>
+      <div class="f"><dt>Style</dt><dd><em>Gothic / Art Nouveau</em></dd></div>
+    </dl>
+  </div>
+</section>
+
+<!-- WORKFLOW — how this page becomes alive with a real video -->
+<section class="workflow" id="workflow">
+  <div class="workflow-inner">
+    <aside class="workflow-eyebrow">
+      <span>Method</span>
+      <strong>Scroll · Build · Frame</strong>
+    </aside>
+    <p class="workflow-body">
+      The blueprint above is a <em>live SVG placeholder</em> — it draws itself as you scroll.
+      To swap it for real video frames of <em>any landmark you choose</em>: generate a blueprint
+      &amp; finished image (Step 6), produce a transition video on Kie.ai (Step 7), then run
+      <code>node extract-frames-sights.mjs path/to/your-video.mp4</code> — the page will detect
+      the frames and play them on the canvas automatically.
+    </p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="sights-footer">
+  <span>© MMXXVI Sights · An Architectural Index</span>
+  <span><a href="index.html">← Back to Chronos</a></span>
+  <span>Set in Fraunces &amp; Hanken</span>
+</footer>
+
+<script src="js/sights.js"></script>
+</body>
+</html>

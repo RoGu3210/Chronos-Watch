@@ -1,0 +1,850 @@
+/* =========================================================
+   SIGHTS — Architectural landmarks, dark edition
+   ========================================================= */
+
+:root {
+  /* Cool dark palette (cooler than TesterTech's warm graphite) */
+  --bg:        #08090C;
+  --bg-1:      #0D0F14;
+  --surface:   #12141A;
+  --surface-2: #1A1D26;
+  --line:      #21242E;
+  --line-strong: #31353F;
+
+  /* Text */
+  --text:      #EDEAE0;
+  --text-soft: #B6B2A7;
+  --text-dim:  #7C7B73;
+  --text-muted:#4D4D48;
+
+  /* Accents */
+  --blueprint: #7DD3FC;   /* sky / blueprint cyan */
+  --blueprint-deep: #38BDF8;
+  --ink:       #08090C;
+  --paper:     #EDEAE0;
+
+  /* Typography */
+  --serif: 'Fraunces', 'Iowan Old Style', Georgia, serif;
+  --sans:  'Hanken Grotesk', system-ui, sans-serif;
+  --mono:  'JetBrains Mono', 'Courier New', monospace;
+
+  /* Rhythm */
+  --gutter: clamp(20px, 4vw, 56px);
+  --max:    1440px;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--sans);
+  font-size: 16px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  scroll-behavior: smooth;
+}
+
+body { overflow-x: hidden; }
+
+a { color: inherit; text-decoration: none; }
+img, svg { display: block; max-width: 100%; height: auto; }
+button { font: inherit; background: none; border: 0; cursor: pointer; color: inherit; }
+::selection { background: var(--blueprint); color: var(--ink); }
+
+/* Subtle film grain */
+.grain {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 200;
+  opacity: 0.08;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.9  0 0 0 0 0.92  0 0 0 0 0.95  0 0 0 0.6 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+}
+
+.wrap {
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+  position: relative;
+}
+
+/* =========================================================
+   Header
+   ========================================================= */
+
+.sights-header {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 32px;
+  padding: 18px var(--gutter);
+  background: linear-gradient(180deg, rgba(8,9,12,0.92), rgba(8,9,12,0));
+  border-bottom: 1px solid transparent;
+  transition: background 300ms, border-color 300ms;
+}
+.sights-header.is-scrolled {
+  background: rgba(8,9,12,0.88);
+  backdrop-filter: blur(18px) saturate(140%);
+  -webkit-backdrop-filter: blur(18px) saturate(140%);
+  border-bottom-color: var(--line);
+}
+
+.sights-brand {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 10px;
+  font-family: var(--serif);
+  font-size: 22px;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  color: var(--text);
+}
+.sights-brand .mark {
+  font-size: 14px;
+  color: var(--blueprint);
+}
+.sights-brand i { font-style: italic; font-weight: 360; }
+
+.sights-nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+}
+.sights-nav a {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--text-soft);
+  padding: 8px 14px;
+  border-radius: 999px;
+  transition: color 200ms, background 200ms;
+}
+.sights-nav a:hover {
+  color: var(--blueprint);
+  background: rgba(125, 211, 252, 0.06);
+}
+
+.sights-meta {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+.sights-meta .dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--blueprint);
+  box-shadow: 0 0 0 3px rgba(125,211,252,0.18);
+}
+
+/* =========================================================
+   Hero
+   ========================================================= */
+
+.hero {
+  min-height: 100vh;
+  display: grid;
+  align-content: end;
+  padding: 120px var(--gutter) clamp(90px, 12vh, 140px);
+  position: relative;
+}
+
+.hero-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--blueprint);
+  margin-bottom: 24px;
+}
+.hero-eyebrow .tick {
+  width: 22px; height: 1px; background: var(--blueprint);
+}
+
+.hero-title {
+  font-family: var(--serif);
+  font-variation-settings: "opsz" 144;
+  font-weight: 360;
+  font-size: clamp(64px, 11vw, 180px);
+  line-height: 0.92;
+  letter-spacing: -0.035em;
+  color: var(--text);
+}
+.hero-title em { font-style: italic; font-weight: 300; }
+.hero-title .dot { color: var(--blueprint); font-style: normal; font-weight: 400; }
+
+.hero-sub {
+  margin-top: 28px;
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: clamp(20px, 2vw, 28px);
+  line-height: 1.35;
+  color: var(--text-soft);
+  max-width: 38ch;
+  font-weight: 320;
+}
+.hero-sub em {
+  font-style: normal;
+  color: var(--blueprint);
+}
+
+.hero-meta-strip {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  align-items: center;
+  margin-top: 56px;
+  padding-top: 24px;
+  border-top: 1px solid var(--line);
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+.hero-meta-strip span { display: inline-flex; align-items: baseline; gap: 8px; }
+.hero-meta-strip strong {
+  color: var(--text);
+  font-family: var(--serif);
+  font-weight: 360;
+  font-style: italic;
+  letter-spacing: -0.01em;
+  text-transform: none;
+  font-size: 17px;
+}
+
+.hero-scroll-cue {
+  position: absolute;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+.hero-scroll-cue .line {
+  width: 1px;
+  height: 36px;
+  background: linear-gradient(to bottom, var(--blueprint), transparent);
+  animation: scroll-cue 2.4s ease-in-out infinite;
+}
+@keyframes scroll-cue {
+  0%, 100% { transform: scaleY(0.4); transform-origin: top; opacity: 0.4; }
+  50%      { transform: scaleY(1);   transform-origin: top; opacity: 1; }
+}
+
+/* =========================================================
+   Frame Stage — sticky canvas that plays scroll-driven frames
+   ========================================================= */
+
+.stage-shell {
+  /* Tall scroll container that drives the animation */
+  position: relative;
+  height: 400vh; /* 4 viewports tall — scroll budget for the animation */
+}
+
+.stage {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  width: 100%;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  background: radial-gradient(ellipse at 50% 60%, rgba(125,211,252,0.04), transparent 60%);
+}
+
+/* Subtle grid overlay — engineering paper feel */
+.stage::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(125,211,252,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(125,211,252,0.03) 1px, transparent 1px);
+  background-size: 40px 40px;
+  pointer-events: none;
+  opacity: 0.6;
+}
+
+/* Canvas — used when extracted frames exist.
+   Radial gradient mask + subtle scroll-rotation (§8 polish). */
+.stage-canvas {
+  position: relative;
+  width: min(100%, 1200px);
+  height: 82vh;
+  z-index: 2;
+}
+.stage-canvas canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+  transform-origin: 50% 50%;
+  will-change: transform;
+  /* Soft-edge the canvas so the frame floats into the dark background
+     instead of sitting in a hard rectangle */
+  mask-image: radial-gradient(ellipse 70% 65% at 50% 50%, black 55%, transparent 90%);
+  -webkit-mask-image: radial-gradient(ellipse 70% 65% at 50% 50%, black 55%, transparent 90%);
+}
+
+/* SVG placeholder — drawn on scroll via stroke-dashoffset until frames arrive */
+.stage-svg {
+  position: relative;
+  width: min(86%, 900px);
+  height: 78vh;
+  z-index: 2;
+}
+.stage-svg svg { width: 100%; height: 100%; overflow: visible; }
+
+.stage-svg .blueprint {
+  stroke: var(--blueprint);
+  fill: none;
+  stroke-width: 1.4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  vector-effect: non-scaling-stroke;
+  filter: drop-shadow(0 0 6px rgba(125,211,252,0.25));
+}
+/* Per-stroke dasharray/offset so var(--len) resolves on each element
+   (JS sets --len and --off on the individual paths/lines/circles). */
+.stage-svg .blueprint > path,
+.stage-svg .blueprint > line,
+.stage-svg .blueprint > circle {
+  stroke-dasharray: var(--len, 4000);
+  stroke-dashoffset: var(--off, 4000);
+}
+
+.stage-svg .silhouette {
+  fill: var(--ink);
+  stroke: var(--text);
+  stroke-width: 0.6;
+  opacity: var(--solid-op, 0);
+  transition: none;
+}
+
+.stage-svg .grid-mark {
+  stroke: var(--line);
+  stroke-width: 0.4;
+  stroke-dasharray: 2 4;
+  opacity: 0.5;
+}
+
+/* Frame counter / phase label HUD */
+.stage-hud {
+  position: absolute;
+  bottom: 32px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 5;
+  display: inline-flex;
+  align-items: center;
+  gap: 18px;
+  padding: 12px 22px;
+  background: rgba(8,9,12,0.75);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--text);
+}
+.stage-hud .dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--blueprint);
+  box-shadow: 0 0 0 3px rgba(125,211,252,0.18);
+}
+.stage-hud .phase em {
+  color: var(--blueprint);
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 16px;
+  letter-spacing: -0.01em;
+  text-transform: none;
+  font-weight: 360;
+  margin-left: 8px;
+}
+.stage-hud .progress {
+  color: var(--text-dim);
+}
+.stage-hud .progress strong {
+  color: var(--text);
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 360;
+  text-transform: none;
+  font-size: 14px;
+  letter-spacing: -0.01em;
+}
+
+/* Stage corner ticks */
+.stage-shell .corner {
+  position: absolute;
+  width: 18px; height: 18px;
+  z-index: 4;
+  pointer-events: none;
+}
+.stage-shell .corner::before,
+.stage-shell .corner::after {
+  content: ""; position: absolute; background: var(--blueprint);
+}
+.stage-shell .corner::before { width: 100%; height: 1px; }
+.stage-shell .corner::after  { width: 1px;  height: 100%; }
+.stage-shell .corner.tl { top: 4vh;    left:  4vw;  }
+.stage-shell .corner.tr { top: 4vh;    right: 4vw;  }
+.stage-shell .corner.tr::before { right: 0; } .stage-shell .corner.tr::after { right: 0; }
+.stage-shell .corner.bl { bottom: 12vh; left:  4vw;  }
+.stage-shell .corner.bl::before { bottom: 0; }
+.stage-shell .corner.br { bottom: 12vh; right: 4vw;  }
+.stage-shell .corner.br::before { bottom: 0; right: 0; } .stage-shell .corner.br::after { right: 0; }
+
+/* Loading state when frames are being fetched */
+.stage-loading {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 3;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  display: none;
+}
+.stage-loading.is-on { display: block; }
+
+/* =========================================================
+   Info section — landmark facts
+   ========================================================= */
+
+.facts {
+  padding: clamp(80px, 12vh, 140px) var(--gutter);
+  background: var(--bg);
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+.facts-inner {
+  max-width: var(--max);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(40px, 6vw, 88px);
+}
+.facts h2 {
+  font-family: var(--serif);
+  font-variation-settings: "opsz" 96;
+  font-weight: 360;
+  font-size: clamp(36px, 4.4vw, 64px);
+  line-height: 0.98;
+  letter-spacing: -0.025em;
+  color: var(--text);
+}
+.facts h2 em { font-style: italic; font-weight: 320; }
+.facts p {
+  margin-top: 22px;
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 18px;
+  line-height: 1.55;
+  color: var(--text-soft);
+  max-width: 48ch;
+  font-weight: 360;
+}
+
+.facts-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1px;
+  background: var(--line);
+  border: 1px solid var(--line);
+  align-self: center;
+}
+.facts-grid .f {
+  background: var(--bg-1);
+  padding: 22px 26px 26px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.facts-grid dt {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+.facts-grid dd {
+  font-family: var(--serif);
+  font-weight: 360;
+  font-size: clamp(22px, 2.2vw, 30px);
+  letter-spacing: -0.015em;
+  color: var(--text);
+  line-height: 1;
+}
+.facts-grid dd em { font-style: italic; font-weight: 320; }
+.facts-grid dd small {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  color: var(--text-dim);
+  margin-left: 4px;
+}
+
+/* =========================================================
+   Workflow note (replace-with-your-own callout)
+   ========================================================= */
+
+.workflow {
+  padding: clamp(60px, 10vh, 120px) var(--gutter);
+  background: var(--bg);
+}
+.workflow-inner {
+  max-width: var(--max);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: clamp(28px, 4vw, 56px);
+  align-items: start;
+}
+.workflow-eyebrow {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--blueprint);
+  min-width: 170px;
+  display: flex; flex-direction: column; gap: 6px;
+}
+.workflow-eyebrow strong {
+  color: var(--text);
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 360;
+  font-size: 17px;
+  letter-spacing: -0.01em;
+  text-transform: none;
+}
+.workflow-body {
+  font-family: var(--serif);
+  font-weight: 360;
+  font-size: clamp(22px, 2.4vw, 32px);
+  line-height: 1.3;
+  letter-spacing: -0.015em;
+  color: var(--text);
+}
+.workflow-body em { font-style: italic; font-weight: 320; color: var(--blueprint); }
+.workflow-body code {
+  font-family: var(--mono);
+  font-size: 14px;
+  font-style: normal;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  padding: 4px 10px;
+  border-radius: 4px;
+  color: var(--blueprint);
+  letter-spacing: 0;
+  margin: 0 4px;
+}
+
+/* =========================================================
+   Footer
+   ========================================================= */
+
+.sights-footer {
+  padding: clamp(40px, 6vh, 80px) var(--gutter);
+  border-top: 1px solid var(--line);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 24px;
+  flex-wrap: wrap;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+.sights-footer a {
+  color: var(--text);
+  border-bottom: 1px solid var(--line-strong);
+  padding-bottom: 3px;
+  transition: color 200ms, border-color 200ms;
+}
+.sights-footer a:hover { color: var(--blueprint); border-color: var(--blueprint); }
+
+/* =========================================================
+   Top scroll-progress bar (§8 polish)
+   ========================================================= */
+
+.scroll-progress {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%;
+  height: 2px;
+  background: var(--blueprint);
+  transform-origin: 0 50%;
+  transform: scaleX(0);
+  z-index: 999;
+  box-shadow: 0 0 10px rgba(125,211,252,0.4);
+  pointer-events: none;
+  will-change: transform;
+}
+
+/* =========================================================
+   Loading screen — covers viewport while frames batch-preload (§4)
+   ========================================================= */
+
+.loading {
+  position: fixed;
+  inset: 0;
+  z-index: 800;
+  background: var(--bg);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: var(--gutter);
+  pointer-events: none;
+}
+.loading.is-on { display: flex; pointer-events: auto; }
+
+.loading::before {
+  /* Subtle blueprint grid in the background */
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(125,211,252,0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(125,211,252,0.05) 1px, transparent 1px);
+  background-size: 40px 40px;
+  opacity: 0.5;
+}
+
+.loading-inner {
+  position: relative;
+  max-width: 540px;
+  width: 100%;
+  text-align: center;
+}
+
+.loading-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--blueprint);
+}
+.loading-eyebrow .tick { width: 22px; height: 1px; background: var(--blueprint); }
+
+.loading-title {
+  margin-top: 18px;
+  font-family: var(--serif);
+  font-variation-settings: "opsz" 96;
+  font-weight: 360;
+  font-size: clamp(36px, 5vw, 56px);
+  letter-spacing: -0.03em;
+  line-height: 1.02;
+  color: var(--text);
+}
+.loading-title em { font-style: italic; font-weight: 320; }
+.loading-title .dot { color: var(--blueprint); font-style: normal; }
+
+.loading-track {
+  margin-top: 36px;
+  height: 2px;
+  background: var(--line);
+  position: relative;
+  overflow: hidden;
+}
+.loading-fill {
+  position: absolute;
+  inset: 0;
+  background: var(--blueprint);
+  transform-origin: 0 50%;
+  transform: scaleX(0);
+  transition: transform 180ms cubic-bezier(.2,.7,.2,1);
+  box-shadow: 0 0 8px rgba(125,211,252,0.5);
+}
+
+.loading-meta-row {
+  margin-top: 14px;
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+.loading-meta-row span:last-child {
+  color: var(--blueprint);
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 400;
+  font-size: 17px;
+  letter-spacing: -0.01em;
+  text-transform: none;
+}
+
+/* =========================================================
+   Phase overlay cards — tied to scroll-position ranges (§7)
+   Glassmorphic blur, fade in/out as user scrolls through ranges.
+   ========================================================= */
+
+.overlay {
+  position: absolute;
+  z-index: 4;
+  width: min(360px, 30vw);
+  padding: 22px 24px 24px;
+  background: rgba(8, 9, 12, 0.55);
+  border: 1px solid var(--line);
+  backdrop-filter: blur(14px) saturate(140%);
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 520ms cubic-bezier(.2,.7,.2,1), transform 520ms cubic-bezier(.2,.7,.2,1);
+  pointer-events: none;
+}
+.overlay.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.overlay::before,
+.overlay::after {
+  content: "";
+  position: absolute;
+  width: 12px; height: 12px;
+  pointer-events: none;
+}
+.overlay::before {
+  top: -1px; left: -1px;
+  border-top: 1px solid var(--blueprint);
+  border-left: 1px solid var(--blueprint);
+}
+.overlay::after {
+  bottom: -1px; right: -1px;
+  border-bottom: 1px solid var(--blueprint);
+  border-right: 1px solid var(--blueprint);
+}
+
+.overlay .num {
+  display: block;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--blueprint);
+  margin-bottom: 10px;
+}
+.overlay .title {
+  display: block;
+  font-family: var(--serif);
+  font-weight: 360;
+  font-size: clamp(22px, 2vw, 28px);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  color: var(--text);
+  margin-bottom: 12px;
+}
+.overlay .title em { font-style: italic; font-weight: 320; }
+.overlay p {
+  font-family: var(--sans);
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--text-soft);
+  margin: 0;
+}
+
+/* Corner placements within the stage */
+.overlay-tl { top: 12vh; left:  4vw;  }
+.overlay-tr { top: 12vh; right: 4vw;  }
+.overlay-bl { bottom: 20vh; left:  4vw;  }
+.overlay-br { bottom: 20vh; right: 4vw;  }
+
+@media (max-width: 900px) {
+  .overlay { width: 80vw; }
+  .overlay-tl, .overlay-tr { top: 12vh; left: 10vw; right: 10vw; }
+  .overlay-bl, .overlay-br { bottom: 22vh; left: 10vw; right: 10vw; }
+}
+
+/* =========================================================
+   Reveal on load
+   ========================================================= */
+
+@keyframes rise-in {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.hero-eyebrow, .hero-title, .hero-sub, .hero-meta-strip {
+  animation: rise-in 900ms cubic-bezier(.16,.84,.32,1) backwards;
+}
+.hero-title       { animation-delay: 120ms; }
+.hero-sub         { animation-delay: 240ms; }
+.hero-meta-strip  { animation-delay: 360ms; }
+
+/* =========================================================
+   Responsive
+   ========================================================= */
+
+@media (max-width: 900px) {
+  .sights-header {
+    grid-template-columns: 1fr auto;
+    gap: 14px;
+  }
+  .sights-nav {
+    grid-column: 1 / -1;
+    order: 3;
+    justify-content: flex-start;
+    overflow-x: auto;
+    padding-bottom: 4px;
+    margin: 0 -16px;
+    padding-left: 16px;
+    padding-right: 16px;
+    scrollbar-width: none;
+  }
+  .sights-nav::-webkit-scrollbar { display: none; }
+  .sights-meta .hide-sm { display: none; }
+
+  .stage-shell { height: 350vh; }
+  .stage-canvas { height: 70vh; }
+  .stage-svg { height: 65vh; }
+  .stage-shell .corner { width: 14px; height: 14px; }
+
+  .facts-inner { grid-template-columns: 1fr; gap: 32px; }
+  .workflow-inner { grid-template-columns: 1fr; gap: 18px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

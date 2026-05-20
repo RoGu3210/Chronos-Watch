@@ -18,6 +18,14 @@ node_modules/
 screenshots/
 temporary screenshots/
 
+# Local debug + screenshot scripts (not part of the live site)
+debug-*.mjs
+screenshot-*.mjs
+zoom-center.mjs
+verify-anchors.mjs
+verify-anything.mjs
+screenshot.mjs
+
 # OS
 Thumbs.db
 .DS_Store
