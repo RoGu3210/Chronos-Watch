@@ -1,0 +1,30 @@
+# Secrets — NEVER push these
+.env
+env
+.env.*
+!.env.example
+*.key
+*.pem
+
+# API job artifacts (contains taskIds / API responses)
+.kie-*.json
+.kie-poll.log
+
+# Node / tooling
+node_modules/
+.cache/
+
+# Build / verification outputs
+screenshots/
+temporary screenshots/
+
+# OS
+Thumbs.db
+.DS_Store
+
+# Editor
+.vscode/
+.idea/
+
+# Claude Code local state
+.claude/

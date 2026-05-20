@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Chronos — Time on your wrist</title>
+<meta name="description" content="Chronos. A smartwatch dissected to the millimeter. Edition 01 of 26 — limited to 240 pieces." />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300..800&family=Onest:wght@300..800&family=JetBrains+Mono:wght@300..600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <!-- LOADER -->
+  <div id="loader" class="loader" aria-hidden="true">
+    <div class="loader-meta">— LOADING THE WATCH —</div>
+    <div class="loader-brand">CHRONOS</div>
+    <div class="loader-bar-wrap"><div id="loader-bar"></div></div>
+    <div class="loader-foot">
+      <span class="loader-percent" id="loader-percent">0%</span>
+      <span class="loader-frames" id="loader-frames">0 / 239 frames</span>
+    </div>
+  </div>
+
+  <!-- HEADER -->
+  <header class="site-header">
+    <a href="#hero" class="brand">
+      <span class="brand-mark" aria-hidden="true">⌖</span>
+      <span class="brand-name">Chronos</span>
+    </a>
+    <nav class="primary-nav" aria-label="Primary">
+      <a href="#features">Features</a>
+      <a href="#dissection">Dissection</a>
+      <a href="product.html" class="nav-product">Product&nbsp;<span class="arr">→</span></a>
+      <a href="#reserve" class="nav-cta">Reserve</a>
+    </nav>
+    <button class="menu-btn" id="menu-btn" aria-label="Open menu" aria-expanded="false">
+      <span></span><span></span>
+    </button>
+  </header>
+
+  <!-- MOBILE MENU -->
+  <div id="mobile-menu" class="mobile-menu" hidden>
+    <nav aria-label="Mobile">
+      <a href="#features">Features</a>
+      <a href="#dissection">Dissection</a>
+      <a href="product.html">Product →</a>
+      <a href="#reserve" class="mm-cta">Reserve</a>
+    </nav>
+  </div>
+
+  <!-- HERO STANDALONE -->
+  <section class="hero-standalone" id="hero">
+    <div class="hero-grid">
+      <div class="hero-meta">
+        <span class="section-label">001 / Time, dissected</span>
+      </div>
+
+      <h1 class="hero-heading" aria-label="Chronos">
+        <span class="word" data-word>
+          <span class="char">C</span><span class="char">h</span><span class="char">r</span><span class="char">o</span><span class="char">n</span><span class="char">o</span><span class="char">s</span>
+        </span>
+      </h1>
+
+      <p class="hero-tagline">Time on <em>your wrist.</em></p>
+
+      <div class="hero-foot">
+        <div class="scroll-indicator" aria-hidden="true">
+          <span class="scroll-line"></span>
+          <span class="scroll-label">Scroll</span>
+        </div>
+        <div class="hero-meta-right">
+          <span class="meta-line">Edition 01 / 26</span>
+          <span class="meta-line">Made of 412 parts</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CANVAS (frame renderer, fixed) -->
+  <div class="canvas-wrap" id="canvas-wrap" aria-hidden="true">
+    <canvas id="canvas"></canvas>
+  </div>
+
+  <!-- DARK OVERLAY (only opaque during stats) -->
+  <div id="dark-overlay" aria-hidden="true"></div>
+
+  <!-- HORIZONTAL MARQUEE (fixed) -->
+  <div class="marquee-wrap" id="marquee-1" data-scroll-speed="-25" aria-hidden="true">
+    <div class="marquee-text">
+      <span>Chronos</span><i>·</i>
+      <span>Time on your wrist</span><i>·</i>
+      <span>Engineered for precision</span><i>·</i>
+      <span>412 components</span><i>·</i>
+      <span>Chronos</span><i>·</i>
+      <span>Time on your wrist</span><i>·</i>
+      <span>Engineered for precision</span><i>·</i>
+      <span>412 components</span><i>·</i>
+    </div>
+  </div>
+
+  <!-- SCROLL CONTAINER -->
+  <div id="scroll-container">
+
+    <!-- 001 INTRODUCTION -->
+    <section class="scroll-section section-content align-center" id="features"
+             data-enter="18" data-leave="28" data-animation="fade-up">
+      <div class="section-inner">
+        <span class="section-label">001 / Built around a single idea</span>
+        <h2 class="section-heading">A watch you can <em>take apart</em> in your head.</h2>
+        <p class="section-body">Chronos exposes its anatomy on purpose. Every component named, numbered, and accountable for one thing.</p>
+      </div>
+    </section>
+
+    <!-- 002 DISPLAY -->
+    <section class="scroll-section section-content align-left"
+             data-enter="30" data-leave="42" data-animation="slide-left">
+      <div class="section-inner">
+        <span class="section-label">002 / Display</span>
+        <h2 class="section-heading">Sapphire crystal, ground to <em>0.6&nbsp;mm</em>.</h2>
+        <p class="section-body">A single-piece sapphire lens above a 1.32" round AMOLED — 466 × 466, 1 000 nits, always on. Honest about the time, even in direct sun.</p>
+        <div class="section-meta">
+          <span>AMOLED · 466 × 466</span>
+          <span>1 000 nits · always on</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- 003 SENSORS -->
+    <section class="scroll-section section-content align-right"
+             data-enter="44" data-leave="56" data-animation="slide-right">
+      <div class="section-inner">
+        <span class="section-label">003 / Sensors</span>
+        <h2 class="section-heading">Eleven sensors. <em>One conclusion.</em></h2>
+        <p class="section-body">Heart rate, SpO₂, skin temperature, 3-axis accelerometer, gyro, ambient light, barometer. Sampled together, weighted, then translated into a single index your body actually understands.</p>
+        <div class="section-meta">
+          <span>11 sensor array</span>
+          <span>200 Hz sample rate</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- 004 POWER -->
+    <section class="scroll-section section-content align-left"
+             data-enter="58" data-leave="68" data-animation="scale-up">
+      <div class="section-inner">
+        <span class="section-label">004 / Power cell</span>
+        <h2 class="section-heading">Eighteen days of <em>quiet</em>.</h2>
+        <p class="section-body">A silicon-anode lithium cell delivers eighteen days of standard use — long enough to forget the charger exists, short enough to keep the watch honest about its weight.</p>
+        <div class="section-meta">
+          <span>Si-anode · 410 mAh</span>
+          <span>USB-C fast charge · 45 min</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- 005 CASE -->
+    <section class="scroll-section section-content align-right"
+             data-enter="70" data-leave="78" data-animation="clip-reveal">
+      <div class="section-inner">
+        <span class="section-label">005 / Case</span>
+        <h2 class="section-heading">Grade&nbsp;5 titanium, brushed by <em>hand</em>.</h2>
+        <p class="section-body">42 mm across, 9.8 mm thick, 38 grams. Sandblasted, then hand-polished along three radii. Each piece carries a single laser-etched serial on the inner caseback.</p>
+        <div class="section-meta">
+          <span>Ti Grade 5 · 38 g</span>
+          <span>42 × 9.8 mm</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- 006 STATS -->
+    <section class="scroll-section section-stats"
+             data-enter="80" data-leave="88" data-animation="stagger-up">
+      <div class="stats-inner">
+        <span class="section-label centered">006 / By the numbers</span>
+        <div class="stats-grid">
+          <div class="stat">
+            <div class="stat-row">
+              <span class="stat-number" data-value="412" data-decimals="0">0</span>
+            </div>
+            <span class="stat-label">Components</span>
+          </div>
+          <div class="stat">
+            <div class="stat-row">
+              <span class="stat-number" data-value="0.3" data-decimals="1">0</span>
+              <span class="stat-suffix">mm</span>
+            </div>
+            <span class="stat-label">Tolerance</span>
+          </div>
+          <div class="stat">
+            <div class="stat-row">
+              <span class="stat-number" data-value="18" data-decimals="0">0</span>
+              <span class="stat-suffix">d</span>
+            </div>
+            <span class="stat-label">Battery life</span>
+          </div>
+          <div class="stat">
+            <div class="stat-row">
+              <span class="stat-number" data-value="50" data-decimals="0">0</span>
+              <span class="stat-suffix">m</span>
+            </div>
+            <span class="stat-label">Water-rated</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 007 DISSECTION -->
+    <section class="scroll-section section-dissection" id="dissection"
+             data-enter="90" data-leave="96" data-animation="rotate-in">
+      <div class="dissection-inner">
+        <span class="section-label centered">007 / Dissection</span>
+        <h2 class="section-heading centered">Every layer <em>accounted for</em>.</h2>
+
+        <div class="dissection-stage">
+          <video class="dissection-video"
+                 src="Smart Watch Dissection.mp4"
+                 autoplay muted loop playsinline preload="auto"></video>
+
+          <!-- callouts positioned over the watch in the stage -->
+          <div class="callout" data-callout="1" style="--x:28%; --y:24%;">
+            <span class="dot"></span>
+            <span class="line"></span>
+            <div class="info"><span class="num">01</span><span class="lbl">Sapphire lens</span></div>
+          </div>
+          <div class="callout" data-callout="2" style="--x:58%; --y:48%;">
+            <span class="dot"></span>
+            <span class="line"></span>
+            <div class="info right"><span class="num">02</span><span class="lbl">M6 processor</span></div>
+          </div>
+          <div class="callout" data-callout="3" style="--x:46%; --y:62%;">
+            <span class="dot"></span>
+            <span class="line"></span>
+            <div class="info"><span class="num">03</span><span class="lbl">Mainboard</span></div>
+          </div>
+          <div class="callout" data-callout="4" style="--x:64%; --y:74%;">
+            <span class="dot"></span>
+            <span class="line"></span>
+            <div class="info right"><span class="num">04</span><span class="lbl">Biosensor array</span></div>
+          </div>
+          <div class="callout" data-callout="5" style="--x:74%; --y:60%;">
+            <span class="dot"></span>
+            <span class="line"></span>
+            <div class="info right"><span class="num">05</span><span class="lbl">Battery cell</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 008 CTA -->
+    <section class="scroll-section section-cta" id="reserve"
+             data-enter="97" data-leave="100" data-animation="scale-up" data-persist="true">
+      <div class="cta-inner">
+        <span class="section-label centered">008 / Reserve</span>
+        <h2 class="section-heading centered">Time on your wrist, <em>at a time of your choosing.</em></h2>
+        <div class="cta-row">
+          <a class="btn btn-primary" href="product.html">View the Product <span class="arrow">→</span></a>
+          <a class="btn btn-ghost" href="product.html">Read the dossier</a>
+        </div>
+        <span class="cta-meta">Edition 01 / 26 · Ships Q3 2026 · Limited to 240 pieces</span>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="foot-row">
+      <a href="#hero" class="foot-brand">
+        <span class="brand-mark">⌖</span>
+        <span>Chronos</span>
+      </a>
+      <span class="foot-tagline">Time on your wrist.</span>
+    </div>
+    <div class="foot-row">
+      <div class="foot-links">
+        <a href="#" aria-label="Instagram">Instagram</a>
+        <a href="#" aria-label="YouTube">YouTube</a>
+        <a href="#" aria-label="X / Twitter">X / Twitter</a>
+        <a href="product.html">Product</a>
+      </div>
+      <div class="foot-legal">© MMXXVI Chronos Atelier · Made in Switzerland</div>
+    </div>
+  </footer>
+
+  <!-- SCRIPTS -->
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1.0.45/dist/lenis.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
