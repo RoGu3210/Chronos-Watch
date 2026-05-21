@@ -1,371 +1,506 @@
 <!DOCTYPE html>
 <html><head><meta charset="utf-8"><style>
-  html, body { margin: 0; padding: 0; background: #08090C; }
-  body { width: 1600px; height: 1200px; position: relative; font-family: 'Courier New', monospace; }
-  /* Engineering paper grid — two layers, fine + coarse */
+  html, body { margin: 0; padding: 0; background: #050709; }
+  body { width: 1600px; height: 1200px; position: relative; font-family: 'Courier New', monospace; overflow: hidden; }
   body::before {
     content: ""; position: absolute; inset: 0;
     background-image:
-      linear-gradient(rgba(125,211,252,0.05) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(125,211,252,0.05) 1px, transparent 1px);
-    background-size: 40px 40px;
+      linear-gradient(rgba(125,211,252,0.06) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(125,211,252,0.06) 1px, transparent 1px);
+    background-size: 32px 32px;
   }
   body::after {
     content: ""; position: absolute; inset: 0;
     background-image:
-      linear-gradient(rgba(125,211,252,0.10) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(125,211,252,0.10) 1px, transparent 1px);
-    background-size: 200px 200px;
+      linear-gradient(rgba(125,211,252,0.13) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(125,211,252,0.13) 1px, transparent 1px);
+    background-size: 160px 160px;
   }
   .stage {
     position: absolute; inset: 0;
     display: flex; align-items: center; justify-content: center;
+    z-index: 2;
   }
   svg { width: 100%; height: 100%; overflow: visible; }
-  .blueprint path,
-  .blueprint line,
-  .blueprint rect,
-  .blueprint ellipse,
-  .blueprint polygon,
-  .blueprint circle,
-  .blueprint polyline {
-    stroke: #7DD3FC; stroke-width: 1.2; fill: none;
-    stroke-linecap: round; stroke-linejoin: round;
-    filter: drop-shadow(0 0 5px rgba(125,211,252,0.4));
-  }
-  .blueprint .heavy { stroke-width: 1.8; }
-  .blueprint .fine { stroke-width: 0.8; opacity: 0.85; }
-  .reg line { stroke: #1F2937; stroke-width: 0.6; stroke-dasharray: 3 6; }
-  .dim line { stroke: #7DD3FC; stroke-width: 0.6; stroke-dasharray: 2 4; opacity: 0.65; }
-  .dim text, .callout {
+  /* Default stroke style for blueprint elements */
+  .bp { stroke: #B8E0FA; stroke-width: 1; fill: none; stroke-linecap: round; stroke-linejoin: round; vector-effect: non-scaling-stroke; }
+  .bp-heavy { stroke-width: 1.8; }
+  .bp-fine { stroke-width: 0.6; opacity: 0.85; }
+  .bp-faint { stroke-width: 0.5; opacity: 0.55; }
+  /* Hatching for shaded areas */
+  .hatch { stroke: #7DD3FC; stroke-width: 0.45; opacity: 0.55; }
+  /* Dimension annotations */
+  .dim-line { stroke: #7DD3FC; stroke-width: 0.6; stroke-dasharray: 3 5; opacity: 0.75; }
+  .dim-text {
     font-family: 'Courier New', monospace; font-size: 11px;
-    fill: #7DD3FC; letter-spacing: 1.8px;
+    fill: #7DD3FC; letter-spacing: 2px;
   }
+  .leader { stroke: #7DD3FC; stroke-width: 0.5; opacity: 0.7; }
+  .label {
+    font-family: 'Courier New', monospace; font-size: 10px;
+    fill: #B8E0FA; letter-spacing: 1.5px;
+  }
+  /* Glow on the line work */
+  .blueprint-group { filter: drop-shadow(0 0 4px rgba(125,211,252,0.4)); }
+  /* Corner brackets + decorative crosshairs */
   .corner {
-    position: absolute; width: 28px; height: 28px;
-    border: 1.5px solid #7DD3FC; opacity: 0.8;
+    position: absolute; width: 32px; height: 32px;
+    border: 1.5px solid #7DD3FC; opacity: 0.85; z-index: 3;
   }
-  .corner.tl { top: 28px; left: 28px; border-right: 0; border-bottom: 0; }
-  .corner.tr { top: 28px; right: 28px; border-left: 0; border-bottom: 0; }
-  .corner.bl { bottom: 28px; left: 28px; border-right: 0; border-top: 0; }
-  .corner.br { bottom: 28px; right: 28px; border-left: 0; border-top: 0; }
-  .top-strip {
-    position: absolute; top: 48px; left: 56px; right: 56px;
-    display: flex; justify-content: space-between; align-items: center;
-    color: #7DD3FC; font-family: 'Courier New', monospace;
-    font-size: 12px; letter-spacing: 2.5px; opacity: 0.9;
-    border-bottom: 1px solid rgba(125,211,252,0.18);
-    padding-bottom: 14px;
-  }
-  .top-strip .tick {
-    display: inline-block; width: 20px; height: 1px;
-    background: #7DD3FC; margin-right: 10px; vertical-align: middle;
-  }
-  .bot-strip {
-    position: absolute; bottom: 56px; left: 56px; right: 56px;
-    display: flex; justify-content: space-between; align-items: center;
-    color: #7DD3FC; font-family: 'Courier New', monospace;
-    font-size: 11px; letter-spacing: 2px; opacity: 0.55;
-    border-top: 1px solid rgba(125,211,252,0.18);
-    padding-top: 12px;
-  }
+  .corner.tl { top: 30px; left: 30px; border-right: 0; border-bottom: 0; }
+  .corner.tr { top: 30px; right: 30px; border-left: 0; border-bottom: 0; }
+  .corner.bl { bottom: 30px; left: 30px; border-right: 0; border-top: 0; }
+  .corner.br { bottom: 30px; right: 30px; border-left: 0; border-top: 0; }
   .crosshair {
-    position: absolute; width: 14px; height: 14px;
-    border: 1px solid #7DD3FC; border-radius: 50%; opacity: 0.7;
+    position: absolute; width: 16px; height: 16px;
+    border: 1px solid #7DD3FC; border-radius: 50%; opacity: 0.7; z-index: 3;
   }
   .crosshair::before, .crosshair::after {
     content: ""; position: absolute; background: #7DD3FC;
   }
-  .crosshair::before { left: -8px; right: -8px; top: 50%; height: 1px; transform: translateY(-50%); }
-  .crosshair::after { top: -8px; bottom: -8px; left: 50%; width: 1px; transform: translateX(-50%); }
+  .crosshair::before { left: -10px; right: -10px; top: 50%; height: 1px; transform: translateY(-50%); }
+  .crosshair::after { top: -10px; bottom: -10px; left: 50%; width: 1px; transform: translateX(-50%); }
+  .top-strip, .bot-strip {
+    position: absolute; left: 80px; right: 80px;
+    display: flex; justify-content: space-between; align-items: center;
+    color: #7DD3FC; font-family: 'Courier New', monospace;
+    font-size: 11px; letter-spacing: 2.5px; opacity: 0.85; z-index: 3;
+  }
+  .top-strip {
+    top: 50px;
+    border-bottom: 1px solid rgba(125,211,252,0.22);
+    padding-bottom: 14px;
+  }
+  .bot-strip {
+    bottom: 50px; opacity: 0.6;
+    border-top: 1px solid rgba(125,211,252,0.22);
+    padding-top: 12px;
+  }
+  .top-strip .tick {
+    display: inline-block; width: 22px; height: 1px;
+    background: #7DD3FC; margin-right: 12px; vertical-align: middle;
+  }
 </style></head>
 <body>
   <span class="corner tl"></span><span class="corner tr"></span>
   <span class="corner bl"></span><span class="corner br"></span>
-
-  <span class="crosshair" style="top: 110px;  left: 110px;"></span>
-  <span class="crosshair" style="top: 110px;  right: 110px;"></span>
-  <span class="crosshair" style="bottom: 110px; left: 110px;"></span>
-  <span class="crosshair" style="bottom: 110px; right: 110px;"></span>
+  <span class="crosshair" style="top: 120px;  left: 120px;"></span>
+  <span class="crosshair" style="top: 120px;  right: 120px;"></span>
+  <span class="crosshair" style="bottom: 120px; left: 120px;"></span>
+  <span class="crosshair" style="bottom: 120px; right: 120px;"></span>
 
   <div class="top-strip">
     <span><span class="tick"></span>SIGHT №01 · LIBERTY ENLIGHTENING THE WORLD</span>
-    <span>BARTHOLDI · 1886 · BEDLOE'S ISLAND</span>
-    <span>DRG №01 / 01 · SHEET A</span>
+    <span>F.A. BARTHOLDI · G. EIFFEL · MDCCCLXXXVI</span>
+    <span>FRONT ELEVATION · 1:200</span>
   </div>
 
   <div class="stage">
-    <svg viewBox="0 0 800 1000" preserveAspectRatio="xMidYMid meet">
-      <!-- registration grid -->
-      <g class="reg">
-        <line x1="40"  y1="930" x2="760" y2="930"/>
-        <line x1="400" y1="40"  x2="400" y2="930"/>
-        <line x1="120" y1="40"  x2="120" y2="930"/>
-        <line x1="680" y1="40"  x2="680" y2="930"/>
-        <line x1="40"  y1="120" x2="760" y2="120"/>
-        <line x1="40"  y1="290" x2="760" y2="290"/>
-        <line x1="40"  y1="540" x2="760" y2="540"/>
-        <line x1="40"  y1="720" x2="760" y2="720"/>
+    <svg viewBox="0 0 1200 1500" preserveAspectRatio="xMidYMid meet">
+      <defs>
+        <!-- Subtle gradient for hatching variation -->
+        <pattern id="diagHatch" x="0" y="0" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+          <line x1="0" y1="0" x2="0" y2="6" stroke="#7DD3FC" stroke-width="0.35" opacity="0.4"/>
+        </pattern>
+        <pattern id="crossHatch" x="0" y="0" width="8" height="8" patternUnits="userSpaceOnUse">
+          <line x1="0" y1="0" x2="8" y2="8" stroke="#7DD3FC" stroke-width="0.3" opacity="0.3"/>
+          <line x1="0" y1="8" x2="8" y2="0" stroke="#7DD3FC" stroke-width="0.3" opacity="0.3"/>
+        </pattern>
+      </defs>
+
+      <!-- Center reference axes -->
+      <g>
+        <line class="bp" x1="600" y1="40" x2="600" y2="1400" stroke="#1F2937" stroke-width="0.5" stroke-dasharray="3 6"/>
+        <line class="bp" x1="40" y1="1380" x2="1160" y2="1380" stroke="#1F2937" stroke-width="0.5" stroke-dasharray="3 6"/>
       </g>
 
-      <!-- DIMENSIONS -->
-      <g class="dim">
-        <!-- Total height: 93m -->
-        <line x1="58" y1="80" x2="58" y2="930"/>
-        <line x1="52" y1="80" x2="64" y2="80"/>
-        <line x1="52" y1="930" x2="64" y2="930"/>
-        <text x="42" y="510" transform="rotate(-90 42 510)" text-anchor="middle">93 M · TOTAL HEIGHT</text>
-
-        <!-- Pedestal: 47m (right side) -->
-        <line x1="742" y1="720" x2="742" y2="910"/>
-        <line x1="736" y1="720" x2="748" y2="720"/>
-        <line x1="736" y1="910" x2="748" y2="910"/>
-        <text x="758" y="820" transform="rotate(-90 758 820)" text-anchor="middle">PEDESTAL · 47 M</text>
-
-        <!-- Figure: 46m (right side, upper) -->
-        <line x1="742" y1="120" x2="742" y2="720"/>
-        <line x1="736" y1="120" x2="748" y2="120"/>
-        <line x1="736" y1="720" x2="748" y2="720"/>
-        <text x="758" y="420" transform="rotate(-90 758 420)" text-anchor="middle">STATUE · 46 M</text>
+      <!-- Dimension column (left side) — metric ticks 0 / 47 / 76 / 93 m -->
+      <g>
+        <line class="dim-line" x1="100" y1="120" x2="100" y2="1340"/>
+        <line class="dim-line" x1="90" y1="120" x2="110" y2="120"/>
+        <line class="dim-line" x1="90" y1="430" x2="110" y2="430"/>
+        <line class="dim-line" x1="90" y1="1040" x2="110" y2="1040"/>
+        <line class="dim-line" x1="90" y1="1340" x2="110" y2="1340"/>
+        <text class="dim-text" x="74" y="124" text-anchor="end">93M</text>
+        <text class="dim-text" x="74" y="434" text-anchor="end">76M</text>
+        <text class="dim-text" x="74" y="1044" text-anchor="end">47M</text>
+        <text class="dim-text" x="74" y="1344" text-anchor="end">0M</text>
+        <text class="dim-text" x="58" y="730" text-anchor="middle" transform="rotate(-90 58 730)">ELEVATION — METRIC</text>
       </g>
 
-      <g class="blueprint">
+      <!-- Dimension column (right side) — labelled distances -->
+      <g>
+        <line class="dim-line" x1="1100" y1="120" x2="1100" y2="430"/>
+        <line class="dim-line" x1="1090" y1="120" x2="1110" y2="120"/>
+        <line class="dim-line" x1="1090" y1="430" x2="1110" y2="430"/>
+        <text class="dim-text" x="1118" y="282" transform="rotate(-90 1118 282)" text-anchor="middle">CROWN+TORCH · 17 M</text>
+
+        <line class="dim-line" x1="1100" y1="430" x2="1100" y2="1040"/>
+        <line class="dim-line" x1="1090" y1="1040" x2="1110" y2="1040"/>
+        <text class="dim-text" x="1118" y="740" transform="rotate(-90 1118 740)" text-anchor="middle">BODY+ROBE · 29 M</text>
+
+        <line class="dim-line" x1="1100" y1="1040" x2="1100" y2="1340"/>
+        <line class="dim-line" x1="1090" y1="1340" x2="1110" y2="1340"/>
+        <text class="dim-text" x="1118" y="1196" transform="rotate(-90 1118 1196)" text-anchor="middle">PEDESTAL · 47 M</text>
+      </g>
+
+      <g class="blueprint-group">
 
         <!-- ============================================ -->
-        <!-- WATER LINE -->
-        <line class="heavy" x1="40" y1="910" x2="760" y2="910"/>
-        <!-- Subtle harbor ripple marks -->
-        <line class="fine" x1="60" y1="918" x2="120" y2="918"/>
-        <line class="fine" x1="160" y1="918" x2="220" y2="918"/>
-        <line class="fine" x1="260" y1="918" x2="300" y2="918"/>
-        <line class="fine" x1="500" y1="918" x2="540" y2="918"/>
-        <line class="fine" x1="580" y1="918" x2="640" y2="918"/>
-        <line class="fine" x1="680" y1="918" x2="740" y2="918"/>
+        <!-- WATER / GROUND LINE -->
+        <line class="bp bp-heavy" x1="80" y1="1340" x2="1120" y2="1340"/>
+        <!-- Subtle harbor ripple suggestions -->
+        <g class="bp-faint">
+          <line x1="120" y1="1352" x2="200" y2="1352"/>
+          <line x1="240" y1="1352" x2="310" y2="1352"/>
+          <line x1="350" y1="1352" x2="400" y2="1352"/>
+          <line x1="800" y1="1352" x2="850" y2="1352"/>
+          <line x1="890" y1="1352" x2="960" y2="1352"/>
+          <line x1="1000" y1="1352" x2="1080" y2="1352"/>
+        </g>
 
         <!-- ============================================ -->
-        <!-- FORT WOOD — 11-point star base (simplified to wide tier with star indications) -->
-        <path class="heavy" d="M 250 910 L 250 870 L 550 870 L 550 910 Z"/>
-        <!-- Star point indications on the left/right (suggesting 11-point fortification) -->
-        <polyline points="250,870 234,860 244,850 250,860"/>
-        <polyline points="550,870 566,860 556,850 550,860"/>
-        <polyline points="244,850 230,838 240,830 254,840"/>
-        <polyline points="556,850 570,838 560,830 546,840"/>
-        <!-- Vertical bastion ribs -->
-        <line class="fine" x1="290" y1="910" x2="290" y2="870"/>
-        <line class="fine" x1="330" y1="910" x2="330" y2="870"/>
-        <line class="fine" x1="370" y1="910" x2="370" y2="870"/>
-        <line x1="400" y1="910" x2="400" y2="870"/>
-        <line class="fine" x1="430" y1="910" x2="430" y2="870"/>
-        <line class="fine" x1="470" y1="910" x2="470" y2="870"/>
-        <line class="fine" x1="510" y1="910" x2="510" y2="870"/>
+        <!-- FORT WOOD STAR BASE (11-point star, partial view from front) -->
+        <!-- The base looks like a stepped fort with star points visible left & right -->
+        <path class="bp bp-heavy" d="M 350 1340 L 350 1260 L 850 1260 L 850 1340 Z"/>
+        <!-- Star points (front-view representation of 11-pointed star) -->
+        <!-- Left side points -->
+        <polyline class="bp" points="350,1340 320,1320 300,1290 320,1280 350,1290"/>
+        <polyline class="bp" points="350,1290 310,1270 290,1245 320,1255 350,1265"/>
+        <polyline class="bp" points="350,1265 305,1245 290,1218 318,1232 350,1240"/>
+        <!-- Right side mirror points -->
+        <polyline class="bp" points="850,1340 880,1320 900,1290 880,1280 850,1290"/>
+        <polyline class="bp" points="850,1290 890,1270 910,1245 880,1255 850,1265"/>
+        <polyline class="bp" points="850,1265 895,1245 910,1218 882,1232 850,1240"/>
+        <!-- Bastion vertical ribs -->
+        <g class="bp bp-fine">
+          <line x1="380" y1="1340" x2="380" y2="1260"/>
+          <line x1="430" y1="1340" x2="430" y2="1260"/>
+          <line x1="480" y1="1340" x2="480" y2="1260"/>
+          <line x1="530" y1="1340" x2="530" y2="1260"/>
+          <line x1="600" y1="1340" x2="600" y2="1260"/>
+          <line x1="670" y1="1340" x2="670" y2="1260"/>
+          <line x1="720" y1="1340" x2="720" y2="1260"/>
+          <line x1="770" y1="1340" x2="770" y2="1260"/>
+          <line x1="820" y1="1340" x2="820" y2="1260"/>
+        </g>
+        <!-- Fort wall cap molding -->
+        <line class="bp" x1="350" y1="1252" x2="850" y2="1252"/>
 
         <!-- ============================================ -->
-        <!-- PEDESTAL TIERS -->
-        <!-- Lower tier (transition) -->
-        <path d="M 285 870 L 285 830 L 515 830 L 515 870"/>
-        <line class="fine" x1="290" y1="830" x2="515" y2="830"/>
-        <!-- Main pedestal body -->
-        <path class="heavy" d="M 310 830 L 310 740 L 490 740 L 490 830"/>
-        <!-- Vertical pilaster ribs -->
-        <line x1="340" y1="830" x2="340" y2="740"/>
-        <line x1="370" y1="830" x2="370" y2="740"/>
-        <line x1="400" y1="830" x2="400" y2="740"/>
-        <line x1="430" y1="830" x2="430" y2="740"/>
-        <line x1="460" y1="830" x2="460" y2="740"/>
-        <!-- Pedestal cap / cornice band -->
-        <path d="M 316 740 L 310 722 L 490 722 L 484 740 Z"/>
-        <!-- Plinth platform -->
-        <line x1="335" y1="722" x2="465" y2="722"/>
-        <line class="fine" x1="335" y1="715" x2="465" y2="715"/>
+        <!-- PEDESTAL (Richard Morris Hunt's design) -->
+        <!-- Lower tier (transition platform) -->
+        <path class="bp" d="M 410 1260 L 410 1200 L 790 1200 L 790 1260"/>
+        <line class="bp bp-fine" x1="410" y1="1208" x2="790" y2="1208"/>
+        <line class="bp bp-fine" x1="410" y1="1220" x2="790" y2="1220"/>
+
+        <!-- Main pedestal body (rectangular with vertical pilasters) -->
+        <path class="bp bp-heavy" d="M 450 1200 L 450 1060 L 750 1060 L 750 1200"/>
+        <!-- Pilaster columns at corners -->
+        <line class="bp bp-heavy" x1="478" y1="1060" x2="478" y2="1200"/>
+        <line class="bp bp-heavy" x1="722" y1="1060" x2="722" y2="1200"/>
+        <!-- Inner pilasters -->
+        <line class="bp" x1="528" y1="1060" x2="528" y2="1200"/>
+        <line class="bp" x1="578" y1="1060" x2="578" y2="1200"/>
+        <line class="bp" x1="628" y1="1060" x2="628" y2="1200"/>
+        <line class="bp" x1="678" y1="1060" x2="678" y2="1200"/>
+        <!-- Greek-key meander band (suggested) at base -->
+        <g class="bp bp-fine">
+          <line x1="450" y1="1188" x2="750" y2="1188"/>
+          <line x1="450" y1="1196" x2="750" y2="1196"/>
+        </g>
+        <!-- Niche windows (small rectangular openings between pilasters) -->
+        <g class="bp bp-fine">
+          <rect x="498" y="1100" width="16" height="50"/>
+          <rect x="548" y="1100" width="16" height="50"/>
+          <rect x="598" y="1100" width="16" height="50"/>
+          <rect x="648" y="1100" width="16" height="50"/>
+          <rect x="698" y="1100" width="16" height="50"/>
+        </g>
+
+        <!-- Pedestal cornice (decorative top molding) -->
+        <path class="bp bp-heavy" d="M 460 1060 L 450 1040 L 750 1040 L 740 1060 Z"/>
+        <line class="bp bp-fine" x1="450" y1="1050" x2="750" y2="1050"/>
+
+        <!-- Plinth (small platform statue stands on) -->
+        <path class="bp" d="M 490 1040 L 490 1020 L 710 1020 L 710 1040"/>
 
         <!-- ============================================ -->
-        <!-- ROBE (the column-like draped figure) -->
-        <!-- Robe hem at base — flares slightly outward -->
-        <path class="heavy" d="M 340 722 L 332 710 L 326 670 L 322 620 L 322 540"/>
-        <path class="heavy" d="M 460 722 L 468 710 L 474 670 L 478 620 L 478 540"/>
-        <!-- Robe interior vertical fold lines (long flowing drapes) -->
-        <line class="fine" x1="350" y1="722" x2="354" y2="560"/>
-        <line class="fine" x1="370" y1="722" x2="372" y2="540"/>
-        <line class="fine" x1="390" y1="722" x2="392" y2="540"/>
-        <line class="fine" x1="400" y1="722" x2="400" y2="540"/>
-        <line class="fine" x1="410" y1="722" x2="408" y2="540"/>
-        <line class="fine" x1="430" y1="722" x2="428" y2="540"/>
-        <line class="fine" x1="450" y1="722" x2="446" y2="560"/>
+        <!-- ROBE / DRAPED FIGURE (the column-like flowing body) -->
+        <!-- Outer robe contours, slightly flared at hem -->
+        <path class="bp bp-heavy" d="M 510 1020 Q 502 1000 500 970 Q 498 920 498 860 L 498 760"/>
+        <path class="bp bp-heavy" d="M 690 1020 Q 698 1000 700 970 Q 702 920 702 860 L 702 760"/>
+
+        <!-- Robe vertical fold lines (long flowing drapes, slight wave) -->
+        <g class="bp bp-fine">
+          <path d="M 522 1018 Q 522 900 524 800 L 526 762"/>
+          <path d="M 546 1018 Q 548 900 548 800 L 550 762"/>
+          <path d="M 570 1018 Q 572 900 572 800 L 572 760"/>
+          <path d="M 600 1018 Q 600 900 600 800 L 600 758"/>
+          <path d="M 630 1018 Q 628 900 628 800 L 628 760"/>
+          <path d="M 654 1018 Q 652 900 652 800 L 650 762"/>
+          <path d="M 678 1018 Q 678 900 676 800 L 674 762"/>
+        </g>
+
+        <!-- Cross folds (suggesting layered chiton) -->
+        <path class="bp bp-fine" d="M 502 990 Q 600 1004 698 990"/>
+        <path class="bp bp-fine" d="M 502 1060 Q 600 1074 698 1060"/>
+
+        <!-- Hatching shadow on right side of robe (subtle gradient effect) -->
+        <g class="hatch">
+          <line x1="680" y1="1018" x2="688" y2="1018"/>
+          <line x1="682" y1="1000" x2="690" y2="1000"/>
+          <line x1="683" y1="980" x2="691" y2="980"/>
+          <line x1="685" y1="960" x2="693" y2="960"/>
+          <line x1="686" y1="940" x2="694" y2="940"/>
+          <line x1="687" y1="920" x2="695" y2="920"/>
+          <line x1="688" y1="900" x2="696" y2="900"/>
+          <line x1="689" y1="880" x2="697" y2="880"/>
+          <line x1="690" y1="860" x2="698" y2="860"/>
+          <line x1="690" y1="840" x2="698" y2="840"/>
+          <line x1="690" y1="820" x2="698" y2="820"/>
+          <line x1="690" y1="800" x2="698" y2="800"/>
+          <line x1="690" y1="780" x2="698" y2="780"/>
+        </g>
 
         <!-- ============================================ -->
-        <!-- WAIST / BELT BAND -->
-        <path d="M 322 540 L 322 520 L 478 520 L 478 540"/>
-        <line class="fine" x1="322" y1="530" x2="478" y2="530"/>
+        <!-- BELT / SASH BAND at waist -->
+        <path class="bp" d="M 498 760 L 498 740 L 702 740 L 702 760"/>
+        <line class="bp bp-fine" x1="500" y1="750" x2="700" y2="750"/>
+        <!-- Diagonal sash band across torso -->
+        <path class="bp bp-fine" d="M 510 690 L 690 660 L 692 672 L 512 702 Z"/>
 
         <!-- ============================================ -->
         <!-- TORSO / UPPER BODY -->
-        <path class="heavy" d="M 322 520 L 322 460 L 332 410 L 350 370"/>
-        <path class="heavy" d="M 478 520 L 478 460 L 468 410 L 450 370"/>
+        <path class="bp bp-heavy" d="M 498 740 L 498 660 Q 506 620 524 590 L 552 558"/>
+        <path class="bp bp-heavy" d="M 702 740 L 702 660 Q 694 620 676 590 L 648 558"/>
+
         <!-- Chest fold lines -->
-        <line class="fine" x1="360" y1="520" x2="362" y2="400"/>
-        <line class="fine" x1="380" y1="520" x2="380" y2="390"/>
-        <line class="fine" x1="400" y1="520" x2="400" y2="380"/>
-        <line class="fine" x1="420" y1="520" x2="420" y2="390"/>
-        <line class="fine" x1="440" y1="520" x2="438" y2="400"/>
-        <!-- Sash diagonal -->
-        <line x1="340" y1="450" x2="460" y2="430"/>
+        <g class="bp bp-fine">
+          <path d="M 540 740 Q 538 660 540 600"/>
+          <path d="M 568 740 Q 568 660 572 580"/>
+          <path d="M 600 740 L 600 570"/>
+          <path d="M 632 740 Q 632 660 628 580"/>
+          <path d="M 660 740 Q 662 660 660 600"/>
+        </g>
+
+        <!-- Necklace / collar curve -->
+        <path class="bp bp-fine" d="M 564 620 Q 600 632 636 620"/>
 
         <!-- ============================================ -->
-        <!-- SHOULDERS (raised level, broader than torso) -->
-        <path d="M 350 370 L 332 360 L 320 358 L 312 365"/>
-        <path d="M 450 370 L 468 360 L 480 358 L 488 365"/>
-
-        <!-- ============================================ -->
-        <!-- LEFT ARM HOLDING TABLET (descends across body) -->
-        <!-- Upper arm: from left shoulder down/forward -->
-        <path class="heavy" d="M 320 360 L 290 410 L 268 470"/>
-        <!-- Forearm cradling tablet -->
-        <path class="heavy" d="M 268 470 L 270 510 L 290 540 L 320 552"/>
+        <!-- LEFT ARM HOLDING TABLET -->
+        <!-- Upper arm: shoulder → elbow (descending to forward) -->
+        <path class="bp bp-heavy" d="M 498 590 L 460 580 Q 430 600 415 640 L 405 720"/>
+        <!-- Forearm: cradling the tablet -->
+        <path class="bp bp-heavy" d="M 405 720 Q 405 768 425 800 Q 450 822 488 832"/>
         <!-- Hand on tablet -->
-        <path d="M 320 552 L 332 550 L 340 542"/>
+        <path class="bp" d="M 488 832 Q 506 832 518 822"/>
         <!-- Inner arm contour -->
-        <path class="fine" d="M 332 365 L 305 415 L 282 472"/>
-        <!-- Tablet — held diagonally, leaning against torso -->
-        <path class="heavy" d="M 232 432 L 308 416 L 326 528 L 250 544 Z"/>
-        <!-- Tablet inscription lines -->
-        <line class="fine" x1="244" y1="448" x2="316" y2="436"/>
-        <line class="fine" x1="246" y1="464" x2="318" y2="452"/>
-        <line class="fine" x1="248" y1="480" x2="320" y2="468"/>
-        <line class="fine" x1="250" y1="496" x2="322" y2="484"/>
-        <line class="fine" x1="252" y1="512" x2="324" y2="500"/>
-        <line class="fine" x1="254" y1="528" x2="326" y2="516"/>
+        <path class="bp bp-fine" d="M 514 588 Q 482 600 466 638 L 432 720 Q 434 762 452 792"/>
 
         <!-- ============================================ -->
-        <!-- RIGHT ARM RAISED HOLDING TORCH (THE iconic gesture) -->
-        <!-- Upper arm: from right shoulder UP and slightly out -->
-        <path class="heavy" d="M 480 360 L 506 290 L 524 230 L 538 170"/>
+        <!-- TABLET (held diagonally against torso) -->
+        <path class="bp bp-heavy" d="M 322 632 L 460 612 L 488 798 L 350 818 Z"/>
+        <!-- Tablet border inner -->
+        <path class="bp bp-fine" d="M 332 642 L 452 624 L 478 790 L 358 808 Z"/>
+        <!-- Inscription lines -->
+        <g class="bp bp-fine">
+          <line x1="346" y1="668" x2="464" y2="652"/>
+          <line x1="350" y1="692" x2="468" y2="676"/>
+          <line x1="354" y1="716" x2="472" y2="700"/>
+          <line x1="358" y1="740" x2="476" y2="724"/>
+          <line x1="362" y1="764" x2="480" y2="748"/>
+          <line x1="366" y1="788" x2="484" y2="772"/>
+        </g>
+        <!-- Inscription text -->
+        <g style="font-family: 'Times New Roman', serif; fill: #B8E0FA; opacity: 0.85;">
+          <text x="400" y="688" font-size="16" letter-spacing="2" text-anchor="middle" transform="rotate(-8 400 688)">JULY · IV</text>
+          <text x="410" y="724" font-size="16" letter-spacing="2" text-anchor="middle" transform="rotate(-8 410 724)">MDCCLXXVI</text>
+        </g>
+
+        <!-- ============================================ -->
+        <!-- RIGHT ARM RAISED HOLDING TORCH (THE iconic arm) -->
+        <!-- Upper arm: shoulder → ascending up-and-out -->
+        <path class="bp bp-heavy" d="M 702 590 L 740 540 Q 770 480 790 410 L 808 320 L 822 230 L 832 150"/>
         <!-- Inner arm contour -->
-        <path class="fine" d="M 468 366 L 492 296 L 512 234 L 528 174"/>
+        <path class="bp bp-fine" d="M 686 592 L 720 545 Q 752 488 772 416 L 792 326 L 808 234 L 822 154"/>
         <!-- Outer arm contour -->
-        <path class="fine" d="M 492 358 L 520 294 L 538 232 L 552 170"/>
-        <!-- Hand gripping torch handle -->
-        <path d="M 538 170 L 548 160 L 558 158 L 562 162"/>
-        <path d="M 528 174 L 540 162"/>
+        <path class="bp bp-fine" d="M 716 588 Q 758 522 790 410 L 810 320 L 824 232 L 840 152"/>
+        <!-- Hand gripping torch -->
+        <path class="bp bp-heavy" d="M 832 150 L 845 138 L 860 134 L 870 140 L 866 158 L 850 168 L 838 162"/>
 
         <!-- ============================================ -->
         <!-- TORCH -->
-        <!-- Torch handle (cylindrical) -->
-        <path class="heavy" d="M 546 162 L 550 130 L 558 130 L 562 162 Z"/>
-        <line class="fine" x1="554" y1="130" x2="554" y2="162"/>
-        <!-- Torch bowl / cup -->
-        <path class="heavy" d="M 542 130 L 544 116 L 564 116 L 566 130 Z"/>
-        <!-- Decorative rim -->
-        <line x1="542" y1="124" x2="566" y2="124"/>
-        <!-- FLAME -->
-        <path class="heavy" d="
-          M 548 116
-          Q 544 100 548 88
-          Q 552 78 556 84
-          Q 560 72 564 80
-          Q 568 70 568 80
-          Q 574 78 570 92
-          Q 578 90 572 102
-          Q 580 100 574 110
-          Q 568 116 560 116
+        <!-- Torch shaft -->
+        <path class="bp bp-heavy" d="M 838 130 L 838 80 L 870 80 L 870 130 Z"/>
+        <line class="bp bp-fine" x1="854" y1="80" x2="854" y2="130"/>
+        <!-- Decorative bands on shaft -->
+        <line class="bp bp-fine" x1="838" y1="92" x2="870" y2="92"/>
+        <line class="bp bp-fine" x1="838" y1="118" x2="870" y2="118"/>
+        <!-- Torch bowl/cup -->
+        <path class="bp bp-heavy" d="M 826 80 L 832 60 L 876 60 L 882 80 Z"/>
+        <!-- Bowl decoration -->
+        <line class="bp bp-fine" x1="832" y1="68" x2="876" y2="68"/>
+        <!-- FLAME (detailed, multi-tongue) -->
+        <path class="bp bp-heavy" d="
+          M 832 60
+          Q 824 30 838 12
+          Q 846 0 854 14
+          Q 856 -8 866 8
+          Q 872 -4 874 14
+          Q 884 6 880 28
+          Q 894 24 884 46
+          Q 898 42 888 60
+          L 876 60
           Z"/>
         <!-- Inner flame -->
-        <path class="fine" d="M 554 110 Q 556 96 560 88 Q 564 80 564 100 Z"/>
+        <path class="bp" d="M 846 56 Q 844 28 854 14 Q 866 4 866 32 Q 866 52 856 58 Z"/>
+        <!-- Innermost flame core -->
+        <path class="bp bp-fine" d="M 854 52 Q 852 36 858 22 Q 862 18 862 40 Q 860 50 856 54 Z"/>
 
         <!-- ============================================ -->
         <!-- NECK -->
-        <line x1="386" y1="370" x2="386" y2="305"/>
-        <line x1="414" y1="370" x2="414" y2="305"/>
-        <!-- Neck shadow line -->
-        <line class="fine" x1="388" y1="345" x2="412" y2="345"/>
+        <path class="bp bp-heavy" d="M 568 558 L 568 506"/>
+        <path class="bp bp-heavy" d="M 632 558 L 632 506"/>
+        <!-- Neck shadow lines -->
+        <line class="bp bp-fine" x1="570" y1="540" x2="630" y2="540"/>
+        <line class="bp bp-fine" x1="572" y1="552" x2="628" y2="552"/>
+
+        <!-- Collarbone (subtle) -->
+        <path class="bp bp-fine" d="M 552 568 Q 600 582 648 568"/>
 
         <!-- ============================================ -->
-        <!-- HEAD -->
+        <!-- HEAD - more detailed Greek/Roman classical face -->
         <!-- Face outline -->
-        <ellipse cx="400" cy="248" rx="34" ry="46"/>
-        <!-- Hair / forehead line -->
-        <path d="M 370 232 Q 400 218 430 232"/>
-        <!-- Eyes (suggested) -->
-        <line class="fine" x1="386" y1="250" x2="394" y2="250"/>
-        <line class="fine" x1="406" y1="250" x2="414" y2="250"/>
+        <ellipse class="bp bp-heavy" cx="600" cy="430" rx="48" ry="68"/>
+        <!-- Hair line under crown -->
+        <path class="bp" d="M 558 400 Q 600 380 642 400"/>
+        <path class="bp bp-fine" d="M 558 412 Q 600 396 642 412"/>
+        <!-- Forehead curve -->
+        <path class="bp bp-fine" d="M 560 410 Q 600 422 640 410"/>
+        <!-- Eyebrows -->
+        <path class="bp" d="M 572 432 Q 582 428 592 432"/>
+        <path class="bp" d="M 608 432 Q 618 428 628 432"/>
+        <!-- Eyes -->
+        <ellipse class="bp" cx="582" cy="440" rx="6" ry="3"/>
+        <ellipse class="bp" cx="618" cy="440" rx="6" ry="3"/>
+        <!-- Pupils -->
+        <circle class="bp bp-fine" cx="582" cy="441" r="1.2"/>
+        <circle class="bp bp-fine" cx="618" cy="441" r="1.2"/>
         <!-- Nose -->
-        <line class="fine" x1="400" y1="252" x2="397" y2="270"/>
+        <path class="bp" d="M 600 444 L 596 470 Q 596 478 600 480 Q 604 478 604 470 L 600 444"/>
+        <line class="bp bp-fine" x1="596" y1="466" x2="604" y2="466"/>
         <!-- Mouth -->
-        <path class="fine" d="M 390 280 Q 400 285 410 280"/>
-        <!-- Chin shadow -->
-        <line class="fine" x1="390" y1="288" x2="410" y2="288"/>
+        <path class="bp" d="M 588 488 Q 600 494 612 488"/>
+        <path class="bp bp-fine" d="M 590 492 Q 600 489 610 492"/>
+        <!-- Chin -->
+        <path class="bp bp-fine" d="M 588 498 Q 600 504 612 498"/>
+        <!-- Cheekbone shadow lines -->
+        <path class="bp bp-fine" d="M 562 450 Q 568 460 574 458"/>
+        <path class="bp bp-fine" d="M 638 450 Q 632 460 626 458"/>
+        <!-- Ear suggestions -->
+        <path class="bp bp-fine" d="M 558 450 Q 552 462 558 472"/>
+        <path class="bp bp-fine" d="M 642 450 Q 648 462 642 472"/>
 
         <!-- ============================================ -->
-        <!-- CROWN — diadem ring + 7 long pointed rays -->
-        <!-- Crown band/ring (sits on top of head) -->
-        <path class="heavy" d="M 366 218 Q 400 210 434 218 L 432 208 Q 400 200 368 208 Z"/>
-        <!-- Decorative band lines -->
-        <line class="fine" x1="372" y1="212" x2="428" y2="212"/>
+        <!-- CROWN — detailed diadem ring + 7 long pointed rays -->
+        <!-- Diadem ring (decorated band) -->
+        <path class="bp bp-heavy" d="M 552 388 Q 600 375 648 388 L 644 366 Q 600 353 556 366 Z"/>
+        <!-- Decorative band lines inside diadem -->
+        <line class="bp bp-fine" x1="560" y1="378" x2="640" y2="378"/>
+        <line class="bp bp-fine" x1="562" y1="382" x2="638" y2="382"/>
+        <!-- Small decorative gems/circles on the diadem band -->
+        <circle class="bp bp-fine" cx="580" cy="378" r="2.5"/>
+        <circle class="bp bp-fine" cx="600" cy="376" r="2.5"/>
+        <circle class="bp bp-fine" cx="620" cy="378" r="2.5"/>
 
-        <!-- Seven crown rays (longer, more dramatic) — central + 3 each side -->
-        <!-- Ray 1 (center, straight up) -->
-        <path class="heavy" d="M 400 200 L 400 130 L 396 138 M 400 130 L 404 138"/>
-        <line class="fine" x1="400" y1="170" x2="394" y2="178"/>
-        <line class="fine" x1="400" y1="170" x2="406" y2="178"/>
+        <!-- Seven rays (longer, sharper, fanning outward) -->
+        <!-- Ray 1: center, straight up -->
+        <path class="bp bp-heavy" d="M 596 368 L 600 200 L 604 368 Z"/>
+        <line class="bp bp-fine" x1="600" y1="280" x2="596" y2="290"/>
+        <line class="bp bp-fine" x1="600" y1="280" x2="604" y2="290"/>
 
-        <!-- Ray 2 (slight right tilt) -->
-        <path class="heavy" d="M 410 202 L 426 130"/>
-        <path d="M 418 168 L 414 174 M 418 168 L 424 172"/>
+        <!-- Ray 2: slight right tilt -->
+        <path class="bp bp-heavy" d="M 614 370 L 638 204 L 622 372 Z"/>
+        <line class="bp bp-fine" x1="628" y1="282" x2="622" y2="290"/>
 
-        <!-- Ray 3 (more right tilt) -->
-        <path class="heavy" d="M 420 206 L 452 140"/>
-        <path d="M 434 178 L 432 184 M 434 178 L 440 180"/>
+        <!-- Ray 3: more right tilt -->
+        <path class="bp bp-heavy" d="M 628 376 L 668 222 L 638 380 Z"/>
 
-        <!-- Ray 4 (far right, more horizontal) -->
-        <path class="heavy" d="M 430 214 L 480 168"/>
-        <path d="M 454 196 L 454 202 M 454 196 L 460 198"/>
+        <!-- Ray 4: far right, more horizontal -->
+        <path class="bp bp-heavy" d="M 640 386 L 712 256 L 652 392 Z"/>
 
-        <!-- Ray 5 (slight left tilt) — mirror of Ray 2 -->
-        <path class="heavy" d="M 390 202 L 374 130"/>
-        <path d="M 382 168 L 386 174 M 382 168 L 376 172"/>
+        <!-- Ray 5: slight left (mirror of 2) -->
+        <path class="bp bp-heavy" d="M 586 370 L 562 204 L 578 372 Z"/>
+        <line class="bp bp-fine" x1="572" y1="282" x2="578" y2="290"/>
 
-        <!-- Ray 6 (more left tilt) — mirror of Ray 3 -->
-        <path class="heavy" d="M 380 206 L 348 140"/>
-        <path d="M 366 178 L 368 184 M 366 178 L 360 180"/>
+        <!-- Ray 6: more left (mirror of 3) -->
+        <path class="bp bp-heavy" d="M 572 376 L 532 222 L 562 380 Z"/>
 
-        <!-- Ray 7 (far left, more horizontal) — mirror of Ray 4 -->
-        <path class="heavy" d="M 370 214 L 320 168"/>
-        <path d="M 346 196 L 346 202 M 346 196 L 340 198"/>
+        <!-- Ray 7: far left, more horizontal (mirror of 4) -->
+        <path class="bp bp-heavy" d="M 560 386 L 488 256 L 548 392 Z"/>
+
+        <!-- Decorative element behind crown (suggestion of halo/light) -->
+        <path class="bp bp-fine" d="M 510 360 Q 600 320 690 360" opacity="0.5"/>
 
       </g>
 
       <!-- ============================================ -->
-      <!-- ANNOTATIONS -->
-      <text class="callout" x="490" y="98">FLAME · GILDED · MCMLXXXVI</text>
-      <line x1="486" y1="94" x2="572" y2="94" stroke="#7DD3FC" stroke-width="0.5" stroke-dasharray="2 3" opacity="0.6"/>
+      <!-- LEADER LINES + LABELS for technical annotations -->
+      <g>
+        <!-- Crown / 7 rays -->
+        <line class="leader" x1="500" y1="280" x2="280" y2="280"/>
+        <circle cx="500" cy="280" r="2" fill="#7DD3FC"/>
+        <text class="label" x="270" y="278" text-anchor="end">CROWN · 7 RAYS · 7 SEAS</text>
+        <text class="label" x="270" y="292" text-anchor="end">DIADEM BAND · GILDED COPPER</text>
 
-      <text class="callout" x="240" y="172">CROWN · 7 RAYS · 7 SEAS</text>
-      <line x1="320" y1="168" x2="340" y2="168" stroke="#7DD3FC" stroke-width="0.5" stroke-dasharray="2 3" opacity="0.6"/>
+        <!-- Torch flame -->
+        <line class="leader" x1="858" y1="28" x2="1020" y2="28"/>
+        <circle cx="858" cy="28" r="2" fill="#7DD3FC"/>
+        <text class="label" x="1030" y="26">FLAME · 24K GOLD LEAF · MCMLXXXVI</text>
+        <text class="label" x="1030" y="40">VISIBLE 11 KM</text>
 
-      <text class="callout" x="180" y="448">TABULA · JULY · IV · MDCCLXXVI</text>
-      <line x1="232" y1="444" x2="180" y2="444" stroke="#7DD3FC" stroke-width="0.5" stroke-dasharray="2 3" opacity="0.6"/>
+        <!-- Right arm -->
+        <line class="leader" x1="810" y1="380" x2="990" y2="380"/>
+        <circle cx="810" cy="380" r="2" fill="#7DD3FC"/>
+        <text class="label" x="1000" y="378">RIGHT ARM · 12.8 M</text>
+        <text class="label" x="1000" y="392">COPPER SHEET · 2.38 MM</text>
 
-      <text class="callout" x="500" y="368">RIGHT ARM · 12.8 M</text>
-      <line x1="498" y1="364" x2="490" y2="358" stroke="#7DD3FC" stroke-width="0.5" stroke-dasharray="2 3" opacity="0.6"/>
+        <!-- Tablet -->
+        <line class="leader" x1="345" y1="720" x2="210" y2="720"/>
+        <circle cx="345" cy="720" r="2" fill="#7DD3FC"/>
+        <text class="label" x="200" y="718" text-anchor="end">TABULA · 7.19 × 4.14 M</text>
+        <text class="label" x="200" y="732" text-anchor="end">INSCR · JULY IV MDCCLXXVI</text>
 
-      <text class="callout" x="540" y="760">CU SHEET · 2.4 MM</text>
-      <line x1="535" y1="756" x2="495" y2="750" stroke="#7DD3FC" stroke-width="0.5" stroke-dasharray="2 3" opacity="0.6"/>
+        <!-- Robe / chiton -->
+        <line class="leader" x1="700" y1="900" x2="940" y2="900"/>
+        <circle cx="700" cy="900" r="2" fill="#7DD3FC"/>
+        <text class="label" x="950" y="898">PEPLOS · 354 PLATES</text>
+        <text class="label" x="950" y="912">ARMATURE · WROUGHT IRON</text>
 
-      <text class="callout" x="540" y="892">FORT WOOD · 11-POINT STAR</text>
-      <line x1="535" y1="888" x2="555" y2="888" stroke="#7DD3FC" stroke-width="0.5" stroke-dasharray="2 3" opacity="0.6"/>
+        <!-- Pedestal cornice -->
+        <line class="leader" x1="755" y1="1050" x2="960" y2="1050"/>
+        <circle cx="755" cy="1050" r="2" fill="#7DD3FC"/>
+        <text class="label" x="970" y="1048">PEDESTAL · R.M. HUNT · 1885</text>
+        <text class="label" x="970" y="1062">GRANITE · GOULDS QUARRY</text>
 
-      <!-- Y-axis tick labels (heights in m) -->
-      <text class="callout" x="78" y="124" fill="#7DD3FC" opacity="0.5">93M</text>
-      <text class="callout" x="78" y="294" fill="#7DD3FC" opacity="0.5">76M</text>
-      <text class="callout" x="78" y="544" fill="#7DD3FC" opacity="0.5">53M</text>
-      <text class="callout" x="78" y="724" fill="#7DD3FC" opacity="0.5">47M</text>
-      <text class="callout" x="78" y="914" fill="#7DD3FC" opacity="0.5">0M</text>
+        <!-- Fort Wood base -->
+        <line class="leader" x1="855" y1="1300" x2="1010" y2="1300"/>
+        <circle cx="855" cy="1300" r="2" fill="#7DD3FC"/>
+        <text class="label" x="1020" y="1298">FORT WOOD · 1808</text>
+        <text class="label" x="1020" y="1312">11-POINTED STAR FORTRESS</text>
+
+        <!-- Bedloe's Island callout -->
+        <line class="leader" x1="600" y1="1372" x2="600" y2="1410"/>
+        <text class="label" x="600" y="1424" text-anchor="middle">LIBERTY ISLAND · UPPER NEW YORK BAY · 40°41'21"N</text>
+      </g>
 
     </svg>
   </div>
 
   <div class="bot-strip">
     <span>SCALE 1:200 · METRIC</span>
-    <span>FRONT ELEVATION · SHEET A</span>
-    <span>BARTHOLDI · EIFFEL · MDCCCLXXXVI</span>
+    <span>SHEET A — FRONT ELEVATION</span>
+    <span>DRG №01 / 01 · LIBERTY ENLIGHTENING THE WORLD</span>
   </div>
 </body></html>

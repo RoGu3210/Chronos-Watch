@@ -2,344 +2,614 @@
 <html><head><meta charset="utf-8"><style>
   html, body { margin: 0; padding: 0; }
   body {
-    width: 1600px; height: 1200px; position: relative;
+    width: 1600px; height: 1200px; position: relative; overflow: hidden;
     background:
-      radial-gradient(ellipse 60% 40% at 70% 18%, rgba(255,200,150,0.06) 0%, transparent 60%),
-      radial-gradient(ellipse 80% 50% at 50% 85%, rgba(125,211,252,0.10) 0%, transparent 70%),
-      linear-gradient(180deg, #050811 0%, #08090C 35%, #0B0E14 70%, #0E1219 100%);
-    overflow: hidden;
+      /* Warm torch glow upper-right */
+      radial-gradient(ellipse 50% 35% at 72% 12%, rgba(255,200,140,0.10) 0%, transparent 60%),
+      /* Cool moon/sky glow center-top */
+      radial-gradient(ellipse 70% 40% at 50% 10%, rgba(180,210,235,0.06) 0%, transparent 70%),
+      /* Harbor mist at base */
+      radial-gradient(ellipse 90% 30% at 50% 92%, rgba(125,180,200,0.10) 0%, transparent 70%),
+      /* Vertical sky gradient: deep navy → near-black */
+      linear-gradient(180deg, #060A14 0%, #08090E 30%, #0A0C12 60%, #0E1116 90%, #161A20 100%);
   }
-  /* Subtle star field in the upper sky */
+  /* Star field */
   body::before {
     content: ""; position: absolute; inset: 0;
     background-image:
-      radial-gradient(1px 1px at 8%  6%, rgba(237,234,224,0.5) 50%, transparent 50%),
-      radial-gradient(1px 1px at 17% 12%, rgba(237,234,224,0.3) 50%, transparent 50%),
-      radial-gradient(1px 1px at 23% 5%, rgba(237,234,224,0.45) 50%, transparent 50%),
-      radial-gradient(1px 1px at 34% 14%, rgba(237,234,224,0.3) 50%, transparent 50%),
-      radial-gradient(2px 2px at 42% 7%, rgba(237,234,224,0.55) 50%, transparent 50%),
-      radial-gradient(1px 1px at 58% 11%, rgba(237,234,224,0.3) 50%, transparent 50%),
-      radial-gradient(1px 1px at 68% 4%, rgba(237,234,224,0.4) 50%, transparent 50%),
-      radial-gradient(1px 1px at 78% 10%, rgba(237,234,224,0.35) 50%, transparent 50%),
-      radial-gradient(1px 1px at 88% 6%, rgba(237,234,224,0.5) 50%, transparent 50%),
-      radial-gradient(1px 1px at 94% 14%, rgba(237,234,224,0.3) 50%, transparent 50%),
-      radial-gradient(1px 1px at 6% 22%, rgba(237,234,224,0.3) 50%, transparent 50%),
-      radial-gradient(1px 1px at 95% 25%, rgba(237,234,224,0.3) 50%, transparent 50%);
-  }
-  /* Distant water horizon */
-  body::after {
-    content: ""; position: absolute;
-    left: 0; right: 0; bottom: 0; height: 18%;
-    background:
-      linear-gradient(180deg, transparent 0%, rgba(125,211,252,0.04) 30%, rgba(125,211,252,0.12) 100%);
-    pointer-events: none;
+      radial-gradient(1px 1px at 4%  3%, rgba(237,234,224,0.45) 50%, transparent 50%),
+      radial-gradient(1px 1px at 9%  8%, rgba(237,234,224,0.3) 50%, transparent 50%),
+      radial-gradient(2px 2px at 13% 5%, rgba(237,234,224,0.55) 50%, transparent 50%),
+      radial-gradient(1px 1px at 18% 12%, rgba(237,234,224,0.3) 50%, transparent 50%),
+      radial-gradient(1px 1px at 22% 4%, rgba(237,234,224,0.4) 50%, transparent 50%),
+      radial-gradient(1px 1px at 27% 9%, rgba(237,234,224,0.3) 50%, transparent 50%),
+      radial-gradient(1px 1px at 32% 14%, rgba(237,234,224,0.35) 50%, transparent 50%),
+      radial-gradient(2px 2px at 38% 6%, rgba(237,234,224,0.55) 50%, transparent 50%),
+      radial-gradient(1px 1px at 43% 11%, rgba(237,234,224,0.3) 50%, transparent 50%),
+      radial-gradient(1px 1px at 47% 3%, rgba(237,234,224,0.4) 50%, transparent 50%),
+      radial-gradient(1px 1px at 53% 8%, rgba(237,234,224,0.35) 50%, transparent 50%),
+      radial-gradient(1px 1px at 59% 13%, rgba(237,234,224,0.3) 50%, transparent 50%),
+      radial-gradient(2px 2px at 63% 5%, rgba(237,234,224,0.5) 50%, transparent 50%),
+      radial-gradient(1px 1px at 68% 10%, rgba(237,234,224,0.3) 50%, transparent 50%),
+      radial-gradient(1px 1px at 76% 4%, rgba(237,234,224,0.4) 50%, transparent 50%),
+      radial-gradient(1px 1px at 81% 9%, rgba(237,234,224,0.3) 50%, transparent 50%),
+      radial-gradient(1px 1px at 85% 14%, rgba(237,234,224,0.35) 50%, transparent 50%),
+      radial-gradient(1px 1px at 91% 6%, rgba(237,234,224,0.5) 50%, transparent 50%),
+      radial-gradient(1px 1px at 95% 11%, rgba(237,234,224,0.3) 50%, transparent 50%),
+      radial-gradient(1px 1px at 7%  18%, rgba(237,234,224,0.25) 50%, transparent 50%),
+      radial-gradient(1px 1px at 24% 22%, rgba(237,234,224,0.2) 50%, transparent 50%),
+      radial-gradient(1px 1px at 56% 18%, rgba(237,234,224,0.25) 50%, transparent 50%),
+      radial-gradient(1px 1px at 92% 22%, rgba(237,234,224,0.25) 50%, transparent 50%);
   }
   .stage {
     position: absolute; inset: 0;
     display: flex; align-items: center; justify-content: center;
+    z-index: 2;
   }
   svg { width: 100%; height: 100%; display: block; }
-  .grain {
-    position: absolute; inset: 0; pointer-events: none;
-    opacity: 0.12; mix-blend-mode: overlay;
-    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.85  0 0 0 0 0.92  0 0 0 0 1  0 0 0 0.6 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  /* Distant city light suggestion on horizon */
+  .horizon-lights {
+    position: absolute; bottom: 12%; left: 5%; right: 5%;
+    height: 4px;
+    background:
+      radial-gradient(1.5px 1.5px at 12% 50%, rgba(255,210,140,0.6) 50%, transparent 50%),
+      radial-gradient(1px 1px at 22% 50%, rgba(255,210,140,0.5) 50%, transparent 50%),
+      radial-gradient(2px 2px at 32% 50%, rgba(255,200,130,0.7) 50%, transparent 50%),
+      radial-gradient(1px 1px at 42% 50%, rgba(255,220,160,0.5) 50%, transparent 50%),
+      radial-gradient(1.5px 1.5px at 70% 50%, rgba(255,210,140,0.6) 50%, transparent 50%),
+      radial-gradient(1px 1px at 78% 50%, rgba(255,200,130,0.5) 50%, transparent 50%),
+      radial-gradient(2px 2px at 86% 50%, rgba(255,220,160,0.7) 50%, transparent 50%);
+    z-index: 1;
   }
-  /* Atmospheric haze near base */
+  /* Water reflection texture */
+  .water {
+    position: absolute; bottom: 0; left: 0; right: 0; height: 14%;
+    background:
+      linear-gradient(180deg, transparent 0%, rgba(80,130,160,0.10) 30%, rgba(50,90,120,0.20) 100%);
+    z-index: 1;
+  }
+  .water::before {
+    content: ""; position: absolute; inset: 0;
+    background-image:
+      repeating-linear-gradient(180deg, transparent 0px, transparent 4px, rgba(125,200,230,0.05) 4px, rgba(125,200,230,0.05) 5px);
+  }
+  /* Atmospheric haze at base */
   .haze {
     position: absolute; left: 0; right: 0;
-    bottom: 6%; height: 30%;
-    background: radial-gradient(ellipse 60% 100% at 50% 100%, rgba(125,211,252,0.06) 0%, transparent 60%);
-    pointer-events: none;
+    bottom: 8%; height: 32%;
+    background: radial-gradient(ellipse 70% 100% at 50% 100%, rgba(125,180,220,0.08) 0%, transparent 70%);
+    z-index: 2; pointer-events: none;
+  }
+  /* Film grain */
+  .grain {
+    position: absolute; inset: 0; pointer-events: none;
+    opacity: 0.12; mix-blend-mode: overlay; z-index: 4;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.85  0 0 0 0 0.92  0 0 0 0 1  0 0 0 0.6 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  }
+  /* Subtle vignette */
+  .vignette {
+    position: absolute; inset: 0; pointer-events: none; z-index: 3;
+    background: radial-gradient(ellipse 90% 90% at 50% 50%, transparent 40%, rgba(0,0,0,0.45) 100%);
   }
 </style></head>
 <body>
+  <div class="horizon-lights"></div>
+
   <div class="stage">
-    <svg viewBox="0 0 800 1000" preserveAspectRatio="xMidYMid meet">
+    <svg viewBox="0 0 1200 1500" preserveAspectRatio="xMidYMid meet">
       <defs>
-        <!-- Verdigris (oxidized copper) gradient — the famous patina color -->
+        <!-- VERDIGRIS — multi-stop copper-patina gradient -->
         <linearGradient id="patina" x1="0%" y1="0%" x2="0%" y2="100%">
-          <stop offset="0%"  stop-color="#B8DAD0"/>
-          <stop offset="25%" stop-color="#88B5A6"/>
-          <stop offset="55%" stop-color="#5C8C7E"/>
-          <stop offset="85%" stop-color="#3A6258"/>
-          <stop offset="100%" stop-color="#234039"/>
+          <stop offset="0%"   stop-color="#C5DCD4"/>
+          <stop offset="15%"  stop-color="#9CBFB3"/>
+          <stop offset="35%"  stop-color="#76A395"/>
+          <stop offset="55%"  stop-color="#558677"/>
+          <stop offset="75%"  stop-color="#3A6759"/>
+          <stop offset="100%" stop-color="#21413A"/>
         </linearGradient>
-        <linearGradient id="patina-dark" x1="0%" y1="0%" x2="0%" y2="100%">
-          <stop offset="0%"  stop-color="#5C8C7E"/>
-          <stop offset="100%" stop-color="#1A2C28"/>
+        <!-- Side-lit verdigris (darker, for the body's left side which is in shadow) -->
+        <linearGradient id="patina-side" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%"   stop-color="rgba(20,40,35,0.55)"/>
+          <stop offset="60%"  stop-color="rgba(20,40,35,0)"/>
+          <stop offset="100%" stop-color="rgba(20,40,35,0)"/>
         </linearGradient>
+        <!-- Warm rim light from right (torch direction) -->
         <linearGradient id="rim-warm" x1="0%" y1="0%" x2="100%" y2="0%">
-          <stop offset="0%"  stop-color="rgba(255,200,150,0)"/>
-          <stop offset="80%" stop-color="rgba(255,200,150,0.18)"/>
-          <stop offset="100%" stop-color="rgba(255,210,160,0.45)"/>
+          <stop offset="0%"   stop-color="rgba(255,180,110,0)"/>
+          <stop offset="75%"  stop-color="rgba(255,190,130,0.18)"/>
+          <stop offset="95%"  stop-color="rgba(255,200,140,0.55)"/>
+          <stop offset="100%" stop-color="rgba(255,210,160,0.85)"/>
         </linearGradient>
+        <!-- Cool rim light from left (moonlight/harbor) -->
         <linearGradient id="rim-cool" x1="100%" y1="0%" x2="0%" y2="0%">
-          <stop offset="0%"  stop-color="rgba(125,211,252,0)"/>
-          <stop offset="80%" stop-color="rgba(125,211,252,0.10)"/>
-          <stop offset="100%" stop-color="rgba(125,211,252,0.25)"/>
+          <stop offset="0%"   stop-color="rgba(140,180,220,0)"/>
+          <stop offset="75%"  stop-color="rgba(140,200,230,0.10)"/>
+          <stop offset="100%" stop-color="rgba(160,210,240,0.40)"/>
         </linearGradient>
+        <!-- Stone gradient for pedestal -->
         <linearGradient id="stone" x1="0%" y1="0%" x2="0%" y2="100%">
-          <stop offset="0%"  stop-color="#52483B"/>
-          <stop offset="60%" stop-color="#332B22"/>
-          <stop offset="100%" stop-color="#1A1410"/>
+          <stop offset="0%"   stop-color="#5A4F40"/>
+          <stop offset="20%"  stop-color="#403628"/>
+          <stop offset="60%"  stop-color="#2B2218"/>
+          <stop offset="100%" stop-color="#161108"/>
         </linearGradient>
-        <radialGradient id="flame-outer" cx="50%" cy="65%" r="60%">
-          <stop offset="0%"  stop-color="rgba(255,215,140,0.95)"/>
-          <stop offset="50%" stop-color="rgba(255,160,60,0.55)"/>
+        <linearGradient id="stone-light" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%"   stop-color="rgba(140,120,90,0.35)"/>
+          <stop offset="60%"  stop-color="rgba(140,120,90,0)"/>
+        </linearGradient>
+        <!-- Torch flame gradients -->
+        <radialGradient id="flame-outer" cx="50%" cy="65%" r="55%">
+          <stop offset="0%"   stop-color="rgba(255,220,150,0.95)"/>
+          <stop offset="50%"  stop-color="rgba(255,160,60,0.55)"/>
           <stop offset="100%" stop-color="rgba(255,120,30,0)"/>
         </radialGradient>
-        <radialGradient id="flame-core" cx="50%" cy="60%" r="40%">
-          <stop offset="0%"  stop-color="#FFFCEC"/>
-          <stop offset="60%" stop-color="rgba(255,232,140,0.9)"/>
+        <radialGradient id="flame-core" cx="50%" cy="58%" r="38%">
+          <stop offset="0%"   stop-color="#FFFCEC"/>
+          <stop offset="60%"  stop-color="rgba(255,232,140,0.9)"/>
           <stop offset="100%" stop-color="rgba(255,200,80,0)"/>
         </radialGradient>
-        <radialGradient id="flame-glow" cx="50%" cy="50%" r="50%">
-          <stop offset="0%"  stop-color="rgba(255,180,90,0.35)"/>
-          <stop offset="60%" stop-color="rgba(255,180,90,0.10)"/>
+        <radialGradient id="flame-halo" cx="50%" cy="50%" r="50%">
+          <stop offset="0%"   stop-color="rgba(255,180,90,0.40)"/>
+          <stop offset="50%"  stop-color="rgba(255,180,90,0.15)"/>
           <stop offset="100%" stop-color="rgba(255,180,90,0)"/>
         </radialGradient>
+        <!-- Gold leaf gradient for torch bowl + flame base -->
+        <linearGradient id="gold" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%"   stop-color="#F0CC78"/>
+          <stop offset="50%"  stop-color="#C99E48"/>
+          <stop offset="100%" stop-color="#8A6928"/>
+        </linearGradient>
+
+        <!-- Patina spot pattern for texture -->
+        <pattern id="patinaSpots" x="0" y="0" width="40" height="40" patternUnits="userSpaceOnUse">
+          <circle cx="8" cy="12" r="2" fill="rgba(60,90,80,0.18)"/>
+          <circle cx="24" cy="28" r="1.5" fill="rgba(60,90,80,0.15)"/>
+          <circle cx="32" cy="6" r="1" fill="rgba(80,110,100,0.15)"/>
+          <circle cx="16" cy="34" r="1.2" fill="rgba(60,90,80,0.12)"/>
+        </pattern>
+        <!-- Stone texture pattern -->
+        <pattern id="stoneTex" x="0" y="0" width="50" height="50" patternUnits="userSpaceOnUse">
+          <rect x="0" y="0" width="50" height="50" fill="none"/>
+          <line x1="0" y1="12" x2="50" y2="11" stroke="rgba(80,70,55,0.12)" stroke-width="0.5"/>
+          <line x1="0" y1="28" x2="50" y2="29" stroke="rgba(80,70,55,0.10)" stroke-width="0.5"/>
+          <line x1="0" y1="42" x2="50" y2="41" stroke="rgba(80,70,55,0.12)" stroke-width="0.5"/>
+          <line x1="20" y1="0" x2="22" y2="50" stroke="rgba(60,50,40,0.08)" stroke-width="0.4"/>
+          <line x1="42" y1="0" x2="40" y2="50" stroke="rgba(60,50,40,0.08)" stroke-width="0.4"/>
+        </pattern>
       </defs>
 
-      <!-- FAR HORIZON LINE -->
-      <rect x="0" y="908" width="800" height="2" fill="rgba(125,211,252,0.18)"/>
+      <!-- HORIZON / SEA LINE -->
+      <rect x="0" y="1340" width="1200" height="2" fill="rgba(125,180,220,0.30)"/>
+      <rect x="0" y="1346" width="1200" height="1" fill="rgba(125,180,220,0.15)"/>
 
-      <!-- TORCH FLAME GLOW (background halo so it shows behind everything) -->
-      <ellipse cx="556" cy="98" rx="90" ry="100" fill="url(#flame-glow)"/>
+      <!-- Torch flame glow halo (background) -->
+      <ellipse cx="854" cy="30" rx="180" ry="160" fill="url(#flame-halo)" opacity="0.7"/>
+      <ellipse cx="854" cy="30" rx="120" ry="110" fill="url(#flame-halo)" opacity="0.9"/>
 
       <!-- ============================================ -->
-      <!-- PEDESTAL (dark stone) -->
-      <!-- Fort Wood star base (front face) -->
-      <path d="M 250 910 L 250 870 L 550 870 L 550 910 Z" fill="url(#stone)"/>
-      <!-- Star point indications on left + right (suggest 11-point fortification) -->
-      <polygon points="250,870 234,860 244,850 250,860" fill="url(#stone)"/>
-      <polygon points="550,870 566,860 556,850 550,860" fill="url(#stone)"/>
-      <polygon points="244,850 230,838 240,830 254,840" fill="url(#stone)"/>
-      <polygon points="556,850 570,838 560,830 546,840" fill="url(#stone)"/>
-      <!-- Lower tier -->
-      <path d="M 285 870 L 285 830 L 515 830 L 515 870 Z" fill="url(#stone)"/>
+      <!-- FORT WOOD STAR BASE -->
+      <!-- Main rectangle of star fort -->
+      <rect x="350" y="1260" width="500" height="80" fill="url(#stone)"/>
+      <rect x="350" y="1260" width="500" height="80" fill="url(#stoneTex)"/>
+      <!-- Star points -->
+      <polygon points="350,1340 320,1320 300,1290 320,1280 350,1290" fill="url(#stone)"/>
+      <polygon points="350,1290 310,1270 290,1245 320,1255 350,1265" fill="url(#stone)"/>
+      <polygon points="350,1265 305,1245 290,1218 318,1232 350,1240" fill="url(#stone)"/>
+      <polygon points="850,1340 880,1320 900,1290 880,1280 850,1290" fill="url(#stone)"/>
+      <polygon points="850,1290 890,1270 910,1245 880,1255 850,1265" fill="url(#stone)"/>
+      <polygon points="850,1265 895,1245 910,1218 882,1232 850,1240" fill="url(#stone)"/>
+      <!-- Top trim molding on fort -->
+      <rect x="350" y="1252" width="500" height="4" fill="rgba(80,70,55,0.6)"/>
+      <!-- Bastion vertical ribs (subtle shadow lines) -->
+      <g stroke="rgba(20,15,10,0.6)" stroke-width="0.8">
+        <line x1="430" y1="1260" x2="430" y2="1340"/>
+        <line x1="510" y1="1260" x2="510" y2="1340"/>
+        <line x1="600" y1="1260" x2="600" y2="1340"/>
+        <line x1="690" y1="1260" x2="690" y2="1340"/>
+        <line x1="770" y1="1260" x2="770" y2="1340"/>
+      </g>
+      <!-- Rim light on top edge of fort -->
+      <rect x="350" y="1252" width="500" height="2" fill="rgba(180,200,220,0.18)"/>
+
+      <!-- ============================================ -->
+      <!-- PEDESTAL — multi-tier Hunt's design -->
+      <!-- Lower tier (transition platform) -->
+      <rect x="410" y="1200" width="380" height="60" fill="url(#stone)"/>
+      <rect x="410" y="1200" width="380" height="60" fill="url(#stoneTex)"/>
+      <rect x="410" y="1200" width="380" height="60" fill="url(#stone-light)" opacity="0.6"/>
+      <!-- Top molding -->
+      <rect x="410" y="1196" width="380" height="3" fill="rgba(120,100,75,0.5)"/>
+      <rect x="410" y="1196" width="380" height="1" fill="rgba(200,180,150,0.18)"/>
+
       <!-- Main pedestal body -->
-      <path d="M 310 830 L 310 740 L 490 740 L 490 830 Z" fill="url(#stone)"/>
-      <!-- Pedestal cornice cap -->
-      <path d="M 316 740 L 310 722 L 490 722 L 484 740 Z" fill="url(#stone)"/>
+      <rect x="450" y="1060" width="300" height="140" fill="url(#stone)"/>
+      <rect x="450" y="1060" width="300" height="140" fill="url(#stoneTex)"/>
+      <!-- Side gradient — light on left -->
+      <rect x="450" y="1060" width="300" height="140" fill="url(#stone-light)" opacity="0.55"/>
 
-      <!-- Subtle texture lines on pedestal -->
-      <g stroke="rgba(237,234,224,0.04)" stroke-width="0.5">
-        <line x1="340" y1="830" x2="340" y2="740"/>
-        <line x1="370" y1="830" x2="370" y2="740"/>
-        <line x1="400" y1="830" x2="400" y2="740"/>
-        <line x1="430" y1="830" x2="430" y2="740"/>
-        <line x1="460" y1="830" x2="460" y2="740"/>
+      <!-- Pilasters (vertical columns) -->
+      <g fill="rgba(20,15,10,0.45)">
+        <rect x="478" y="1060" width="6" height="140"/>
+        <rect x="528" y="1060" width="6" height="140"/>
+        <rect x="578" y="1060" width="6" height="140"/>
+        <rect x="628" y="1060" width="6" height="140"/>
+        <rect x="678" y="1060" width="6" height="140"/>
+        <rect x="722" y="1060" width="6" height="140"/>
       </g>
+      <!-- Pilaster highlight edges -->
+      <g fill="rgba(180,160,130,0.18)">
+        <rect x="476" y="1060" width="1" height="140"/>
+        <rect x="526" y="1060" width="1" height="140"/>
+        <rect x="576" y="1060" width="1" height="140"/>
+        <rect x="626" y="1060" width="1" height="140"/>
+        <rect x="676" y="1060" width="1" height="140"/>
+        <rect x="720" y="1060" width="1" height="140"/>
+      </g>
+
+      <!-- Niche windows (recessed openings) -->
+      <g fill="rgba(0,0,0,0.65)">
+        <rect x="498" y="1100" width="14" height="50"/>
+        <rect x="548" y="1100" width="14" height="50"/>
+        <rect x="598" y="1100" width="14" height="50"/>
+        <rect x="648" y="1100" width="14" height="50"/>
+        <rect x="698" y="1100" width="14" height="50"/>
+      </g>
+      <!-- Niche inner glow (suggesting interior light) -->
+      <g fill="rgba(255,200,140,0.06)">
+        <rect x="498" y="1100" width="14" height="14"/>
+        <rect x="548" y="1100" width="14" height="14"/>
+        <rect x="598" y="1100" width="14" height="14"/>
+        <rect x="648" y="1100" width="14" height="14"/>
+        <rect x="698" y="1100" width="14" height="14"/>
+      </g>
+
+      <!-- Greek key / meander band at bottom of pedestal -->
+      <rect x="450" y="1184" width="300" height="14" fill="rgba(20,15,10,0.55)"/>
+      <g stroke="rgba(140,120,90,0.4)" stroke-width="1" fill="none">
+        <path d="M 460 1187 L 466 1187 L 466 1192 L 472 1192 L 472 1187 L 478 1187 L 478 1195 L 460 1195 Z"/>
+        <path d="M 484 1187 L 490 1187 L 490 1192 L 496 1192 L 496 1187 L 502 1187 L 502 1195 L 484 1195 Z"/>
+        <path d="M 508 1187 L 514 1187 L 514 1192 L 520 1192 L 520 1187 L 526 1187 L 526 1195 L 508 1195 Z"/>
+        <path d="M 532 1187 L 538 1187 L 538 1192 L 544 1192 L 544 1187 L 550 1187 L 550 1195 L 532 1195 Z"/>
+        <path d="M 556 1187 L 562 1187 L 562 1192 L 568 1192 L 568 1187 L 574 1187 L 574 1195 L 556 1195 Z"/>
+        <path d="M 580 1187 L 586 1187 L 586 1192 L 592 1192 L 592 1187 L 598 1187 L 598 1195 L 580 1195 Z"/>
+        <path d="M 604 1187 L 610 1187 L 610 1192 L 616 1192 L 616 1187 L 622 1187 L 622 1195 L 604 1195 Z"/>
+        <path d="M 628 1187 L 634 1187 L 634 1192 L 640 1192 L 640 1187 L 646 1187 L 646 1195 L 628 1195 Z"/>
+        <path d="M 652 1187 L 658 1187 L 658 1192 L 664 1192 L 664 1187 L 670 1187 L 670 1195 L 652 1195 Z"/>
+        <path d="M 676 1187 L 682 1187 L 682 1192 L 688 1192 L 688 1187 L 694 1187 L 694 1195 L 676 1195 Z"/>
+        <path d="M 700 1187 L 706 1187 L 706 1192 L 712 1192 L 712 1187 L 718 1187 L 718 1195 L 700 1195 Z"/>
+        <path d="M 724 1187 L 730 1187 L 730 1192 L 736 1192 L 736 1187 L 742 1187 L 742 1195 L 724 1195 Z"/>
+      </g>
+
+      <!-- Pedestal cornice (top molding) -->
+      <path d="M 462 1060 L 450 1040 L 750 1040 L 738 1060 Z" fill="url(#stone)"/>
+      <path d="M 462 1060 L 450 1040 L 750 1040 L 738 1060 Z" fill="url(#stoneTex)"/>
+      <!-- Cornice top highlight -->
+      <line x1="450" y1="1040" x2="750" y2="1040" stroke="rgba(180,160,130,0.4)" stroke-width="1.5"/>
+      <line x1="450" y1="1043" x2="750" y2="1043" stroke="rgba(180,160,130,0.2)" stroke-width="0.8"/>
+
+      <!-- Plinth (small platform for statue feet) -->
+      <rect x="490" y="1020" width="220" height="20" fill="url(#stone)"/>
+      <line x1="490" y1="1020" x2="710" y2="1020" stroke="rgba(180,160,130,0.3)" stroke-width="1"/>
 
       <!-- ============================================ -->
-      <!-- ROBE — the flowing draped column from the pedestal top to the waist -->
+      <!-- ROBE -->
+      <!-- Main robe shape -->
       <path fill="url(#patina)" d="
-        M 340 722
-        Q 332 700 326 670
-        Q 322 620 322 540
-        L 322 460
-        Q 326 410 350 370
-        L 386 370
-        L 386 305
-        L 414 305
-        L 414 370
-        L 450 370
-        Q 474 410 478 460
-        L 478 540
-        Q 478 620 474 670
-        Q 468 700 460 722
+        M 510 1020
+        Q 502 1000 500 970
+        Q 498 920 498 860
+        L 498 760
+        L 498 660
+        Q 506 620 524 590
+        L 552 558
+        L 568 558
+        L 568 506
+        L 632 506
+        L 632 558
+        L 648 558
+        L 676 590
+        Q 694 620 702 660
+        L 702 760
+        L 702 860
+        Q 702 920 700 970
+        Q 698 1000 690 1020
         Z"/>
 
-      <!-- Robe fold shadows (darker tones on the right side of folds) -->
-      <g fill="rgba(35,64,57,0.4)">
-        <path d="M 350 720 L 354 560 L 358 720 Z"/>
-        <path d="M 372 720 L 376 540 L 380 720 Z"/>
-        <path d="M 392 720 L 396 530 L 400 720 Z"/>
-        <path d="M 412 720 L 416 530 L 420 720 Z"/>
-        <path d="M 432 720 L 436 540 L 440 720 Z"/>
-        <path d="M 452 720 L 456 560 L 460 720 Z"/>
+      <!-- Patina texture overlay -->
+      <path opacity="0.5" fill="url(#patinaSpots)" d="
+        M 510 1020
+        Q 502 1000 500 970
+        Q 498 920 498 860
+        L 498 760
+        L 498 660
+        Q 506 620 524 590
+        L 552 558
+        L 648 558
+        L 676 590
+        Q 694 620 702 660
+        L 702 760
+        L 702 860
+        Q 702 920 700 970
+        Q 698 1000 690 1020
+        Z"/>
+
+      <!-- Vertical drapery folds (deep shadows) -->
+      <g fill="rgba(20,40,35,0.55)">
+        <path d="M 530 1018 Q 530 900 532 800 L 534 760 L 528 760 L 526 800 Q 524 900 522 1018 Z"/>
+        <path d="M 556 1018 Q 558 900 558 800 L 560 760 L 554 760 L 552 800 Q 550 900 548 1018 Z"/>
+        <path d="M 580 1018 Q 582 900 582 800 L 582 760 L 576 760 L 574 800 Q 572 900 570 1018 Z"/>
+        <path d="M 610 1018 Q 610 900 610 800 L 610 760 L 604 760 L 602 800 Q 602 900 600 1018 Z"/>
+        <path d="M 638 1018 Q 638 900 638 800 L 636 760 L 630 760 L 628 800 Q 628 900 628 1018 Z"/>
+        <path d="M 664 1018 Q 662 900 662 800 L 660 760 L 654 760 L 656 800 Q 654 900 654 1018 Z"/>
       </g>
 
-      <!-- Robe highlights (lighter on the left side of folds — light from upper-left) -->
-      <g fill="rgba(184,218,208,0.18)">
-        <path d="M 346 720 L 350 580 L 354 720 Z"/>
-        <path d="M 366 720 L 370 560 L 374 720 Z"/>
-        <path d="M 386 720 L 390 550 L 394 720 Z"/>
+      <!-- Highlight on fold edges (left side, light source from upper-left) -->
+      <g fill="rgba(197,220,212,0.30)">
+        <path d="M 518 1018 Q 518 900 520 800 L 522 760 L 524 760 L 522 800 Q 522 900 522 1018 Z"/>
+        <path d="M 544 1018 Q 546 900 546 800 L 548 760 L 550 760 L 548 800 Q 548 900 548 1018 Z"/>
+        <path d="M 568 1018 Q 568 900 568 800 L 570 760 L 572 760 L 570 800 Q 570 900 572 1018 Z"/>
       </g>
 
-      <!-- Belt/sash band -->
-      <rect x="322" y="520" width="156" height="14" fill="url(#patina-dark)"/>
-      <!-- Diagonal sash drape -->
-      <path d="M 326 480 L 478 440 L 480 452 L 328 492 Z" fill="rgba(35,64,57,0.3)"/>
+      <!-- Horizontal robe cross-folds (subtle) -->
+      <g fill="rgba(20,40,35,0.20)">
+        <path d="M 502 990 Q 600 1004 698 990 L 698 1000 Q 600 1014 502 1000 Z"/>
+        <path d="M 502 920 Q 600 932 698 920 L 698 928 Q 600 940 502 928 Z"/>
+        <path d="M 502 840 Q 600 850 698 840 L 698 848 Q 600 858 502 848 Z"/>
+      </g>
+
+      <!-- Belt / sash band at waist -->
+      <rect x="498" y="740" width="204" height="20" fill="#3D6B5D"/>
+      <rect x="498" y="745" width="204" height="3" fill="rgba(180,200,190,0.18)"/>
+      <rect x="498" y="755" width="204" height="2" fill="rgba(20,40,35,0.45)"/>
+
+      <!-- Diagonal sash band over torso -->
+      <path d="M 504 670 L 698 640 L 702 654 L 508 686 Z" fill="rgba(20,40,35,0.25)"/>
+      <path d="M 504 670 L 698 640" stroke="rgba(180,200,190,0.18)" stroke-width="0.8"/>
 
       <!-- ============================================ -->
-      <!-- LEFT ARM HOLDING TABLET (positioned IN FRONT of robe) -->
-      <!-- The arm extends from left shoulder across the body holding the tablet -->
+      <!-- LEFT ARM HOLDING TABLET -->
       <path fill="url(#patina)" d="
-        M 322 380
-        L 305 370
-        L 285 400
-        L 268 460
-        L 264 510
-        L 280 545
-        L 310 558
-        L 326 552
-        L 332 540
-        L 330 520
-        L 312 510
-        L 296 495
-        L 284 470
-        L 294 430
-        L 310 395
+        M 500 590
+        L 472 580
+        Q 442 600 425 640
+        L 410 720
+        L 410 770
+        Q 414 805 432 832
+        Q 458 855 498 858
+        L 510 854
+        L 514 838
+        L 510 820
+        L 488 810
+        L 466 798
+        L 446 778
+        L 438 750
+        L 442 720
+        L 452 686
+        L 468 650
+        Q 478 620 500 600
         Z"/>
+      <!-- Arm shadow -->
+      <path fill="rgba(20,40,35,0.35)" d="M 410 720 L 410 770 Q 414 805 432 832 Q 442 838 446 836 Q 432 818 426 800 L 422 770 L 424 720 Z"/>
 
-      <!-- TABLET — held diagonally, leaning against torso -->
-      <path d="M 226 432 L 308 416 L 326 528 L 244 544 Z" fill="url(#patina)" stroke="rgba(20,34,30,0.5)" stroke-width="1"/>
+      <!-- TABLET (held diagonally) -->
+      <path d="M 322 632 L 460 612 L 488 798 L 350 818 Z" fill="url(#patina)" stroke="rgba(20,40,35,0.5)" stroke-width="1.2"/>
+      <!-- Tablet thickness (right edge) -->
+      <path d="M 460 612 L 470 624 L 498 810 L 488 798 Z" fill="rgba(20,40,35,0.55)"/>
+      <!-- Tablet inner border -->
+      <path d="M 332 642 L 452 624 L 478 790 L 358 808 Z" fill="none" stroke="rgba(20,40,35,0.4)" stroke-width="0.6"/>
       <!-- Inscription lines -->
-      <g stroke="rgba(20,34,30,0.4)" stroke-width="0.6" fill="none">
-        <line x1="240" y1="448" x2="316" y2="436"/>
-        <line x1="242" y1="464" x2="318" y2="452"/>
-        <line x1="244" y1="480" x2="320" y2="468"/>
-        <line x1="246" y1="496" x2="322" y2="484"/>
-        <line x1="248" y1="512" x2="324" y2="500"/>
-        <line x1="250" y1="528" x2="326" y2="516"/>
+      <g stroke="rgba(20,40,35,0.45)" stroke-width="0.7" fill="none">
+        <line x1="340" y1="660" x2="458" y2="644"/>
+        <line x1="344" y1="688" x2="462" y2="672"/>
+        <line x1="348" y1="716" x2="466" y2="700"/>
+        <line x1="352" y1="744" x2="470" y2="728"/>
+        <line x1="356" y1="772" x2="474" y2="756"/>
       </g>
-      <!-- Tablet inscription text suggestion -->
-      <text x="270" y="478" font-family="Times, serif" font-size="9" fill="rgba(20,34,30,0.55)" letter-spacing="1" text-anchor="middle">JULY · IV</text>
-      <text x="276" y="498" font-family="Times, serif" font-size="9" fill="rgba(20,34,30,0.55)" letter-spacing="1" text-anchor="middle">MDCCLXXVI</text>
+      <!-- Tablet inscription -->
+      <g style="font-family: 'Times New Roman', serif; font-weight: bold; fill: rgba(20,40,35,0.7);">
+        <text x="396" y="688" font-size="18" letter-spacing="2" text-anchor="middle" transform="rotate(-8 396 688)">JULY · IV</text>
+        <text x="406" y="724" font-size="18" letter-spacing="2" text-anchor="middle" transform="rotate(-8 406 724)">MDCCLXXVI</text>
+      </g>
+      <!-- Light highlight along top edge of tablet -->
+      <line x1="328" y1="635" x2="458" y2="616" stroke="rgba(197,220,212,0.4)" stroke-width="1.2"/>
 
       <!-- ============================================ -->
-      <!-- RIGHT ARM RAISED HOLDING TORCH (separate element, extends UP-RIGHT from shoulder) -->
+      <!-- RIGHT ARM RAISED -->
       <path fill="url(#patina)" d="
-        M 478 380
-        L 492 380
-        L 510 320
-        L 524 250
-        L 538 180
-        L 548 140
-        L 542 140
-        L 532 178
-        L 518 248
-        L 504 318
-        L 488 376
+        M 702 590
+        L 720 580
+        Q 740 540 762 480
+        L 790 410
+        L 808 320
+        L 820 230
+        L 832 150
+        L 840 130
+        L 828 130
+        L 822 152
+        L 810 232
+        L 800 322
+        L 782 412
+        L 754 484
+        Q 734 540 716 590
         Z"/>
+      <!-- Arm interior shadow -->
+      <path fill="rgba(20,40,35,0.3)" d="M 716 590 Q 728 562 738 530 L 768 432 L 790 320 L 814 200 L 824 152 L 832 152 L 820 232 L 808 322 L 790 412 L 762 484 Q 740 540 720 580 Z"/>
       <!-- Hand gripping torch -->
-      <path fill="url(#patina-dark)" d="M 540 138 L 552 130 L 564 134 L 562 150 L 548 156 Z"/>
+      <path fill="url(#patina)" d="M 832 150 L 846 138 L 862 134 L 870 142 L 872 156 L 862 168 L 846 168 L 836 162 Z"/>
+      <path fill="rgba(20,40,35,0.4)" d="M 832 150 L 836 162 L 846 168 L 854 168 Q 846 158 842 150 Z"/>
 
       <!-- ============================================ -->
-      <!-- TORCH (handle + bowl + flame) -->
-      <!-- Handle -->
-      <rect x="546" y="100" width="16" height="44" fill="url(#patina-dark)"/>
-      <!-- Bowl/cup -->
-      <path d="M 538 100 L 540 88 L 568 88 L 570 100 Z" fill="#D4B58C"/>
-      <!-- Decorative rim -->
-      <line x1="538" y1="94" x2="570" y2="94" stroke="rgba(0,0,0,0.3)" stroke-width="0.6"/>
-      <!-- FLAME -->
+      <!-- TORCH -->
+      <!-- Torch shaft -->
+      <rect x="838" y="80" width="32" height="50" fill="url(#patina)"/>
+      <!-- Shaft decorative bands -->
+      <line x1="838" y1="92" x2="870" y2="92" stroke="rgba(20,40,35,0.5)" stroke-width="0.8"/>
+      <line x1="838" y1="118" x2="870" y2="118" stroke="rgba(20,40,35,0.5)" stroke-width="0.8"/>
+      <!-- Shaft highlight -->
+      <line x1="841" y1="80" x2="841" y2="130" stroke="rgba(197,220,212,0.35)" stroke-width="1"/>
+
+      <!-- Torch BOWL (gold leaf) -->
+      <path d="M 826 80 L 832 56 L 876 56 L 882 80 Z" fill="url(#gold)"/>
+      <!-- Bowl decoration -->
+      <line x1="826" y1="64" x2="882" y2="64" stroke="rgba(80,55,15,0.5)" stroke-width="0.8"/>
+      <line x1="826" y1="76" x2="882" y2="76" stroke="rgba(80,55,15,0.5)" stroke-width="0.8"/>
+
+      <!-- FLAME (multi-layer) -->
+      <!-- Outer halo -->
+      <ellipse cx="854" cy="32" rx="58" ry="70" fill="url(#flame-halo)" opacity="0.55"/>
+      <!-- Outer flame -->
       <path fill="url(#flame-outer)" d="
-        M 544 88
-        Q 540 70 546 56
-        Q 552 44 556 52
-        Q 560 38 564 48
-        Q 568 34 568 50
-        Q 576 46 572 64
-        Q 580 60 574 76
-        Q 582 74 576 88
-        Q 568 96 558 96
-        Q 548 96 544 88
+        M 832 56
+        Q 822 28 836 8
+        Q 844 -8 854 6
+        Q 860 -20 868 0
+        Q 872 -14 876 4
+        Q 886 -2 880 24
+        Q 894 20 884 44
+        Q 896 42 884 56
         Z"/>
-      <!-- Inner bright flame core -->
+      <!-- Inner flame core -->
       <path fill="url(#flame-core)" d="
-        M 552 84
-        Q 550 70 555 60
-        Q 560 50 562 60
-        Q 566 56 564 76
-        Q 562 84 555 86
+        M 846 50
+        Q 842 24 850 10
+        Q 856 -2 862 12
+        Q 866 -4 868 20
+        Q 870 46 856 52
         Z"/>
+      <!-- Brightest innermost -->
+      <ellipse cx="856" cy="28" rx="6" ry="14" fill="rgba(255,255,240,0.85)"/>
 
       <!-- ============================================ -->
       <!-- NECK -->
-      <rect x="386" y="295" width="28" height="20" fill="url(#patina)"/>
-      <!-- Neck shadow -->
-      <rect x="386" y="305" width="28" height="2" fill="rgba(20,34,30,0.35)"/>
+      <rect x="568" y="506" width="64" height="52" fill="url(#patina)"/>
+      <!-- Neck shadow (right side) -->
+      <rect x="608" y="506" width="24" height="52" fill="rgba(20,40,35,0.35)"/>
+      <!-- Neck rim light -->
+      <rect x="568" y="506" width="3" height="52" fill="rgba(197,220,212,0.25)"/>
+      <!-- Adam's apple / throat line -->
+      <line x1="600" y1="510" x2="600" y2="555" stroke="rgba(20,40,35,0.25)" stroke-width="0.6"/>
 
       <!-- ============================================ -->
       <!-- HEAD -->
-      <!-- Face -->
-      <ellipse cx="400" cy="248" rx="34" ry="46" fill="url(#patina)"/>
-      <!-- Hair shadow line (under crown band) -->
-      <path d="M 370 232 Q 400 218 430 232" stroke="rgba(20,34,30,0.4)" stroke-width="1" fill="none"/>
-      <!-- Subtle facial shadows -->
-      <ellipse cx="394" cy="252" rx="3" ry="2" fill="rgba(20,34,30,0.25)"/>
-      <ellipse cx="410" cy="252" rx="3" ry="2" fill="rgba(20,34,30,0.25)"/>
-      <path d="M 396 270 L 400 266 L 404 270" stroke="rgba(20,34,30,0.3)" stroke-width="0.8" fill="none"/>
-      <path d="M 391 282 Q 400 287 409 282" stroke="rgba(20,34,30,0.4)" stroke-width="0.8" fill="none"/>
+      <ellipse cx="600" cy="430" rx="48" ry="68" fill="url(#patina)"/>
+      <!-- Patina texture on face -->
+      <ellipse cx="600" cy="430" rx="48" ry="68" fill="url(#patinaSpots)" opacity="0.4"/>
+
+      <!-- Shadow side of face (right/back) -->
+      <path fill="rgba(20,40,35,0.35)" d="M 600 362 Q 648 372 648 430 Q 648 488 600 498 Z"/>
+
+      <!-- Hair shadow line beneath crown -->
+      <path d="M 560 402 Q 600 388 640 402" stroke="rgba(20,40,35,0.6)" stroke-width="2" fill="none"/>
+      <path d="M 560 410 Q 600 396 640 410" stroke="rgba(20,40,35,0.35)" stroke-width="0.8" fill="none"/>
+
+      <!-- Forehead curve -->
+      <path d="M 562 412 Q 600 420 638 412" stroke="rgba(197,220,212,0.20)" stroke-width="1" fill="none"/>
+
+      <!-- Eyebrows -->
+      <path d="M 572 432 Q 582 428 592 432" stroke="rgba(20,40,35,0.55)" stroke-width="1.5" fill="none"/>
+      <path d="M 608 432 Q 618 428 628 432" stroke="rgba(20,40,35,0.55)" stroke-width="1.5" fill="none"/>
+
+      <!-- Eyes -->
+      <ellipse cx="582" cy="442" rx="6.5" ry="3.5" fill="rgba(20,40,35,0.50)"/>
+      <ellipse cx="618" cy="442" rx="6.5" ry="3.5" fill="rgba(20,40,35,0.50)"/>
+      <!-- Eye whites (subtle) -->
+      <ellipse cx="582" cy="441" rx="5" ry="2" fill="rgba(197,220,212,0.25)"/>
+      <ellipse cx="618" cy="441" rx="5" ry="2" fill="rgba(197,220,212,0.25)"/>
+      <!-- Pupils -->
+      <circle cx="582" cy="442" r="1.5" fill="rgba(0,0,0,0.7)"/>
+      <circle cx="618" cy="442" r="1.5" fill="rgba(0,0,0,0.7)"/>
+
+      <!-- Nose -->
+      <path d="M 600 444 L 597 470 Q 597 478 600 480 Q 603 478 603 470 L 600 444" fill="rgba(20,40,35,0.20)"/>
+      <!-- Nose bridge highlight -->
+      <line x1="600" y1="444" x2="600" y2="478" stroke="rgba(197,220,212,0.30)" stroke-width="0.8"/>
+      <!-- Nostril shadows -->
+      <path d="M 595 477 Q 597 480 600 480" stroke="rgba(20,40,35,0.5)" stroke-width="0.8" fill="none"/>
+      <path d="M 605 477 Q 603 480 600 480" stroke="rgba(20,40,35,0.5)" stroke-width="0.8" fill="none"/>
+
+      <!-- Mouth -->
+      <path d="M 586 488 Q 600 493 614 488" stroke="rgba(20,40,35,0.55)" stroke-width="1.2" fill="none"/>
+      <path d="M 588 491 Q 600 488 612 491" stroke="rgba(20,40,35,0.35)" stroke-width="0.7" fill="none"/>
+
+      <!-- Chin/jaw -->
+      <path d="M 590 500 Q 600 506 610 500" stroke="rgba(20,40,35,0.30)" stroke-width="0.8" fill="none"/>
+
+      <!-- Cheekbones (shadow lines) -->
+      <path d="M 562 458 Q 570 470 578 466" stroke="rgba(20,40,35,0.25)" stroke-width="0.6" fill="none"/>
+      <path d="M 638 458 Q 630 470 622 466" stroke="rgba(20,40,35,0.25)" stroke-width="0.6" fill="none"/>
+
+      <!-- Face rim light from left -->
+      <path d="M 553 412 Q 553 462 562 488 Q 568 500 575 504" stroke="rgba(197,220,212,0.45)" stroke-width="1.5" fill="none"/>
 
       <!-- ============================================ -->
-      <!-- CROWN — diadem ring + 7 long pointed rays -->
-      <!-- Crown band -->
-      <path d="M 366 218 Q 400 210 434 218 L 432 208 Q 400 200 368 208 Z" fill="url(#patina)" stroke="rgba(20,34,30,0.4)" stroke-width="0.6"/>
+      <!-- CROWN -->
+      <!-- Diadem ring -->
+      <path d="M 552 388 Q 600 375 648 388 L 644 366 Q 600 353 556 366 Z" fill="url(#patina)"/>
+      <path d="M 552 388 Q 600 375 648 388 L 644 366 Q 600 353 556 366 Z" fill="url(#patinaSpots)" opacity="0.5"/>
+      <!-- Diadem decoration bands -->
+      <line x1="558" y1="378" x2="642" y2="378" stroke="rgba(20,40,35,0.55)" stroke-width="0.7"/>
+      <line x1="560" y1="384" x2="640" y2="384" stroke="rgba(20,40,35,0.35)" stroke-width="0.5"/>
+      <!-- Gemstones on diadem -->
+      <circle cx="580" cy="378" r="3" fill="rgba(60,100,90,0.55)" stroke="rgba(20,40,35,0.5)" stroke-width="0.4"/>
+      <circle cx="600" cy="376" r="3.5" fill="rgba(60,100,90,0.55)" stroke="rgba(20,40,35,0.5)" stroke-width="0.4"/>
+      <circle cx="620" cy="378" r="3" fill="rgba(60,100,90,0.55)" stroke="rgba(20,40,35,0.5)" stroke-width="0.4"/>
+      <!-- Diadem rim light -->
+      <line x1="556" y1="366" x2="644" y2="366" stroke="rgba(197,220,212,0.35)" stroke-width="0.8"/>
 
-      <!-- Seven crown rays — long, sharply pointed, fanning outward -->
-      <g fill="url(#patina)" stroke="rgba(20,34,30,0.35)" stroke-width="0.5" stroke-linejoin="miter">
-        <!-- Ray 1: center, straight up -->
-        <polygon points="396,200 400,124 404,200"/>
+      <!-- Seven crown rays -->
+      <g stroke="rgba(20,40,35,0.4)" stroke-width="0.6" stroke-linejoin="miter">
+        <!-- Ray 1: center -->
+        <polygon points="596,200 600,124 604,200" fill="url(#patina)"/>
         <!-- Ray 2: slight right -->
-        <polygon points="408,201 426,126 414,202"/>
+        <polygon points="608,201 626,126 614,202" fill="url(#patina)"/>
         <!-- Ray 3: more right -->
-        <polygon points="418,206 452,138 425,208"/>
-        <!-- Ray 4: far right, more horizontal -->
-        <polygon points="428,214 482,170 436,217"/>
-        <!-- Ray 5: slight left (mirror of 2) -->
-        <polygon points="392,201 374,126 386,202"/>
-        <!-- Ray 6: more left (mirror of 3) -->
-        <polygon points="382,206 348,138 375,208"/>
-        <!-- Ray 7: far left, more horizontal (mirror of 4) -->
-        <polygon points="372,214 318,170 364,217"/>
+        <polygon points="618,206 652,138 625,208" fill="url(#patina)"/>
+        <!-- Ray 4: far right -->
+        <polygon points="628,214 682,170 636,217" fill="url(#patina)"/>
+        <!-- Ray 5: slight left -->
+        <polygon points="592,201 574,126 586,202" fill="url(#patina)"/>
+        <!-- Ray 6: more left -->
+        <polygon points="582,206 548,138 575,208" fill="url(#patina)"/>
+        <!-- Ray 7: far left -->
+        <polygon points="572,214 518,170 564,217" fill="url(#patina)"/>
       </g>
-      <!-- Crown ring inner decorative line -->
-      <path d="M 370 215 Q 400 207 430 215" stroke="rgba(20,34,30,0.3)" stroke-width="0.6" fill="none"/>
+      <!-- Ray rim lights (left edges catch light) -->
+      <g stroke="rgba(197,220,212,0.45)" stroke-width="0.8" fill="none">
+        <line x1="596" y1="200" x2="600" y2="124"/>
+        <line x1="592" y1="201" x2="574" y2="126"/>
+        <line x1="582" y1="206" x2="548" y2="138"/>
+        <line x1="572" y1="214" x2="518" y2="170"/>
+      </g>
+      <!-- Ray inner shadows (right edges in shadow) -->
+      <g fill="rgba(20,40,35,0.35)">
+        <polygon points="600,124 604,200 602,200 600,128"/>
+        <polygon points="626,126 614,202 616,202 626,130"/>
+        <polygon points="652,138 625,208 627,208 652,142"/>
+      </g>
 
       <!-- ============================================ -->
-      <!-- WARM RIM LIGHT on right side (light from torch direction) -->
-      <path fill="url(#rim-warm)" opacity="0.65" d="
-        M 478 380
-        L 478 540
-        L 478 720
-        L 460 722
-        L 468 710
-        L 474 670
-        L 478 620
-        L 478 540
-        L 478 460
-        Z"/>
+      <!-- WARM RIM LIGHT on right side of figure -->
+      <g opacity="0.6">
+        <path d="M 702 580 L 716 590 L 740 540 L 720 580 Z" fill="url(#rim-warm)"/>
+        <path d="M 702 760 L 702 860 L 702 970 Q 700 1000 690 1020 L 700 1018 L 702 870 L 702 760 Z" fill="url(#rim-warm)"/>
+      </g>
 
-      <!-- Subtle cool rim light on left (from harbor) -->
-      <path fill="url(#rim-cool)" opacity="0.4" d="
-        M 322 460
-        L 322 540
-        L 322 620
-        L 326 670
-        L 332 710
-        L 340 722
-        L 322 720
-        Z"/>
+      <!-- ============================================ -->
+      <!-- COOL RIM LIGHT on left side -->
+      <g opacity="0.4">
+        <path d="M 498 760 L 498 860 L 498 970 Q 502 1000 510 1020 L 500 1018 L 498 870 L 498 760 Z" fill="url(#rim-cool)"/>
+      </g>
 
-      <!-- Torch flame outer halo (foreground glow) -->
-      <ellipse cx="556" cy="72" rx="50" ry="60" fill="url(#flame-outer)" opacity="0.45"/>
-      <ellipse cx="556" cy="68" rx="22" ry="34" fill="url(#flame-core)" opacity="0.7"/>
-
-      <!-- Re-render the very top of flame on top of all glow -->
-      <path fill="url(#flame-core)" opacity="0.9" d="
-        M 552 84
-        Q 550 68 555 56
-        Q 560 46 562 58
-        Q 566 52 564 74
-        Q 562 84 555 86
-        Z"/>
+      <!-- ============================================ -->
+      <!-- AMBIENT GLOW from torch reflecting onto figure -->
+      <ellipse cx="780" cy="200" rx="200" ry="120" fill="rgba(255,180,100,0.06)"/>
+      <ellipse cx="780" cy="300" rx="180" ry="140" fill="rgba(255,180,100,0.04)"/>
 
     </svg>
   </div>
 
+  <div class="water"></div>
   <div class="haze"></div>
+  <div class="vignette"></div>
   <div class="grain"></div>
 </body></html>
