@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Off the Dial — Chronos</title>
+  <meta name="description" content="The page you sought is not on the dial. Return to Chronos." />
+  <meta name="robots" content="noindex" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300..800&family=Onest:wght@300..800&family=JetBrains+Mono:wght@300..600&display=swap" rel="stylesheet" />
+  <style>
+    :root{
+      --bg:#000;
+      --text:#f0ede8;
+      --text-dim:#8a8580;
+      --text-mute:#5a5550;
+      --accent:#c6b074;
+      --rule:rgba(240,237,232,0.10);
+      --rule-strong:rgba(240,237,232,0.28);
+      --font-display:'Bricolage Grotesque','Iowan Old Style',Georgia,serif;
+      --font-body:'Onest','Helvetica Neue',system-ui,sans-serif;
+      --font-mono:'JetBrains Mono',ui-monospace,'SF Mono',monospace;
+    }
+    *{margin:0;padding:0;box-sizing:border-box}
+    html,body{background:var(--bg);color:var(--text);font-family:var(--font-body);-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+    ::selection{background:var(--accent);color:#000}
+    a{color:inherit;text-decoration:none}
+
+    .stage{
+      min-height:100vh;
+      display:grid;
+      grid-template-rows:auto 1fr auto;
+      padding:32px clamp(20px,4vw,56px);
+      position:relative;
+      overflow:hidden;
+    }
+
+    /* ambient grain */
+    .stage::before{
+      content:"";
+      position:absolute;inset:0;
+      background:
+        radial-gradient(900px 600px at 18% 12%, rgba(198,176,116,0.06), transparent 60%),
+        radial-gradient(700px 500px at 82% 88%, rgba(110,203,255,0.05), transparent 60%);
+      pointer-events:none;
+    }
+
+    /* HEADER */
+    .head{
+      display:flex;justify-content:space-between;align-items:center;
+      font-family:var(--font-mono);font-size:10px;letter-spacing:0.28em;
+      text-transform:uppercase;color:var(--text-dim);
+      position:relative;z-index:2;
+    }
+    .head .brand{display:inline-flex;align-items:center;gap:10px;color:var(--text)}
+    .head .brand .mark{font-size:18px;color:var(--accent);letter-spacing:0}
+    .head .brand .name{font-family:var(--font-display);font-weight:500;font-size:14px;letter-spacing:0.04em;text-transform:none}
+    .head .meta{display:flex;gap:18px}
+    .head .meta span:last-child{color:var(--text-mute)}
+
+    /* MAIN */
+    .main{
+      display:grid;
+      grid-template-columns:1fr;
+      align-content:center;
+      justify-items:start;
+      max-width:980px;
+      margin:0 auto;
+      width:100%;
+      padding:80px 0;
+      position:relative;z-index:2;
+    }
+
+    .eyebrow{
+      font-family:var(--font-mono);font-size:10px;letter-spacing:0.32em;
+      text-transform:uppercase;color:var(--text-dim);
+      display:inline-flex;align-items:center;gap:14px;
+      margin-bottom:36px;
+    }
+    .eyebrow::before{
+      content:"";width:28px;height:1px;background:var(--accent);display:inline-block;
+    }
+
+    .code{
+      font-family:var(--font-display);
+      font-weight:300;
+      font-size:clamp(96px,18vw,260px);
+      line-height:0.9;
+      letter-spacing:-0.04em;
+      color:var(--text);
+      margin-bottom:24px;
+      display:flex;align-items:baseline;gap:0.06em;
+    }
+    .code em{
+      font-style:italic;color:var(--accent);font-weight:300;
+    }
+    .code .dot{
+      width:14px;height:14px;border-radius:50%;
+      background:var(--accent);
+      display:inline-block;
+      transform:translateY(-0.6em);
+      animation:tick 2s var(--ease-in-out,cubic-bezier(.65,0,.35,1)) infinite;
+    }
+    @keyframes tick{
+      0%,40%,100%{opacity:1;transform:translateY(-0.6em) scale(1)}
+      45%{opacity:0.35;transform:translateY(-0.6em) scale(0.85)}
+      50%{opacity:1;transform:translateY(-0.6em) scale(1)}
+    }
+
+    h1{
+      font-family:var(--font-display);
+      font-weight:300;
+      font-size:clamp(2rem,4.5vw,3.4rem);
+      line-height:1.05;
+      letter-spacing:-0.02em;
+      margin-bottom:24px;
+      max-width:18ch;
+    }
+    h1 em{font-style:italic;color:var(--accent);font-weight:300}
+
+    .sub{
+      font-family:var(--font-body);
+      font-size:clamp(1rem,1.15vw,1.125rem);
+      line-height:1.7;
+      color:var(--text-dim);
+      max-width:52ch;
+      margin-bottom:48px;
+    }
+
+    .rule{
+      width:48px;height:1px;background:var(--rule-strong);
+      margin-bottom:32px;
+    }
+
+    .ref{
+      font-family:var(--font-mono);font-size:10px;letter-spacing:0.22em;
+      text-transform:uppercase;color:var(--text-mute);
+      margin-bottom:40px;
+      display:flex;gap:18px;flex-wrap:wrap;
+    }
+    .ref span+span{padding-left:18px;border-left:1px solid var(--rule)}
+
+    .actions{display:flex;gap:14px;flex-wrap:wrap}
+    .btn{
+      display:inline-flex;align-items:center;gap:10px;
+      padding:14px 22px;
+      border:1px solid var(--rule-strong);
+      color:var(--text);
+      font-family:var(--font-mono);font-size:11px;letter-spacing:0.22em;
+      text-transform:uppercase;
+      transition:background 0.25s ease,color 0.25s ease,border-color 0.25s ease,transform 0.25s ease;
+    }
+    .btn .arr{transition:transform 0.25s ease}
+    .btn:hover{background:var(--text);color:#000;border-color:var(--text)}
+    .btn:hover .arr{transform:translateX(4px)}
+    .btn.primary{background:var(--accent);color:#000;border-color:var(--accent)}
+    .btn.primary:hover{background:var(--text);color:#000;border-color:var(--text)}
+
+    /* SUGGESTIONS */
+    .suggest{
+      margin-top:64px;
+      padding-top:32px;
+      border-top:1px solid var(--rule);
+      width:100%;max-width:680px;
+    }
+    .suggest-label{
+      font-family:var(--font-mono);font-size:10px;letter-spacing:0.28em;
+      text-transform:uppercase;color:var(--text-mute);
+      margin-bottom:18px;
+    }
+    .suggest-list{
+      display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
+      gap:0;
+    }
+    .suggest-list a{
+      display:flex;justify-content:space-between;align-items:center;
+      padding:14px 0;
+      border-bottom:1px solid var(--rule);
+      font-family:var(--font-body);font-size:0.95rem;
+      color:var(--text-dim);
+      transition:color 0.2s ease,padding-left 0.2s ease;
+    }
+    .suggest-list a:hover{color:var(--text);padding-left:8px}
+    .suggest-list a .a{font-family:var(--font-mono);font-size:11px;color:var(--text-mute)}
+
+    /* FOOTER */
+    .foot{
+      display:flex;justify-content:space-between;align-items:center;
+      font-family:var(--font-mono);font-size:10px;letter-spacing:0.22em;
+      text-transform:uppercase;color:var(--text-mute);
+      padding-top:24px;border-top:1px solid var(--rule);
+      position:relative;z-index:2;
+    }
+
+    @media (max-width:640px){
+      .head .meta span:first-child{display:none}
+      .suggest-list{grid-template-columns:1fr}
+      .foot{flex-direction:column;gap:8px;align-items:flex-start}
+    }
+  </style>
+</head>
+<body>
+  <div class="stage">
+
+    <header class="head">
+      <a class="brand" href="/index.html" aria-label="Chronos home">
+        <span class="mark" aria-hidden="true">⌖</span>
+        <span class="name">Chronos</span>
+      </a>
+      <div class="meta">
+        <span>Edition 01 / 26</span>
+        <span>Geneva · CH</span>
+      </div>
+    </header>
+
+    <main class="main">
+      <span class="eyebrow">Error · No. 404 · Off the dial</span>
+
+      <div class="code" aria-label="404">
+        <span>4</span><span class="dot" aria-hidden="true"></span><span>4</span>
+      </div>
+
+      <h1>This frame does <em>not exist.</em></h1>
+
+      <p class="sub">
+        The page you sought is not on the dial. Either a hand slipped, a link aged out,
+        or the kiln has yet to fire this particular piece. Return to a known surface below.
+      </p>
+
+      <div class="rule" aria-hidden="true"></div>
+
+      <p class="ref">
+        <span>Reference M-404 / 26</span>
+        <span>Atelier Geneva</span>
+      </p>
+
+      <div class="actions">
+        <a href="/index.html" class="btn primary">Return to Chronos <span class="arr">→</span></a>
+        <a href="/product.html" class="btn">View the Watch <span class="arr">→</span></a>
+      </div>
+
+      <section class="suggest" aria-label="Other surfaces">
+        <p class="suggest-label">— Or visit</p>
+        <div class="suggest-list">
+          <a href="/index.html"><span>Home</span><span class="a">↗</span></a>
+          <a href="/product.html"><span>Product</span><span class="a">↗</span></a>
+          <a href="/Sights.html"><span>Sights</span><span class="a">↗</span></a>
+          <a href="/TesterTech.html"><span>TesterTech</span><span class="a">↗</span></a>
+          <a href="/between-heartbeats.html"><span>Between Heartbeats</span><span class="a">◐</span></a>
+          <a href="/contact.html"><span>Contact</span><span class="a">↗</span></a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="foot">
+      <span>© Chronos · The kiln is warm</span>
+      <span>Made of 412 parts</span>
+    </footer>
+
+  </div>
+</body>
+</html>
